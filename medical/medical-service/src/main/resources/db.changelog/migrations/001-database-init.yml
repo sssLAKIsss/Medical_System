@@ -1,0 +1,201 @@
+databaseChangeLog:
+  - changeSet:
+      id: init-vaccination_points-table
+      failOnError: true
+      author: Andrey
+      changes:
+        - createTable:
+            tableName: vaccination_points
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: vaccination_point_number
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: vaccination_point_title
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: city
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: address
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_deleted
+                  type: boolean
+                  defaultValueBoolean: true
+              - column:
+                  name: version
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_modified_date
+                  type: timestamp
+                  constraints:
+                    nullable: true
+              - column:
+                  name : date_time_creation
+                  type: timestamp
+                  constraints:
+                    nullable: true
+
+  - changeSet:
+      id: init-vaccinations-table
+      failOnError: true
+      author: Andrey
+      changes:
+        - createTable:
+            tableName: vaccinations
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: full_name
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: document_number
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: chipping_date
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_deleted
+                  type: boolean
+                  defaultValueBoolean: true
+              - column:
+                  name: version
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_modified_date
+                  type: timestamp
+                  constraints:
+                    nullable: true
+              - column:
+                  name : date_time_creation
+                  type: timestamp
+                  constraints:
+                    nullable: true
+
+  - changeSet:
+      id: init-vaccines-table
+      failOnError: true
+      author: Andrey
+      changes:
+        - createTable:
+            tableName: vaccines
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: vaccine_title
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_deleted
+                  type: boolean
+                  defaultValueBoolean: true
+              - column:
+                  name: version
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_modified_date
+                  type: timestamp
+                  constraints:
+                    nullable: true
+              - column:
+                  name : date_time_creation
+                  type: timestamp
+                  constraints:
+                    nullable: true
+
+  - changeSet:
+      id: init-vaccinations_vaacines-table
+      failOnError: true
+      author: Andrey
+      changes:
+        - createTable:
+            tableName: vaccinations_vaacines
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: vaccination_id
+                  type: int
+                  constraints:
+                    foreignKeyName: vaccination_vaacine_frk
+                    references: vaccinations(id)
+              - column:
+                  name: vaacine_id
+                  type: int
+                  constraints:
+                    foreignKeyName: vaacine_vaccination_frk
+                    references: vaccines(id)
+
+  - changeSet:
+      id: init-vaccinations_vaacination_points-table
+      failOnError: true
+      author: Andrey
+      changes:
+        - createTable:
+            tableName: vaccinations_vaacination_points
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: vaccination_id
+                  type: int
+                  constraints:
+                    foreignKeyName: vaccination_vaacination_point_frk
+                    references: vaccinations(id)
+              - column:
+                  name: vaacination_points_id
+                  type: int
+                  constraints:
+                    foreignKeyName: vaacination_point_vaccination_frk
+                    references: vaccination_points(id)

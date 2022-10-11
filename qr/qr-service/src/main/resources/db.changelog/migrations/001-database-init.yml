@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: init-qr_codes-table
+      failOnError: true
+      author: Andrey
+      changes:
+        - createTable:
+            tableName: qr_codes
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: qr_codes
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: passport_number
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: values
+                  type: text
+                  constraints:
+                    nullable: false

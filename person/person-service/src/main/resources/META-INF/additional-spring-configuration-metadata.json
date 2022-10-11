@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "liquibase.parameters.textColumnType",
+      "type": "java.lang.String",
+      "description": "Description for liquibase.parameters.textColumnType."
+  }
+] }

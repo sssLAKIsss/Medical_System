@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  app:
+    container_name: person
+    image: person-service:1.0-SNAPSHOT
+    build: ./
+    ports:
+      - "8081:8081"
+    expose:
+      - "8081"
+#    depends_on:
+#      - postgresqldb
+#  postgresqldb:
+#    image: postgres
+#    ports:
+#      - "5432:5432"
+#    expose:
+#      - "5432"
+#    environment:
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=postgres
+#      - POSTGRES_DB=persons

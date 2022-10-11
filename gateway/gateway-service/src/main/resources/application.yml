@@ -1,0 +1,56 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+    web-application-type: reactive
+  mvc:
+    pathmatch:
+      matching-strategy: path-pattern-parser
+  application:
+    name: gateway-service
+  jackson:
+    deserialization:
+      read-date-timestamps-as-nanoseconds: false
+    parser:
+      allow-single-quotes: true
+  cloud:
+    discovery:
+      enabled: true
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/users
+    username: postgres
+    password: postgres
+  liquibase:
+    driverClassName: org.postgresql.Driver
+    changeLog: classpath:db.changelog/db.changelog-master.yaml
+    default-schema: public
+    enabled: true
+    url: jdbc:postgresql://localhost:5432/users
+    user: postgres
+    password: postgres
+
+jwt:
+  secret: some-secret-dadsa-das-das-as-das-da-sdasd-sda
+  expirationToken: 86400
+
+logging:
+  level:
+    org:
+      springframework:
+        r2dbc: DEBUG
+
+server:
+  port: 8084
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: on_param
+    include-exception: false
+
+eureka:
+  instance:
+    hostname: localhost

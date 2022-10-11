@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: registry-service
+
+server:
+  port: 8761
+eureka:
+  server:
+    healthcheck:
+      enabled: true
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+

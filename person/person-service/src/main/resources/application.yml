@@ -1,0 +1,51 @@
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: path-pattern-parser
+  application:
+    name: person-service
+  liquibase:
+    changeLog: classpath:db.changelog/db.changelog-master.yaml
+    default-schema: public
+    enabled: true
+  jpa:
+    open-in-view: false
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+  jackson:
+    deserialization:
+      read-date-timestamps-as-nanoseconds: false
+    parser:
+      allow-single-quotes: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/persons?stringtype=unspecified
+    driverClassName: org.postgresql.Driver
+    username: postgres
+    password: postgres
+    hikari:
+      maxLifetime: 180000
+      maximumPoolSize: 5
+  cloud:
+    discovery:
+      enabled: true
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+server:
+  port: 8081
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: on_param
+    include-exception: false
+
+eureka:
+  instance:
+    hostname: localhost

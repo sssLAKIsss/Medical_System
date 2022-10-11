@@ -1,0 +1,143 @@
+[
+  {
+    "lastName": "Андрей",
+    "firstName": "Андреевич",
+    "patronymic": "Андрей",
+    "documents": [
+      {
+        "type": "PASSPORT",
+        "number": "4545001001"
+      }
+    ],
+    "addresses": [
+      {
+        "type": "REGISTRATION",
+        "country": "Russia",
+        "region": "Республика Башкортостан",
+        "city": "Стерлитамак",
+        "street": "Гоголя",
+        "home": 106,
+        "flat": 1
+      }
+    ],
+    "contacts": [
+      {
+        "type": "HOME",
+        "phoneNumber": "+79999999991"
+      }
+    ]
+  },
+  {
+    "lastName": "Владимир",
+    "firstName": "Владимирович",
+    "patronymic": "Владимир",
+    "documents": [
+
+      {
+        "type": "PASSPORT",
+        "number": "4545001002"
+      }
+    ],
+    "addresses": [
+      {
+        "type": "REGISTRATION",
+        "country": "Russia",
+        "region": "Республика Башкортостан",
+        "city": "Стерлитамак",
+        "street": "Гоголя",
+        "home": 106,
+        "flat": 1
+      }
+    ],
+    "contacts": [
+      {
+        "type": "HOME",
+        "phoneNumber": "+79999999992"
+      }
+    ]
+  },
+  {
+    "lastName": "Юрий",
+    "firstName": "Юрьевич",
+    "patronymic": "Юрий",
+    "documents": [
+      {
+        "type": "PASSPORT",
+        "number": "4545001003"
+      }
+    ],
+    "addresses": [
+      {
+        "type": "REGISTRATION",
+        "country": "Russia",
+        "region": "Республика Башкортостан",
+        "city": "Стерлитамак",
+        "street": "Гоголя",
+        "home": 106,
+        "flat": 1
+      }
+    ],
+    "contacts": [
+      {
+        "type": "HOME",
+        "phoneNumber": "+79999999993"
+      }
+    ]
+  },
+  {
+    "lastName": "Слава",
+    "firstName": "Славьевич",
+    "patronymic": "Славин",
+    "documents": [
+      {
+        "type": "PASSPORT",
+        "number": "4545001004"
+      }
+    ],
+    "addresses": [
+      {
+        "type": "REGISTRATION",
+        "country": "Russia",
+        "region": "Республика Башкортостан",
+        "city": "Стерлитамак",
+        "street": "Гоголя",
+        "home": 106,
+        "flat": 1
+      }
+    ],
+    "contacts": [
+      {
+        "type": "HOME",
+        "phoneNumber": "+79999999994"
+      }
+    ]
+  },
+  {
+    "lastName": "Сема",
+    "firstName": "Семович",
+    "patronymic": "Арсеньев",
+    "documents": [
+      {
+        "type": "PASSPORT",
+        "number": "4545001005"
+      }
+    ],
+    "addresses": [
+      {
+        "type": "REGISTRATION",
+        "country": "Russia",
+        "region": "Республика Башкортостан",
+        "city": "Стерлитамак",
+        "street": "Гоголя",
+        "home": 106,
+        "flat": 1
+      }
+    ],
+    "contacts": [
+      {
+        "type": "HOME",
+        "phoneNumber": "+79999999995"
+      }
+    ]
+  }
+]

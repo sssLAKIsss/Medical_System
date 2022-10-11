@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: init-users-table
+      failOnError: true
+      author: Andrey
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+

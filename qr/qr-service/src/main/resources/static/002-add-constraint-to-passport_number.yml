@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: addUniqueConstraint-to-passport_number
+      author: Andrey
+      preConditions:
+        tableExists:
+          tableName: passport_number
+      changes:
+        - addUniqueConstraint:
+            tableName: qr_codes
+            columnNames: passport_number

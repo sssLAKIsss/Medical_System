@@ -1,0 +1,251 @@
+databaseChangeLog:
+  - changeSet:
+        id: init-persons-table
+        failOnError: true
+        author: Andrey
+        changes:
+          - createTable:
+              tableName: persons
+              columns:
+                - column:
+                    name: id
+                    type: int
+                    autoIncrement: true
+                    constraints:
+                      primaryKey: true
+                      nullable: false
+                - column:
+                    name: last_name
+                    type: text
+                    constraints:
+                      nullable: false
+                - column:
+                    name: first_name
+                    type: text
+                    constraints:
+                      nullable: false
+                - column:
+                    name: patronymic
+                    type: text
+                    constraints:
+                      nullable: true
+                - column:
+                    name: visibility
+                    type: boolean
+                    defaultValueBoolean: true
+                - column:
+                    name: version
+                    type: int
+                    constraints:
+                      nullable: false
+                - column:
+                    name: last_modified_date
+                    type: timestamp
+                    constraints:
+                      nullable: true
+                - column:
+                    name : date_time_creation
+                    type: timestamp
+                    constraints:
+                      nullable: true
+
+  - changeSet:
+      id: init-documents-table
+      failOnError: true
+      author: Andrey
+      changes:
+        - createTable:
+            tableName : documents
+            columns:
+              - column:
+                  name : id
+                  type : int
+                  autoIncrement : true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name : type
+                  type : text
+                  constraints:
+                    nullable: false
+              - column:
+                  name : number
+                  type : text
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: person_id
+                  type : int
+                  constraints:
+                    nullable: true
+                    foreignKeyName: documents_persons_frk
+                    references: persons(id)
+              - column:
+                  name: visibility
+                  type: boolean
+                  defaultValueBoolean: true
+              - column:
+                  name: version
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_modified_date
+                  type: timestamp
+                  constraints:
+                    nullable: true
+              - column:
+                  name: date_time_creation
+                  type: timestamp
+                  constraints:
+                    nullable: true
+
+  - changeSet:
+      id: init-contacts-table
+      failOnError: true
+      author: Andrey
+      changes:
+        - createTable:
+            tableName : contacts
+            columns:
+              - column:
+                  name : id
+                  type : int
+                  autoIncrement : true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name : type
+                  type : text
+                  constraints:
+                    nullable: false
+              - column:
+                  name : phone_number
+                  type : text
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: person_id
+                  type: int
+                  constraints:
+                    nullable: true
+                    references: persons(id)
+                    foreignKeyName: contacts_persons_frk
+              - column:
+                  name: visibility
+                  type: boolean
+                  defaultValueBoolean: true
+              - column:
+                  name: version
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_modified_date
+                  type: timestamp
+                  constraints:
+                    nullable: true
+              - column:
+                  name: date_time_creation
+                  type: timestamp
+                  constraints:
+                    nullable: true
+
+  - changeSet:
+      id: init-addresses-table
+      failOnError: true
+      author: Andrey
+      changes:
+        - createTable:
+            tableName : addresses
+            columns:
+              - column:
+                  name : id
+                  type : int
+                  autoIncrement : true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name : type
+                  type : text
+                  constraints:
+                    nullable: false
+              - column:
+                  name : country
+                  type : text
+                  constraints:
+                    nullable: false
+              - column:
+                  name : region
+                  type : text
+                  constraints:
+                    nullable: false
+              - column:
+                  name : city
+                  type : text
+                  constraints:
+                    nullable: false
+              - column:
+                  name : street
+                  type : text
+                  constraints:
+                    nullable: false
+              - column:
+                  name : home
+                  type : text
+                  constraints:
+                    nullable: false
+              - column:
+                  name : flat
+                  type : text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: visibility
+                  type: boolean
+                  defaultValueBoolean: true
+              - column:
+                  name: version
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_modified_date
+                  type: timestamp
+                  constraints:
+                    nullable: true
+              - column:
+                  name: date_time_creation
+                  type: timestamp
+                  constraints:
+                    nullable: true
+
+  - changeSet:
+      id: init-persons_addresses-table
+      failOnError: true
+      author: Andrey
+      changes:
+        - createTable:
+            tableName: persons_addresses
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+              - column:
+                  name: persons_id
+                  type: int
+                  constraints:
+                    foreignKeyName: 1f
+                    references: persons(id)
+              - column:
+                  name: addresses_id
+                  type: int
+                  constraints:
+                    foreignKeyName: 2f
+                    references: addresses(id)

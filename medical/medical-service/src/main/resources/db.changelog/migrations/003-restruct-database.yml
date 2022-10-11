@@ -1,0 +1,115 @@
+databaseChangeLog:
+  - changeSet:
+      id: drop-vaccinations_vaacines-table
+      failOnError: true
+      author: Andrey
+      changes:
+        - dropTable:
+            cascadeConstraints: true
+            tableName: vaccinations_vaacines
+
+  - changeSet:
+      id: drop-vaccinations_vaacination_points-table
+      failOnError: true
+      author: Andrey
+      changes:
+        - dropTable:
+            cascadeConstraints: true
+            tableName: vaccinations_vaacination_points
+
+  - changeSet:
+      id: drop-vaccinations-columns
+      failOnError: true
+      author: Andrey
+      changes:
+        - dropColumn:
+            tableName: vaccinations
+            columns:
+              - column:
+                  name: full_name
+              - column:
+                  name: document_number
+
+  - changeSet:
+      id: drop-vaccinations-columns
+      failOnError: true
+      author: Andrey
+      changes:
+        - dropColumn:
+            tableName: vaccinations
+            columns:
+              - column:
+                  name: full_name
+              - column:
+                  name: document_number
+
+  - changeSet:
+      id: init-patients-table
+      failOnError: true
+      author: Andrey
+      changes:
+        - createTable:
+            tableName: patients
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: full_name
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: document_number
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_deleted
+                  type: boolean
+                  defaultValueBoolean: true
+              - column:
+                  name: version
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_modified_date
+                  type: timestamp
+                  constraints:
+                    nullable: true
+              - column:
+                  name : date_time_creation
+                  type: timestamp
+                  constraints:
+                    nullable: true
+
+  - changeSet:
+      id: add-columns-in-vaccinations-table
+      author: Andrey
+      changes:
+        - addColumn:
+            tableName: vaccinations
+            columns:
+              - column:
+                  name: patient_id
+                  type: int
+                  constraints:
+                    foreignKeyName: vaccinations_patients_frk
+                    references: patients(id)
+              - column:
+                  name: vaccine_id
+                  type: int
+                  constraints:
+                    foreignKeyName: vaccination_vaccine_frk
+                    references: vaccines(id)
+              - column:
+                  name: vaccination_point_id
+                  type: int
+                  constraints:
+                    foreignKeyName: vaccination_vaacination_point_frk
+                    references: vaccination_points(id)

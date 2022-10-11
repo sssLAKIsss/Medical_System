@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>person</artifactId>
+        <groupId>ru.vtb</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>vtb</groupId>
+    <artifactId>person-api</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+
+        <openapi-generator-maven-plugin.version>5.4.0</openapi-generator-maven-plugin.version>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>${openapi-generator-maven-plugin.version}</version>
+                <configuration>
+                    <!--suppress UnresolvedMavenProperty -->
+                    <inputSpec>
+                        ${project.basedir}/src/main/resources/persons-service-api-v0.json
+                    </inputSpec>
+                    <generatorName>spring</generatorName>
+                    <configOptions>
+                        <artifactDescription>API Client for persons-service</artifactDescription>
+                        <developerName>Andrey</developerName>
+                        <artifactId>persons-api</artifactId>
+                        <artifactVersion>latest</artifactVersion>
+                        <hideGenerationTimestamp>true</hideGenerationTimestamp>
+                        <interfaceOnly>true</interfaceOnly>
+                        <skipDefaultInterface>true</skipDefaultInterface>
+                        <apiPackage>ru.vtb.personservice.client.api</apiPackage>
+                        <modelPackage>ru.vtb.personservice.client.model</modelPackage>
+                        <serializableModel>true</serializableModel>
+                        <snapshotVersion>false</snapshotVersion>
+                        <sortModelPropertiesByRequiredFlag>true</sortModelPropertiesByRequiredFlag>
+                        <sortParamsByRequiredFlag>true</sortParamsByRequiredFlag>
+                        <exceptionHandler>false</exceptionHandler>
+                        <performBeanValidation>true</performBeanValidation>
+                        <useBeanValidation>true</useBeanValidation>
+                        <modelMutable>false</modelMutable>
+                        <enumPropertyNaming>UPPERCASE</enumPropertyNaming>
+                        <dateLibrary>java8</dateLibrary>
+                        <useTags>true</useTags>
+                    </configOptions>
+                    <skipValidateSpec>true</skipValidateSpec>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>openapi-java-client</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
