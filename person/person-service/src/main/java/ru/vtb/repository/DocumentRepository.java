@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.vtb.model.Document;
 
 import java.util.List;
@@ -36,11 +37,8 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
             @Param("personsId") List<Long> personsId,
             @Param("visibility") Boolean visibility);
 
+    @Transactional
     @Modifying
     @Query(value = "update Document d set d.visibility = :visibility where d.id in :documentsId")
     void setVisibilityToDocuments(@Param("visibility") Boolean visibility, @Param("documentsId") List<Long> documentsId);
-
-    @Modifying
-    @Query(value = "update Document d set d.visibility = :visibility where d.personId in :personsId")
-    void setVisibilityToDocumentsByPersonsId(@Param("visibility") Boolean visibility, @Param("personsId") List<Long> personsId);
 }

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.vtb.model.Contact;
 
 import java.util.List;
@@ -29,12 +30,8 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
     List<Contact> findAllContactsByPersonIdIsInAndVisibilityIsLike(@Param("personsId") List<Long> personsId,
                                                                     @Param("visibility") Boolean visibility);
 
+    @Transactional
     @Modifying
     @Query(value = "update Contact c set c.visibility = :visibility where c.id in :contactsId")
     void setVisibilityToContacts(@Param("visibility") Boolean visibility, @Param("contactsId") List<Long> contactsId);
-
-    @Modifying
-    @Query(value = "update Contact c set c.visibility = :visibility where c.personId in :personsId")
-    void setVisibilityToContactsByPersonsId(@Param("visibility") Boolean visibility, @Param("personsId") List<Long> personsId);
-
 }

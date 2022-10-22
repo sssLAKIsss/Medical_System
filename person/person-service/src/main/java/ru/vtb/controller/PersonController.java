@@ -31,6 +31,7 @@ import ru.vtb.service.IPersonService;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Set;
 
 
 @Tag(
@@ -237,7 +238,7 @@ public class PersonController {
     })
     @PutMapping("/visibility")
     public ResponseEntity<HttpStatus> setVisibilityToPersons(@RequestParam Boolean visibility,
-                                                             @RequestParam List<Long> personsId) {
+                                                             @RequestParam Set<Long> personsId) {
         personService.setPersonsVisibility(visibility, personsId);
         return ResponseEntity.ok(HttpStatus.OK);
     }

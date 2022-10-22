@@ -21,6 +21,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import java.util.Objects;
 
 @Entity
 @Table(name = "contacts")
@@ -48,4 +49,17 @@ public class Contact extends BaseDateVersionEntity {
 
     @Column(name = "person_id")
     private Long personId;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contact contact = (Contact) o;
+        return id.equals(contact.id) && type == contact.type && phoneNumber.equals(contact.phoneNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, type, phoneNumber);
+    }
 }

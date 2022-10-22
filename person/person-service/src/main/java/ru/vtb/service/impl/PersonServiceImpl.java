@@ -1,7 +1,6 @@
 package ru.vtb.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,52 +9,50 @@ import ru.vtb.dto.getOrUpdate.PersonDto;
 import ru.vtb.exception.PersonNotFoundException;
 import ru.vtb.mapper.IModelMapper;
 import ru.vtb.model.Person;
-import ru.vtb.repository.AddressRepository;
-import ru.vtb.repository.ContactRepository;
-import ru.vtb.repository.DocumentRepository;
 import ru.vtb.repository.PersonRepository;
 import ru.vtb.service.IPersonService;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static java.util.Objects.requireNonNull;
+import static ru.vtb.util.PersonServiceUtil.setPersonsAbilitiesVisibility;
+import static ru.vtb.util.PersonServiceUtil.setVisibility;
 
 @Service
 @RequiredArgsConstructor
 public class PersonServiceImpl implements IPersonService {
     private final PersonRepository personRepository;
-    private final DocumentRepository documentRepository;
-    private final ContactRepository contactRepository;
-    private final AddressRepository addressRepository;
     private final IModelMapper<Person, PersonCreateInputDto, PersonDto> personMapper;
 
     @Override
     @Transactional(readOnly = true)
     public PersonDto findById(Long id, Boolean visibility) {
-        return personMapper.convertToOutputDto(
-                personRepository.findByIdAndVisibility(id, visibility)
-                        .orElseThrow(PersonNotFoundException::new)
-        );
+        Person person = personRepository.findByIdAndVisibility(id, visibility)
+                .orElseThrow(PersonNotFoundException::new);
+        setPersonsAbilitiesVisibility(person, visibility);
+        return personMapper.convertToOutputDto(person);
     }
 
     @Override
     @Transactional(readOnly = true)
     public PersonDto findByPassportNumber(String passportNumber, Boolean visibility) {
-        return personMapper.convertToOutputDto(
-                personRepository.findByPassportNumber(passportNumber, visibility)
-                        .orElseThrow(PersonNotFoundException::new)
-        );
+        Person person = personRepository.findByPassportNumber(passportNumber, visibility)
+                .orElseThrow(PersonNotFoundException::new);
+        setPersonsAbilitiesVisibility(person, visibility);
+        return personMapper.convertToOutputDto(person);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<PersonDto> findAllPersons(Boolean visibility, String filterRegion, Pageable pageable) {
-        return personRepository.findAllPersonsWithPaginationByVisibility(visibility, filterRegion, pageable)
-                .stream()
+        List<Person> persons = personRepository.findAllPersonsWithPaginationByVisibility(visibility, filterRegion, pageable);
+        persons.forEach(person -> setPersonsAbilitiesVisibility(person, visibility));
+        return persons.stream()
                 .map(personMapper::convertToOutputDto)
                 .collect(Collectors.toList());
     }
@@ -63,7 +60,6 @@ public class PersonServiceImpl implements IPersonService {
     @Override
     @Transactional
     public Long save(PersonCreateInputDto personCreateInputDto) {
-        if (isNull(personCreateInputDto)) throw new PersonNotFoundException();
         return personRepository
                 .save(personMapper.convertFromCreateDto(personCreateInputDto))
                 .getId();
@@ -72,7 +68,6 @@ public class PersonServiceImpl implements IPersonService {
     @Override
     @Transactional
     public List<Long> saveAll(List<PersonCreateInputDto> personCreateInputDtos) {
-        if (personCreateInputDtos.isEmpty()) throw new PersonNotFoundException();
         return personRepository
                 .saveAll(personCreateInputDtos
                         .stream()
@@ -86,7 +81,6 @@ public class PersonServiceImpl implements IPersonService {
     @Override
     @Transactional
     public Long update(PersonDto personDto) {
-        if (isNull(personDto)) throw new PersonNotFoundException();
         return personRepository
                 .save(personMapper.convertFromUpdateDto(personDto))
                 .getId();
@@ -95,7 +89,6 @@ public class PersonServiceImpl implements IPersonService {
     @Override
     @Transactional
     public List<Long> updateAll(List<PersonDto> personDtos) {
-        if (personDtos.isEmpty()) throw new PersonNotFoundException();
         return personRepository
                 .saveAll(personDtos
                         .stream()
@@ -109,29 +102,26 @@ public class PersonServiceImpl implements IPersonService {
     @Override
     @Transactional(readOnly = true)
     public boolean isValidPassportForPerson(String personFullName, String passportNumber, Boolean visibility) {
-        if (StringUtils.isBlank(personFullName) || StringUtils.isBlank(passportNumber))
-            throw new RuntimeException();
-
         Optional<Person> optionalPerson = personRepository.findByPassportNumber(passportNumber, visibility);
         if (optionalPerson.isEmpty()) return false;
         Person person = optionalPerson.get();
 
         return requireNonNull(person.getLastName()).concat(" ")
                 .concat(requireNonNull(person.getFirstName()))
-                .concat(
-                        nonNull(person.getPatronymic()) ?
-                                " ".concat(person.getPatronymic()) :
-                                "")
+                .concat(nonNull(person.getPatronymic())
+                        ? " ".concat(person.getPatronymic())
+                        : "")
                 .equals(personFullName);
     }
 
     @Override
     @Transactional
-    public void setPersonsVisibility(Boolean visibility, List<Long> personsId) {
-        personRepository.setVisibilityToDocuments(visibility, personsId);
-        documentRepository.setVisibilityToDocumentsByPersonsId(visibility, personsId);
-        contactRepository.setVisibilityToContactsByPersonsId(visibility, personsId);
-        addressRepository.setVisibilityToAddressesByPersonsId(visibility, personsId);
+    public void setPersonsVisibility(Boolean visibility, Set<Long> personsId) {
+        List<Person> persons = personRepository.findAllById(personsId);
+        setVisibility(new HashSet<>(persons), visibility);
+        persons.forEach(p -> p.setVisibility(visibility));
+        persons.forEach(p -> setPersonsAbilitiesVisibility(p, visibility));
+        personRepository.saveAll(persons);
     }
 
     @Override

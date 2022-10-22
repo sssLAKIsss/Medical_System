@@ -51,8 +51,8 @@ public class DocumentServiceImpl implements IDocumentService {
     @Transactional
     public List<DocumentDto> createListOfDocuments(List<DocumentCreateInputDto> documents) {
         return documentRepository.saveAll(
-                        documents.stream().map(documentMapper::convertFromCreateDto).collect(Collectors.toList())
-                )
+                        documents.stream()
+                                .map(documentMapper::convertFromCreateDto).collect(Collectors.toList()))
                 .stream()
                 .map(documentMapper::convertToOutputDto)
                 .collect(Collectors.toList());

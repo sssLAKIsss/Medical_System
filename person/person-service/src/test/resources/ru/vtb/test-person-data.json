@@ -1,0 +1,48 @@
+{
+  "visibility": true,
+  "version": 0,
+  "lastModifiedDate": "2022-05-30T20:04:34.964271",
+  "dateTimeCreation": "2022-05-30T20:04:34.964271",
+  "id": 3,
+  "lastName": "Юрий",
+  "firstName": "Юрьевич",
+  "patronymic": "Юрий",
+  "documents": [
+    {
+      "visibility": true,
+      "version": 0,
+      "lastModifiedDate": "2022-05-30T20:04:34.968265",
+      "dateTimeCreation": "2022-05-30T20:04:34.968265",
+      "id": 3,
+      "type": "PASSPORT",
+      "number": "4545001003"
+    }
+  ],
+  "addresses": [
+    {
+      "visibility": true,
+      "version": 0,
+      "lastModifiedDate": "2022-05-30T20:04:34.965267",
+      "dateTimeCreation": "2022-05-30T20:04:34.965267",
+      "id": 3,
+      "type": "REGISTRATION",
+      "country": "Russia",
+      "region": "Республика Башкортостан",
+      "city": "Стерлитамак",
+      "street": "Гоголя",
+      "home": 106,
+      "flat": 1
+    }
+  ],
+  "contacts": [
+    {
+      "visibility": true,
+      "version": 0,
+      "lastModifiedDate": "2022-05-30T20:04:34.967266",
+      "dateTimeCreation": "2022-05-30T20:04:34.967266",
+      "id": 3,
+      "type": "HOME",
+      "phoneNumber": "+79999999993"
+    }
+  ]
+}

@@ -24,6 +24,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -68,4 +69,17 @@ public class Person extends BaseDateVersionEntity {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "person_id")
     private Set<Contact> contacts;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return id.equals(person.id) && lastName.equals(person.lastName) && firstName.equals(person.firstName) && Objects.equals(patronymic, person.patronymic);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, lastName, firstName, patronymic);
+    }
 }
