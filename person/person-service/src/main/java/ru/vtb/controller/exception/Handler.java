@@ -51,8 +51,6 @@ public class Handler extends ResponseEntityExceptionHandler {
                 request);
     }
 
-
-    //TODO допечь номарльную упаковку
     @ExceptionHandler(value = {DataIntegrityViolationException.class})
     public ResponseEntity<Object> handleDataIntegrityViolationException(
             DataIntegrityViolationException ex,
@@ -62,9 +60,6 @@ public class Handler extends ResponseEntityExceptionHandler {
         if (cause instanceof PropertyValueException) {
             return handlePropertyValueException((PropertyValueException) cause, request);
         }
-//        if (cause instanceof ConstraintViolationException) {
-//            return handleConstraintViolationException((ConstraintViolationException) ex, request);
-//        }
         log.error(ex.getMessage(), ex);
         return handleOtherException(ex, request);
     }
@@ -89,7 +84,7 @@ public class Handler extends ResponseEntityExceptionHandler {
     }
 
     @NonNull
-//    @Override
+    @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(@NonNull MethodArgumentNotValidException ex,
                                                                   @NonNull HttpHeaders headers,
                                                                   @NonNull HttpStatus status,
@@ -129,7 +124,12 @@ public class Handler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleOtherException(Exception ex, WebRequest request) {
         log.error(ex.getCause().getMessage(), ex);
 
-        return handleExceptionInternal(ex, null, getHeadersFromRequest(request), HttpStatus.INTERNAL_SERVER_ERROR, request);
+        return handleExceptionInternal(
+                ex,
+                null,
+                getHeadersFromRequest(request),
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                request);
     }
 
     private HttpHeaders getHeadersFromRequest(WebRequest request) {
