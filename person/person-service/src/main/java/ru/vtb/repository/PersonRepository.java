@@ -27,7 +27,6 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     Optional<Person> findByPassportNumber(@Param("passportNumber") String passportNumber,
                                           @Param("visibility") Boolean visibility);
 
-    //TODO сделать пагинацию не в памяти
     @Query(value = "select p from Person as p " +
             "left join p.addresses as a " +
             "where (p.visibility= :visibility and :visibility is not null or :visibility is null)  " +

@@ -9,8 +9,10 @@ import ru.vtb.model.Person;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.context.jdbc.Sql.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 @Sql(scripts = "sql/init-person-data-to-db.sql", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(scripts = "sql/drop-person-data-in-db.sql", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -20,13 +22,13 @@ PersonRepositoryTest extends IntegrationAbstractTest {
     protected PersonRepository personRepository;
 
     @Test
-    void findByIdAndVisibility_falseVisibility() {
+    void findByIdAndVisibility_trueVisibility() {
         Person person = personRepository.findByIdAndVisibility(1L, true).orElse(null);
         assertNull(person);
     }
 
     @Test
-    void findByIdAndVisibility() {
+    void findByIdAndVisibility_falseVisibility() {
         Person person = personRepository.findByIdAndVisibility(1L, false).orElse(null);
         assertNotNull(person);
     }
