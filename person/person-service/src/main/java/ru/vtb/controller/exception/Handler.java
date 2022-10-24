@@ -4,6 +4,7 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.PropertyValueException;
 import org.hibernate.internal.util.StringHelper;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import ru.vtb.message.Messages;
 import javax.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import static ru.vtb.message.MessagesKeys.ERROR_BAD_REQUEST;
 import static ru.vtb.message.MessagesKeys.ERROR_INTERNAL_SERVER;
@@ -95,7 +97,11 @@ public class Handler extends ResponseEntityExceptionHandler {
         ApiError error = ApiError.builder()
                 .error(Messages.getMessageForLocale(ERROR_BAD_REQUEST, locale))
                 .message(Messages.getMessageForLocale(MSG_VALIDATION_ERROR, locale))
-                .rawMessage(ex.getMessage())
+                .rawMessage(
+                        ex.getBindingResult().getFieldErrors()
+                                .stream()
+                                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                                .collect(Collectors.joining(", ")))
                 .status(HttpStatus.BAD_REQUEST.value())
                 .timestamp(LocalDateTime.now())
                 .build();
@@ -132,14 +138,6 @@ public class Handler extends ResponseEntityExceptionHandler {
                 request);
     }
 
-    private HttpHeaders getHeadersFromRequest(WebRequest request) {
-        HttpHeaders headers = new HttpHeaders();
-        request.getHeaderNames().forEachRemaining(
-                headerName -> headers.addIfAbsent(headerName, request.getHeader(headerName))
-        );
-        return headers;
-    }
-
     @NonNull
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(
@@ -163,5 +161,13 @@ public class Handler extends ResponseEntityExceptionHandler {
                 .timestamp(LocalDateTime.now())
                 .build();
         return new ResponseEntity<>(error, headers, status);
+    }
+
+    private HttpHeaders getHeadersFromRequest(WebRequest request) {
+        HttpHeaders headers = new HttpHeaders();
+        request.getHeaderNames().forEachRemaining(
+                headerName -> headers.addIfAbsent(headerName, request.getHeader(headerName))
+        );
+        return headers;
     }
 }
