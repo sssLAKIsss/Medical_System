@@ -62,4 +62,12 @@ class ContactRepositoryTest extends IntegrationAbstractTest {
         assertThat(contactRepository.findContactById(1L, false)).isNotNull();
         assertFalse(contactRepository.findContactById(1L, false).orElseThrow().isVisibility());
     }
+
+    @Test
+    void findAllContactsByPersonIdAndVisibility() {
+        List<Contact> contacts = contactRepository.findAllContactsByPersonIdAndVisibility(1L, true);
+        assertNotNull(contacts);
+        assertFalse(contacts.isEmpty());
+        assertThat(contacts).hasSize(1);
+    }
 }

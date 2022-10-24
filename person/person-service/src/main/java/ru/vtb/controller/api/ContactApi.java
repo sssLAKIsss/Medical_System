@@ -24,6 +24,7 @@ import ru.vtb.dto.getOrUpdate.ContactDto;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @Tag(
         name = "contact-controller",
@@ -66,12 +67,10 @@ public interface ContactApi {
             description = "Позволяет получить список контактов по списку уникальных интентификаторов пользователей"
     )
     @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200",
-                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = ContactDto.class))))
+            @ApiResponse(responseCode = "200")
     })
     @GetMapping("/contacts/personsId")
-    ResponseEntity<List<ContactDto>> findContactsByPersonsId(
+    ResponseEntity<Map<Long, List<ContactDto>>> findContactsByPersonsId(
             @RequestParam(required = true) List<Long> personsId,
             @RequestParam(required = false) Boolean visibility);
 

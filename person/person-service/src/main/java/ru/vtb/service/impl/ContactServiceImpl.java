@@ -12,6 +12,7 @@ import ru.vtb.repository.ContactRepository;
 import ru.vtb.service.IContactService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,11 +41,17 @@ public class ContactServiceImpl implements IContactService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ContactDto> findAllContactsByPersonsId(List<Long> personsId, Boolean visibility) {
-        return contactRepository.findAllContactsByPersonIdIsInAndVisibilityIsLike(personsId, visibility)
-                .stream()
-                .map(contactMapper::convertToOutputDto)
-                .collect(Collectors.toList());
+    public Map<Long, List<ContactDto>> findAllContactsByPersonsId(List<Long> personsId, Boolean visibility) {
+        return personsId.stream()
+                .map(personId ->
+                        Map.entry(
+                                personId,
+                                contactRepository.findAllContactsByPersonIdAndVisibility(personId, visibility)
+                                        .stream()
+                                        .map(contactMapper::convertToOutputDto)
+                                        .collect(Collectors.toList())
+                        ))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     @Override

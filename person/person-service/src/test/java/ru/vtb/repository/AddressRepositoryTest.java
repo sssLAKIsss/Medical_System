@@ -60,4 +60,12 @@ class AddressRepositoryTest extends IntegrationAbstractTest {
         assertNotNull(addressRepository.findById(1L));
         assertFalse(addressRepository.findById(1L).orElseThrow().isVisibility());
     }
+
+    @Test
+    void findAllByPersonIdAndVisibility() {
+        List<Address> addresses = addressRepository.findAllAddressesByPersonIdAndVisibility(1L, true);
+        assertNotNull(addresses);
+        assertFalse(addresses.isEmpty());
+        assertThat(addresses).hasSize(1);
+    }
 }

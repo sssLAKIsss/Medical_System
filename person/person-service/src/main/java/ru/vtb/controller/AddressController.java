@@ -10,6 +10,7 @@ import ru.vtb.dto.getOrUpdate.AddressDto;
 import ru.vtb.service.IAddressService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,7 +28,7 @@ public class AddressController implements AddressApi {
     }
 
     @Override
-    public ResponseEntity<List<AddressDto>> findAllAddressesByPersonsId(Boolean visibility, List<Long> personsId) {
+    public ResponseEntity<Map<Long, List<AddressDto>>> findAllAddressesByPersonsId(Boolean visibility, List<Long> personsId) {
         return ResponseEntity.ok(addressService.findAllAddressesByPersonsId(visibility, personsId));
     }
 

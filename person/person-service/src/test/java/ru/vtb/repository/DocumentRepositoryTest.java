@@ -7,6 +7,7 @@ import ru.vtb.IntegrationAbstractTest;
 import ru.vtb.model.Document;
 import ru.vtb.model.superclass.BaseDateVersionEntity;
 
+import javax.print.Doc;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -63,5 +64,13 @@ class DocumentRepositoryTest extends IntegrationAbstractTest {
     void setVisibilityToDocuments() {
         documentRepository.setVisibilityToDocuments(false, List.of(1L));
         assertFalse(documentRepository.findDocumentById(1L, null).orElseThrow().isVisibility());
+    }
+
+    @Test
+    void findAllDocumentsByPersonIdAAndVisibility() {
+        List<Document> documents = documentRepository.findAllDocumentsByPersonIdAAndVisibility(1L, null);
+        assertNotNull(documents);
+        assertFalse(documents.isEmpty());
+        assertThat(documents).hasSize(2);
     }
 }

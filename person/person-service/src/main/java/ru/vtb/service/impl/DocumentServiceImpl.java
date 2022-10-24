@@ -12,6 +12,7 @@ import ru.vtb.repository.DocumentRepository;
 import ru.vtb.service.IDocumentService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,11 +41,17 @@ public class DocumentServiceImpl implements IDocumentService {
 
     @Override
     @Transactional
-    public List<DocumentDto> findAllDocumentsByPersonsId(List<Long> personsId, Boolean visibility) {
-        return documentRepository.findAllDocumentsByPersonsId(personsId, visibility)
-                .stream()
-                .map(documentMapper::convertToOutputDto)
-                .collect(Collectors.toList());
+    public Map<Long, List<DocumentDto>> findAllDocumentsByPersonId(List<Long> personsId, Boolean visibility) {
+        return personsId.stream()
+                .map(personId ->
+                        Map.entry(
+                                personId,
+                                documentRepository.findAllDocumentsByPersonIdAAndVisibility(personId, visibility)
+                                        .stream()
+                                        .map(documentMapper::convertToOutputDto)
+                                        .collect(Collectors.toList())
+                        ))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     @Override

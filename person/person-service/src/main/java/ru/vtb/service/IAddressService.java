@@ -4,11 +4,12 @@ import ru.vtb.dto.createInput.AddressCreateInputDto;
 import ru.vtb.dto.getOrUpdate.AddressDto;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IAddressService {
     AddressDto findById(Long id);
     List<AddressDto> findAllAddresses(Boolean visibility);
-    List<AddressDto> findAllAddressesByPersonsId(Boolean visibility, List<Long> personsId);
+    Map<Long, List<AddressDto>> findAllAddressesByPersonsId(Boolean visibility, List<Long> personsId);
 
     List<AddressDto> createListOfAddresses(List<AddressCreateInputDto> addresses);
     List<AddressDto> updateListOfAddresses(List<AddressDto> addresses);

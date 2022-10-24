@@ -10,6 +10,7 @@ import ru.vtb.dto.getOrUpdate.DocumentDto;
 import ru.vtb.service.IDocumentService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,8 +28,8 @@ public class DocumentController implements DocumentApi {
     }
 
     @Override
-    public ResponseEntity<List<DocumentDto>> findDocumentsByPersonsId(List<Long> personsId, Boolean visibility) {
-        return ResponseEntity.ok(documentService.findAllDocumentsByPersonsId(personsId, visibility));
+    public ResponseEntity<Map<Long, List<DocumentDto>>> findDocumentsByPersonsId(List<Long> personsId, Boolean visibility) {
+        return ResponseEntity.ok(documentService.findAllDocumentsByPersonId(personsId, visibility));
     }
 
     @Override

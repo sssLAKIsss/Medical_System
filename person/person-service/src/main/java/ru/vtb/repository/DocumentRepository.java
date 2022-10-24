@@ -17,18 +17,26 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
             "where d.id = :id and " +
             "(d.visibility = :visibility and :visibility is not null or " +
             ":visibility is null) ")
-    Optional<Document> findDocumentById(@Param("id") Long id, @Param("visibility") Boolean visibility);
+    Optional<Document> findDocumentById(@Param("id") Long id,
+                                        @Param("visibility") Boolean visibility);
 
     @Query(value = "from Document d " +
             "where d.number = :number and " +
             "(d.visibility = :visibility and :visibility is not null or " +
             ":visibility is null) ")
-    Optional<Document> findDocumentByNumber(@Param("number") String number, @Param("visibility") Boolean visibility);
+    Optional<Document> findDocumentByNumber(@Param("number") String number,
+                                            @Param("visibility") Boolean visibility);
 
     @Query(value = "from Document d " +
             "where d.visibility = :visibility and :visibility is not null or " +
             ":visibility is null ")
     List<Document> findAllDocumentsByVisibility(@Param("visibility") Boolean visibility);
+
+    @Query(value = "from Document d " +
+            "where d.personId = :personId and" +
+            "(d.visibility = :visibility and :visibility is not null or :visibility is null) ")
+    List<Document> findAllDocumentsByPersonIdAAndVisibility(@Param("personId") Long personId,
+                                                            @Param("visibility") Boolean visibility);
 
     @Query(value = "from Document d " +
             "where d.personId in :personsId and" +
@@ -40,5 +48,6 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
     @Transactional
     @Modifying
     @Query(value = "update Document d set d.visibility = :visibility where d.id in :documentsId")
-    void setVisibilityToDocuments(@Param("visibility") Boolean visibility, @Param("documentsId") List<Long> documentsId);
+    void setVisibilityToDocuments(@Param("visibility") Boolean visibility,
+                                  @Param("documentsId") List<Long> documentsId);
 }

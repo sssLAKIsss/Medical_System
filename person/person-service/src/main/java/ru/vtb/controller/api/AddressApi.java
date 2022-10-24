@@ -24,6 +24,7 @@ import ru.vtb.dto.getOrUpdate.AddressDto;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @Tag(
         name = "address-controller",
@@ -64,13 +65,10 @@ public interface AddressApi {
             description = "Позволяет получить все адреса конкретных пользователей в зависимости от указанного уровня видимости"
     )
     @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200",
-                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = AddressDto.class))))
+            @ApiResponse(responseCode = "200")
     })
-    ResponseEntity<List<AddressDto>> findAllAddressesByPersonsId(
-            @RequestParam(required = false) Boolean visibility,
-            @RequestParam(required = true) List<Long> personsId);
+    ResponseEntity<Map<Long, List<AddressDto>>> findAllAddressesByPersonsId(@RequestParam(required = false) Boolean visibility,
+                                                                            @RequestParam(required = true) List<Long> personsId);
 
     @Operation(
             summary = "Добавить список адресов в базу",

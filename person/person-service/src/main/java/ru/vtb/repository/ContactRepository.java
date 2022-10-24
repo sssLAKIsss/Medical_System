@@ -20,6 +20,12 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
     Optional<Contact> findContactById(@Param("id") Long id, @Param("visibility") Boolean visibility);
 
     @Query(value = "from Contact c " +
+            "where c.personId = :personId and" +
+            "(c.visibility = :visibility and :visibility is not null or :visibility is null) ")
+    List<Contact> findAllContactsByPersonIdAndVisibility(@Param("personId") Long personId,
+                                                         @Param("visibility") Boolean visibility);
+
+    @Query(value = "from Contact c " +
             "where c.visibility = :visibility and :visibility is not null or " +
             ":visibility is null ")
     List<Contact> findAllContactsByVisibility(@Param("visibility") Boolean visibility);

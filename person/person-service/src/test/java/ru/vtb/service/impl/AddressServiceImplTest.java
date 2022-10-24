@@ -1,5 +1,6 @@
 package ru.vtb.service.impl;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -11,6 +12,7 @@ import ru.vtb.repository.AddressRepository;
 import ru.vtb.AbstractTest;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -64,15 +66,16 @@ class AddressServiceImplTest extends AbstractTest {
     @Test
     void findAllAddressesByPersonsId() {
         //when
-        when(addressRepository.findAllAddressesByPersonsIdIsInAndVisibilityIsLike(anyList(), anyBoolean()))
+        when(addressRepository.findAllAddressesByPersonIdAndVisibility(anyLong(), anyBoolean()))
                 .thenReturn(List.of(Address.builder().build()));
         //then
-        List<AddressDto> addressDtos = addressService.findAllAddressesByPersonsId(true, List.of(1L));
+        Map<Long, List<AddressDto>> resultMap = addressService.findAllAddressesByPersonsId(null, List.of(1L, 2L, 3L));
 
-        assertNotNull(addressDtos);
-        assertFalse(addressDtos.isEmpty());
-        verify(addressRepository, times(1))
-                .findAllAddressesByPersonsIdIsInAndVisibilityIsLike(anyList(), anyBoolean());
+        assertNotNull(resultMap);
+        assertFalse(resultMap.isEmpty());
+        Assertions.assertThat(resultMap).hasSize(3);
+        verify(addressRepository, times(3))
+                .findAllAddressesByPersonIdAndVisibility(anyLong(), any());
     }
 
     @Test

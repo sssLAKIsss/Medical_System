@@ -10,11 +10,14 @@ import ru.vtb.repository.ContactRepository;
 import ru.vtb.AbstractTest;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -57,15 +60,16 @@ class ContactServiceImplTest extends AbstractTest {
     @Test
     void findAllContactsByPersonsId() {
         //when
-        when(contactRepository.findAllContactsByPersonIdIsInAndVisibilityIsLike(any(), any()))
+        when(contactRepository.findAllContactsByPersonIdAndVisibility(anyLong(), any()))
                 .thenReturn(List.of(Contact.builder().build()));
         //then
-        List<ContactDto> contactDtos = contactService.findAllContactsByPersonsId(List.of(1L), true);
+        Map<Long, List<ContactDto>> resultMap = contactService.findAllContactsByPersonsId(List.of(1L, 2L, 3L), true);
 
-        assertNotNull(contactDtos);
-        assertFalse(contactDtos.isEmpty());
-        verify(contactRepository, times(1))
-                .findAllContactsByPersonIdIsInAndVisibilityIsLike(any(), any());
+        assertNotNull(resultMap);
+        assertFalse(resultMap.isEmpty());
+        assertEquals(3, resultMap.size());
+        verify(contactRepository, times(3))
+                .findAllContactsByPersonIdAndVisibility(any(), any());
     }
 
     @Test

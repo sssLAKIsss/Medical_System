@@ -24,6 +24,7 @@ import ru.vtb.dto.getOrUpdate.DocumentDto;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @Tag(
         name = "document-controller",
@@ -66,12 +67,10 @@ public interface DocumentApi {
             description = "Позволяет получить список документов по списку уникальных интентификаторов пользователей"
     )
     @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200",
-                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = DocumentDto.class))))
+            @ApiResponse(responseCode = "200")
     })
     @GetMapping("/documents/personsId")
-    ResponseEntity<List<DocumentDto>> findDocumentsByPersonsId(
+    ResponseEntity<Map<Long, List<DocumentDto>>> findDocumentsByPersonsId(
             @RequestParam(required = true) List<Long> personsId,
             @RequestParam(required = false) Boolean visibility);
 

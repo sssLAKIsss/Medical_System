@@ -10,6 +10,7 @@ import ru.vtb.dto.getOrUpdate.ContactDto;
 import ru.vtb.service.IContactService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,7 +28,7 @@ public class ContactController implements ContactApi {
     }
 
     @Override
-    public ResponseEntity<List<ContactDto>> findContactsByPersonsId(List<Long> personsId, Boolean visibility) {
+    public ResponseEntity<Map<Long, List<ContactDto>>> findContactsByPersonsId(List<Long> personsId, Boolean visibility) {
         return ResponseEntity.ok(contactService.findAllContactsByPersonsId(personsId, visibility));
     }
 

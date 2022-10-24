@@ -1,6 +1,5 @@
 package ru.vtb.controller.api.custom;
 
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -20,18 +19,18 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
         @ApiResponse(responseCode = "400", description = "Bad request",
             content = @Content(
                     mediaType = "application/json",
-                    array = @ArraySchema(schema = @Schema(implementation = ApiError.class))
-            )),
+                    schema = @Schema(implementation = ApiError.class))
+            ),
         @ApiResponse(responseCode = "404", description = "Not found",
             content = @Content(
                     mediaType = "application/json",
-                    array = @ArraySchema(schema = @Schema(implementation = ApiError.class))
-            )),
+                    schema = @Schema(implementation = ApiError.class))
+            ),
         @ApiResponse(responseCode = "500", description = "Internal server error",
             content = @Content(
                     mediaType = "application/json",
-                    array = @ArraySchema(schema = @Schema(implementation = ApiError.class))
-            ))
+                    schema = @Schema(implementation = ApiError.class))
+            )
 })
 public @interface ApiParams {
 }

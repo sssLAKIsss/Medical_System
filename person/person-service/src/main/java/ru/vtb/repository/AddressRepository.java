@@ -19,6 +19,13 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
 
     @Query(value = "from Address a " +
             "join a.persons p where " +
+            "p.id = :personId and  " +
+            "(a.visibility = :visibility and :visibility is not null or :visibility is null) ")
+    List<Address> findAllAddressesByPersonIdAndVisibility(@Param("personId") Long personId,
+                                                          @Param("visibility") Boolean visibility);
+
+    @Query(value = "from Address a " +
+            "join a.persons p where " +
             "p.id in :personsId and  " +
             "(a.visibility = :visibility and :visibility is not null or :visibility is null) ")
     List<Address> findAllAddressesByPersonsIdIsInAndVisibilityIsLike(@Param("personsId") List<Long> personsId,

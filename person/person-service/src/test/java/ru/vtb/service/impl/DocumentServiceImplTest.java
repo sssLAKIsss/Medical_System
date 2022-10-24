@@ -10,6 +10,7 @@ import ru.vtb.repository.DocumentRepository;
 import ru.vtb.AbstractTest;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -56,15 +57,15 @@ class DocumentServiceImplTest extends AbstractTest {
     @Test
     void findAllDocumentsByPersonsId() {
         //when
-        when(documentRepository.findAllDocumentsByPersonsId(any(), any()))
+        when(documentRepository.findAllDocumentsByPersonIdAAndVisibility(any(), any()))
                 .thenReturn(List.of(Document.builder().build()));
         //then
-        List<DocumentDto> documentDtos = documentService.findAllDocumentsByPersonsId(List.of(1L), true);
+        Map<Long, List<DocumentDto>> resultMap = documentService.findAllDocumentsByPersonId(List.of(1L, 2L, 3L), true);
 
-        assertNotNull(documentDtos);
-        assertFalse(documentDtos.isEmpty());
-        verify(documentRepository, times(1))
-                .findAllDocumentsByPersonsId(any(), any());
+        assertNotNull(resultMap);
+        assertFalse(resultMap.isEmpty());
+        verify(documentRepository, times(3))
+                .findAllDocumentsByPersonIdAAndVisibility(any(), any());
     }
 
     @Test
