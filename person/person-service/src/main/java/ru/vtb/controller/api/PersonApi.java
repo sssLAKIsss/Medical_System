@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Set;
 
 @Tag(
-        name = "persons-controller",
+        name = "Person API",
         description = "Позволяет получить, создавать и обновлять пользователя/список пользователей"
 )
 @Validated

@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 @Tag(
-        name = "address-controller",
+        name = "Address API",
         description = "Позволяет получить, создавать и обновлять адреса пользователя/список адресов"
 )
 @Validated

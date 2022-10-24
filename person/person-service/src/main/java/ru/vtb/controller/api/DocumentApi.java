@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 @Tag(
-        name = "document-controller",
+        name = "Document API",
         description = "Позволяет получить, создавать и обновлять доукмент/список документов"
 )
 @Validated
