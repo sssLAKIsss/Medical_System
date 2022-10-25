@@ -128,7 +128,7 @@ public class Handler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<Object> handleOtherException(Exception ex, WebRequest request) {
-        log.error(ex.getCause().getMessage(), ex);
+        log.error(ex.getMessage(), ex);
 
         return handleExceptionInternal(
                 ex,
