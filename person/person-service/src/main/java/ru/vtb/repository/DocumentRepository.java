@@ -13,6 +13,9 @@ import java.util.Optional;
 
 @Repository
 public interface DocumentRepository extends JpaRepository<Document, Long> {
+
+    boolean existsDocumentByNumber(String number);
+
     @Query(value = "from Document d " +
             "where d.id = :id and " +
             "(d.visibility = :visibility and :visibility is not null or " +

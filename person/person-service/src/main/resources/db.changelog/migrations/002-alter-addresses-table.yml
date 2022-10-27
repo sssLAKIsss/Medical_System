@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: modify-addresses-table
+      failOnError: true
+      author: Andrey
+      changes:
+        - modifyDataType:
+            columnName: home
+            newDataType: bigInt
+            tableName: addresses
+        - modifyDataType:
+            columnName: flat
+            newDataType: bigInt
+            tableName: addresses
+        - dropNotNullConstraint:
+            columnName:  flat
+            tableName:  addresses

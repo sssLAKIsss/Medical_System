@@ -12,6 +12,16 @@ import java.util.List;
 
 @Repository
 public interface AddressRepository extends JpaRepository<Address, Long> {
+
+    boolean existsAddressByCountryAndCityAndRegionAndStreetAndHomeAndFlat(
+            String country,
+            String city,
+            String region,
+            String street,
+            Long home,
+            Long flat
+    );
+
     @Query(value = "from Address a " +
             "where a.visibility = :visibility and :visibility is not null or " +
             ":visibility is null ")

@@ -74,7 +74,7 @@ class DocumentServiceImplTest extends AbstractTest {
         when(documentRepository.saveAll(any()))
                 .thenReturn(List.of(Document.builder().build()));
         //then
-        List<DocumentDto> documentDtos = documentService.createListOfDocuments(List.of(DocumentCreateInputDto.builder().build()));
+        List<Long> documentDtos = documentService.createListOfDocuments(List.of(DocumentCreateInputDto.builder().build()));
 
         assertNotNull(documentDtos);
         assertFalse(documentDtos.isEmpty());
@@ -88,7 +88,7 @@ class DocumentServiceImplTest extends AbstractTest {
         when(documentRepository.saveAll(any()))
                 .thenReturn(List.of(Document.builder().build()));
         //then
-        List<DocumentDto> documentDtos = documentService.updateListOfDocuments(List.of(DocumentDto.builder().build()));
+        List<Long> documentDtos = documentService.updateListOfDocuments(List.of(DocumentDto.builder().build()));
 
         assertNotNull(documentDtos);
         assertFalse(documentDtos.isEmpty());

@@ -33,12 +33,12 @@ public class ContactController implements ContactApi {
     }
 
     @Override
-    public ResponseEntity<List<ContactDto>> createContacts(List<ContactCreateInputDto> contact) {
+    public ResponseEntity<List<Long>> createContacts(List<ContactCreateInputDto> contact) {
         return ResponseEntity.ok(contactService.createListOfContacts(contact));
     }
 
     @Override
-    public ResponseEntity<List<ContactDto>> updateContacts(List<ContactDto> contacts) {
+    public ResponseEntity<List<Long>> updateContacts(List<ContactDto> contacts) {
         return ResponseEntity.ok(contactService.updateListOfContacts(contacts));
     }
 

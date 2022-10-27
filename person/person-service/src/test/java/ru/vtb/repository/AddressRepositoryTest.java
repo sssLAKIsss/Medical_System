@@ -68,4 +68,12 @@ class AddressRepositoryTest extends IntegrationAbstractTest {
         assertFalse(addresses.isEmpty());
         assertThat(addresses).hasSize(1);
     }
+
+    @Test
+    void existsAddressByCountryAndCityAndRegionAndStreetAndHomeAndFlatExists() {
+        assertTrue(addressRepository.existsAddressByCountryAndCityAndRegionAndStreetAndHomeAndFlat(
+                "Russia", "UFA", "RB", "GOGOl9", 106L, null));
+        assertFalse(addressRepository.existsAddressByCountryAndCityAndRegionAndStreetAndHomeAndFlat(
+                "Russia", "UFA", "RB", "GOGOl9", 106L, 1L));
+    }
 }

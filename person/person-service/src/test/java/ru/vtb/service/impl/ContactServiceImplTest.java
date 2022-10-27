@@ -78,7 +78,7 @@ class ContactServiceImplTest extends AbstractTest {
         when(contactRepository.saveAll(any()))
                 .thenReturn(List.of(Contact.builder().build()));
         //then
-        List<ContactDto> contactDtos = contactService.createListOfContacts(List.of(ContactCreateInputDto.builder().build()));
+        List<Long> contactDtos = contactService.createListOfContacts(List.of(ContactCreateInputDto.builder().build()));
 
         assertNotNull(contactDtos);
         assertFalse(contactDtos.isEmpty());
@@ -92,7 +92,7 @@ class ContactServiceImplTest extends AbstractTest {
         when(contactRepository.saveAll(any()))
                 .thenReturn(List.of(Contact.builder().build()));
         //then
-        List<ContactDto> contactDtos = contactService.updateListOfContacts(List.of(ContactDto.builder().build()));
+        List<Long> contactDtos = contactService.updateListOfContacts(List.of(ContactDto.builder().build()));
 
         assertNotNull(contactDtos);
         assertFalse(contactDtos.isEmpty());

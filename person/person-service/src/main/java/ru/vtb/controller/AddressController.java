@@ -33,12 +33,12 @@ public class AddressController implements AddressApi {
     }
 
     @Override
-    public ResponseEntity<List<AddressDto>> saveAddresses(List<AddressCreateInputDto> addresses) {
+    public ResponseEntity<List<Long>> saveAddresses(List<AddressCreateInputDto> addresses) {
         return ResponseEntity.ok(addressService.createListOfAddresses(addresses));
     }
 
     @Override
-    public ResponseEntity<List<AddressDto>> updateAddresses(List<AddressDto> addresses) {
+    public ResponseEntity<List<Long>> updateAddresses(List<AddressDto> addresses) {
         return ResponseEntity.ok(addressService.updateListOfAddresses(addresses));
     }
 

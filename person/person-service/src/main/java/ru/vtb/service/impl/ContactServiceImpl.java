@@ -56,25 +56,26 @@ public class ContactServiceImpl implements IContactService {
 
     @Override
     @Transactional
-    public List<ContactDto> createListOfContacts(List<ContactCreateInputDto> contacts) {
+    public List<Long> createListOfContacts(List<ContactCreateInputDto> contacts) {
         return contactRepository.saveAll(
                 contacts.stream()
                         .map(contactMapper::convertFromCreateDto)
+                        .filter(contact -> !contactRepository.existsContactByPhoneNumber(contact.getPhoneNumber()))
                         .collect(Collectors.toList()))
                 .stream()
-                .map(contactMapper::convertToOutputDto)
+                .map(Contact::getId)
                 .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public List<ContactDto> updateListOfContacts(List<ContactDto> contacts) {
+    public List<Long> updateListOfContacts(List<ContactDto> contacts) {
         return contactRepository.saveAll(
                         contacts.stream()
                                 .map(contactMapper::convertFromUpdateDto)
                                 .collect(Collectors.toList()))
                 .stream()
-                .map(contactMapper::convertToOutputDto)
+                .map(Contact::getId)
                 .collect(Collectors.toList());
     }
 

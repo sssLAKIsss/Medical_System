@@ -13,6 +13,9 @@ import java.util.Optional;
 
 @Repository
 public interface ContactRepository extends JpaRepository<Contact, Long> {
+
+    boolean existsContactByPhoneNumber(String phoneNumber);
+
     @Query(value = "from Contact c " +
             "where c.id = :id and " +
             "(c.visibility = :visibility and :visibility is not null or " +

@@ -56,23 +56,27 @@ public class DocumentServiceImpl implements IDocumentService {
 
     @Override
     @Transactional
-    public List<DocumentDto> createListOfDocuments(List<DocumentCreateInputDto> documents) {
+    public List<Long> createListOfDocuments(List<DocumentCreateInputDto> documents) {
         return documentRepository.saveAll(
                         documents.stream()
-                                .map(documentMapper::convertFromCreateDto).collect(Collectors.toList()))
+                                .map(documentMapper::convertFromCreateDto)
+                                .filter(document -> !documentRepository.existsDocumentByNumber(document.getNumber()))
+                                .collect(Collectors.toList()))
                 .stream()
-                .map(documentMapper::convertToOutputDto)
+                .map(Document::getId)
                 .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public List<DocumentDto> updateListOfDocuments(List<DocumentDto> documents) {
+    public List<Long> updateListOfDocuments(List<DocumentDto> documents) {
         return documentRepository.saveAll(
-                        documents.stream().map(documentMapper::convertFromUpdateDto).collect(Collectors.toList())
+                        documents.stream()
+                                .map(documentMapper::convertFromUpdateDto)
+                                .collect(Collectors.toList())
                 )
                 .stream()
-                .map(documentMapper::convertToOutputDto)
+                .map(Document::getId)
                 .collect(Collectors.toList());
     }
 

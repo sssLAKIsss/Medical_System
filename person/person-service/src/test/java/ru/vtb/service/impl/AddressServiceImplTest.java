@@ -84,7 +84,7 @@ class AddressServiceImplTest extends AbstractTest {
         when(addressRepository.saveAll(any()))
                 .thenReturn(List.of(Address.builder().build()));
         //then
-        List<AddressDto> addressDtos = addressService.createListOfAddresses(List.of(AddressCreateInputDto.builder().build()));
+        List<Long> addressDtos = addressService.createListOfAddresses(List.of(AddressCreateInputDto.builder().build()));
 
         assertNotNull(addressDtos);
         assertFalse(addressDtos.isEmpty());
@@ -98,7 +98,7 @@ class AddressServiceImplTest extends AbstractTest {
         when(addressRepository.saveAll(any()))
                 .thenReturn(List.of(Address.builder().build()));
         //then
-        List<AddressDto> addressDtos = addressService.updateListOfAddresses(List.of(AddressDto.builder().build()));
+        List<Long> addressDtos = addressService.updateListOfAddresses(List.of(AddressDto.builder().build()));
 
         assertNotNull(addressDtos);
         assertFalse(addressDtos.isEmpty());

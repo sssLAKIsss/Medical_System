@@ -13,6 +13,7 @@ import ru.vtb.service.IAddressService;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,25 +56,36 @@ public class AddressServiceImpl implements IAddressService {
 
     @Override
     @Transactional
-    public List<AddressDto> createListOfAddresses(List<AddressCreateInputDto> addresses) {
+    public List<Long> createListOfAddresses(List<AddressCreateInputDto> addresses) {
         return addressRepository.saveAll(
                         addresses.stream()
                                 .map(addressMapper::convertFromCreateDto)
+                                .filter(address -> addressRepository
+                                        .existsAddressByCountryAndCityAndRegionAndStreetAndHomeAndFlat(
+                                                address.getCountry(),
+                                                address.getCity(),
+                                                address.getRegion(),
+                                                address.getStreet(),
+                                                address.getHome(),
+                                                Objects.isNull(address.getFlat())
+                                                        ? null
+                                                        : address.getFlat()
+                                        ))
                                 .collect(Collectors.toList()))
                 .stream()
-                .map(addressMapper::convertToOutputDto)
+                .map(Address::getId)
                 .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public List<AddressDto> updateListOfAddresses(List<AddressDto> addresses) {
+    public List<Long> updateListOfAddresses(List<AddressDto> addresses) {
         return addressRepository.saveAll(
                         addresses.stream()
                                 .map(addressMapper::convertFromUpdateDto)
                                 .collect(Collectors.toList()))
                 .stream()
-                .map(addressMapper::convertToOutputDto)
+                .map(Address::getId)
                 .collect(Collectors.toList());
     }
 

@@ -77,10 +77,10 @@ public interface AddressApi {
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200",
-                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = AddressDto.class))))
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Long.class))))
     })
     @PostMapping("/addresses")
-    ResponseEntity<List<AddressDto>> saveAddresses(@Valid @RequestBody List<AddressCreateInputDto> addresses);
+    ResponseEntity<List<Long>> saveAddresses(@Valid @RequestBody List<AddressCreateInputDto> addresses);
 
     @Operation(
             summary = "Обновить список адресов в базе",
@@ -89,10 +89,10 @@ public interface AddressApi {
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200",
-                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = AddressDto.class))))
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Long.class))))
     })
     @PutMapping("/addresses")
-    ResponseEntity<List<AddressDto>> updateAddresses(@Valid @RequestBody List<AddressDto> addresses);
+    ResponseEntity<List<Long>> updateAddresses(@Valid @RequestBody List<AddressDto> addresses);
 
     @Operation(
             summary = "Обновить список адресов в базе",

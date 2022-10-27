@@ -13,8 +13,8 @@ public interface IDocumentService {
     List<DocumentDto> findAllDocuments(Boolean visibility);
     Map<Long, List<DocumentDto>> findAllDocumentsByPersonId(List<Long> personsId, Boolean visibility);
 
-    List<DocumentDto> createListOfDocuments(List<DocumentCreateInputDto> documents);
-    List<DocumentDto> updateListOfDocuments(List<DocumentDto> documents);
+    List<Long> createListOfDocuments(List<DocumentCreateInputDto> documents);
+    List<Long> updateListOfDocuments(List<DocumentDto> documents);
 
     void setDocumentsVisibility(List<Long> documentsId, boolean visibility);
     void deleteDocumentsFromDB(List<Long> documentsId);

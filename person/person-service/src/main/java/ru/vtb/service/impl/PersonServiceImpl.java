@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.vtb.dto.createInput.PersonCreateInputDto;
 import ru.vtb.dto.getOrUpdate.PersonDto;
+import ru.vtb.exception.PersonIsAlreadyExistedException;
 import ru.vtb.exception.PersonNotFoundException;
 import ru.vtb.mapper.IModelMapper;
 import ru.vtb.model.Person;
@@ -60,9 +61,13 @@ public class PersonServiceImpl implements IPersonService {
     @Override
     @Transactional
     public Long save(PersonCreateInputDto personCreateInputDto) {
-        return personRepository
-                .save(personMapper.convertFromCreateDto(personCreateInputDto))
-                .getId();
+        if (personRepository.existsPersonByFirstNameAndLastNameAndPatronymic(
+                personCreateInputDto.getFirstName(),
+                personCreateInputDto.getLastName(),
+                personCreateInputDto.getPatronymic()
+        )) throw new PersonIsAlreadyExistedException();
+
+        return personRepository.save(personMapper.convertFromCreateDto(personCreateInputDto)).getId();
     }
 
     @Override
@@ -72,6 +77,11 @@ public class PersonServiceImpl implements IPersonService {
                 .saveAll(personCreateInputDtos
                         .stream()
                         .map(personMapper::convertFromCreateDto)
+                        .filter(person -> !personRepository.existsPersonByFirstNameAndLastNameAndPatronymic(
+                                person.getFirstName(),
+                                person.getLastName(),
+                                person.getPatronymic()
+                        ))
                         .collect(Collectors.toList()))
                 .stream()
                 .map(Person::getId)

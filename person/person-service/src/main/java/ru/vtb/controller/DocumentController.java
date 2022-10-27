@@ -33,12 +33,12 @@ public class DocumentController implements DocumentApi {
     }
 
     @Override
-    public ResponseEntity<List<DocumentDto>> createDocuments(List<DocumentCreateInputDto> documents) {
+    public ResponseEntity<List<Long>> createDocuments(List<DocumentCreateInputDto> documents) {
         return ResponseEntity.ok(documentService.createListOfDocuments(documents));
     }
 
     @Override
-    public ResponseEntity<List<DocumentDto>> updateDocuments(List<DocumentDto> documents) {
+    public ResponseEntity<List<Long>> updateDocuments(List<DocumentDto> documents) {
         return ResponseEntity.ok(documentService.updateListOfDocuments(documents));
     }
 

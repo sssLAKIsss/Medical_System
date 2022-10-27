@@ -82,10 +82,10 @@ public interface DocumentApi {
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200",
-                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = DocumentDto.class))))
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Long.class))))
     })
     @PostMapping("/documents")
-    ResponseEntity<List<DocumentDto>> createDocuments(@Valid @RequestBody List<DocumentCreateInputDto> documents);
+    ResponseEntity<List<Long>> createDocuments(@Valid @RequestBody List<DocumentCreateInputDto> documents);
 
 
     @Operation(
@@ -95,10 +95,10 @@ public interface DocumentApi {
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200",
-                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = DocumentDto.class))))
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Long.class))))
     })
     @PutMapping("/documents")
-    ResponseEntity<List<DocumentDto>> updateDocuments(@Valid @RequestBody List<DocumentDto> documents);
+    ResponseEntity<List<Long>> updateDocuments(@Valid @RequestBody List<DocumentDto> documents);
 
 
     @Operation(

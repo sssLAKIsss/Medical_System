@@ -82,10 +82,10 @@ public interface ContactApi {
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200",
-                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = ContactDto.class))))
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Long.class))))
     })
     @PostMapping("/contacts")
-    ResponseEntity<List<ContactDto>> createContacts(@Valid @RequestBody List<ContactCreateInputDto> contact);
+    ResponseEntity<List<Long>> createContacts(@Valid @RequestBody List<ContactCreateInputDto> contact);
 
 
     @Operation(
@@ -95,10 +95,10 @@ public interface ContactApi {
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200",
-                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = ContactDto.class))))
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Long.class))))
     })
     @PutMapping("/contacts")
-    ResponseEntity<List<ContactDto>> updateContacts(@Valid @RequestBody List<ContactDto> contacts);
+    ResponseEntity<List<Long>> updateContacts(@Valid @RequestBody List<ContactDto> contacts);
 
 
     @Operation(

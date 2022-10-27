@@ -13,6 +13,12 @@ import java.util.Optional;
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
 
+    boolean existsPersonByFirstNameAndLastNameAndPatronymic(
+            String firstName,
+            String lastName,
+            String patronymic
+    );
+
     @Query(value = "from Person p " +
             "where p.id = :id and " +
             "(p.visibility = :visibility and :visibility is not null or " +

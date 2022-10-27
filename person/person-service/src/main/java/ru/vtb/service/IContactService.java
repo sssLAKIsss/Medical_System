@@ -12,8 +12,8 @@ public interface IContactService {
     List<ContactDto> findAllContacts(Boolean visibility);
     Map<Long, List<ContactDto>> findAllContactsByPersonsId(List<Long> personsId, Boolean visibility);
 
-    List<ContactDto> createListOfContacts(List<ContactCreateInputDto> contacts);
-    List<ContactDto> updateListOfContacts(List<ContactDto> contacts);
+    List<Long> createListOfContacts(List<ContactCreateInputDto> contacts);
+    List<Long> updateListOfContacts(List<ContactDto> contacts);
 
     void setContactsVisibility(List<Long> contactsId, boolean visibility);
     void deleteContactsFromDB(List<Long> contactsId);
