@@ -23,6 +23,8 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static ru.vtb.message.MessagesKeys.ERROR_BAD_REQUEST;
 import static ru.vtb.message.MessagesKeys.ERROR_INTERNAL_SERVER;
 import static ru.vtb.message.MessagesKeys.MSG_DEFAULT;
@@ -58,12 +60,23 @@ public class Handler extends ResponseEntityExceptionHandler {
             DataIntegrityViolationException ex,
             WebRequest request) {
 
-        Throwable cause = ex.getCause();
+        Throwable cause = ex.getMostSpecificCause();
         if (cause instanceof PropertyValueException) {
             return handlePropertyValueException((PropertyValueException) cause, request);
         }
-        log.error(ex.getMessage(), ex);
-        return handleOtherException(ex, request);
+        log.error(ex.getMostSpecificCause().getMessage(), ex);
+        return handleExceptionInternal(
+                ex,
+                ApiError.builder()
+                        .error(Messages.getMessageForLocale(ERROR_BAD_REQUEST, request.getLocale()))
+                        .message(ex.getLocalizedMessage())
+                        .rawMessage(ex.getMostSpecificCause().getMessage())
+                        .status(BAD_REQUEST.value())
+                        .timestamp(LocalDateTime.now())
+                        .build(),
+                new HttpHeaders(),
+                BAD_REQUEST,
+                request);
     }
 
     @ExceptionHandler(value = {PropertyValueException.class})
@@ -78,11 +91,11 @@ public class Handler extends ResponseEntityExceptionHandler {
                 .error(Messages.getMessageForLocale(ERROR_BAD_REQUEST, locale))
                 .message(Messages.getMessageForLocale(messageKey, locale))
                 .rawMessage(ex.getMessage())
-                .status(HttpStatus.BAD_REQUEST.value())
+                .status(BAD_REQUEST.value())
                 .timestamp(LocalDateTime.now())
                 .build();
 
-        return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+        return handleExceptionInternal(ex, error, new HttpHeaders(), BAD_REQUEST, request);
     }
 
     @NonNull
@@ -102,11 +115,11 @@ public class Handler extends ResponseEntityExceptionHandler {
                                 .stream()
                                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                                 .collect(Collectors.joining(", ")))
-                .status(HttpStatus.BAD_REQUEST.value())
+                .status(BAD_REQUEST.value())
                 .timestamp(LocalDateTime.now())
                 .build();
 
-        return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+        return handleExceptionInternal(ex, error, new HttpHeaders(), BAD_REQUEST, request);
     }
 
     @ExceptionHandler(value = {ConstraintViolationException.class})
@@ -119,11 +132,11 @@ public class Handler extends ResponseEntityExceptionHandler {
                 .error(Messages.getMessageForLocale(ERROR_BAD_REQUEST, locale))
                 .message(Messages.getMessageForLocale(MSG_VALIDATION_ERROR, locale))
                 .rawMessage(ex.getMessage())
-                .status(HttpStatus.BAD_REQUEST.value())
+                .status(BAD_REQUEST.value())
                 .timestamp(LocalDateTime.now())
                 .build();
 
-        return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+        return handleExceptionInternal(ex, error, new HttpHeaders(), BAD_REQUEST, request);
     }
 
     @ExceptionHandler(value = {Exception.class})
@@ -134,7 +147,7 @@ public class Handler extends ResponseEntityExceptionHandler {
                 ex,
                 null,
                 getHeadersFromRequest(request),
-                HttpStatus.INTERNAL_SERVER_ERROR,
+                INTERNAL_SERVER_ERROR,
                 request);
     }
 
@@ -157,7 +170,7 @@ public class Handler extends ResponseEntityExceptionHandler {
                 .error(Messages.getMessageForLocale(ERROR_INTERNAL_SERVER, locale))
                 .message(Messages.getMessageForLocale(MSG_DEFAULT, locale))
                 .rawMessage(ex.getMessage())
-                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .status(INTERNAL_SERVER_ERROR.value())
                 .timestamp(LocalDateTime.now())
                 .build();
         return new ResponseEntity<>(error, headers, status);
