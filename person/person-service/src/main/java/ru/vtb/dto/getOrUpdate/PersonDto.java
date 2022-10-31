@@ -2,10 +2,10 @@ package ru.vtb.dto.getOrUpdate;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import ru.vtb.dto.superclass.BaseDtoModel;
 
 import javax.validation.Valid;
@@ -15,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 public class PersonDto extends BaseDtoModel {
 
     @Schema(description = "Идентификатор",
