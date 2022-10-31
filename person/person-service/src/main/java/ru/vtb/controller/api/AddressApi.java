@@ -120,7 +120,7 @@ public interface AddressApi {
     ResponseEntity<HttpStatus> deleteDocumentsById(@RequestParam List<Long> addressesId);
 
     @Operation(
-            summary = "Удалить все документов",
+            summary = "Удалить все адреса",
             description = "Позволяет удалить все документы из базы"
     )
     @ApiResponses({
