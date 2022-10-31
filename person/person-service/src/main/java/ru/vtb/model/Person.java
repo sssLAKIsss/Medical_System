@@ -27,6 +27,8 @@ import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 import java.util.Set;
 
+import static javax.persistence.CascadeType.*;
+
 @Entity
 @Table(name = "persons")
 @AllArgsConstructor
@@ -54,11 +56,11 @@ public class Person extends BaseDateVersionEntity {
     @Column(name = "patronymic")
     private String patronymic;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = {MERGE, PERSIST, REFRESH})
     @JoinColumn(name = "person_id")
     private Set<Document> documents;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {MERGE, PERSIST, REFRESH})
     @JoinTable(
             name = "persons_addresses",
             joinColumns = @JoinColumn(name = "persons_id"),
@@ -66,7 +68,7 @@ public class Person extends BaseDateVersionEntity {
     )
     private Set<Address> addresses;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = {MERGE, PERSIST, REFRESH})
     @JoinColumn(name = "person_id")
     private Set<Contact> contacts;
 

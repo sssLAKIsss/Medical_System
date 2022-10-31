@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import ru.vtb.model.superclass.BaseDateVersionEntity;
 import ru.vtb.model.type.AddressType;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -26,6 +27,10 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 import java.util.Set;
+
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REFRESH;
 
 @Entity
 @Table(name = "addresses")
@@ -71,7 +76,7 @@ public class Address extends BaseDateVersionEntity {
     @Column(name = "flat")
     private Long flat;
 
-    @ManyToMany(mappedBy = "addresses", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "addresses", fetch = FetchType.LAZY, cascade = {MERGE, PERSIST, REFRESH})
     private Set<Person> persons;
 
     @Override
