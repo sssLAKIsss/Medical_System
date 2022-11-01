@@ -24,6 +24,8 @@ import ru.vtb.dto.createInput.PersonCreateInputDto;
 import ru.vtb.dto.getOrUpdate.PersonDto;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Set;
 
@@ -60,8 +62,9 @@ public interface PersonApi {
                     content = @Content(schema = @Schema(implementation = PersonDto.class)))
     })
     @GetMapping("/persons/passportNumber/{passportNumber}")
-    ResponseEntity<PersonDto> findPersonByPassportNumber(@PathVariable String passportNumber,
-                                                         @RequestParam(required = false) Boolean visibility);
+    ResponseEntity<PersonDto> findPersonByPassportNumber(
+            @PathVariable @Pattern(regexp = "^[0-9]{10}$", message = "Номер документа строго 10 цифр") String passportNumber,
+            @RequestParam(required = false) Boolean visibility);
 
 
     @Operation(
@@ -166,7 +169,7 @@ public interface PersonApi {
     })
     @PutMapping("/persons/visibility")
     ResponseEntity<HttpStatus> setVisibilityToPersons(@RequestParam Boolean visibility,
-                                                             @RequestParam Set<Long> personsId);
+                                                      @RequestParam Set<Long> personsId);
 
 
     @Operation(
