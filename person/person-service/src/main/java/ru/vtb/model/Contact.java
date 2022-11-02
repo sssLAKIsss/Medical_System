@@ -1,11 +1,11 @@
 package ru.vtb.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import ru.vtb.model.superclass.BaseDateVersionEntity;
 import ru.vtb.model.type.ContactType;
@@ -30,7 +30,7 @@ import java.util.Objects;
 @Accessors(chain = true)
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @EntityListeners(AuditingEntityListener.class)
 public class Contact extends BaseDateVersionEntity {
 
@@ -55,11 +55,11 @@ public class Contact extends BaseDateVersionEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Contact contact = (Contact) o;
-        return id.equals(contact.id) && type == contact.type && phoneNumber.equals(contact.phoneNumber);
+        return phoneNumber.equals(contact.phoneNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, type, phoneNumber);
+        return Objects.hash(phoneNumber);
     }
 }

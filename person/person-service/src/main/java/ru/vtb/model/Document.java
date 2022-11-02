@@ -1,11 +1,11 @@
 package ru.vtb.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import ru.vtb.model.superclass.BaseDateVersionEntity;
 import ru.vtb.model.type.DocumentType;
@@ -30,7 +30,7 @@ import java.util.Objects;
 @Accessors(chain = true)
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @EntityListeners(AuditingEntityListener.class)
 public class Document extends BaseDateVersionEntity {
 
@@ -55,11 +55,11 @@ public class Document extends BaseDateVersionEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Document document = (Document) o;
-        return id.equals(document.id) && type == document.type && number.equals(document.number);
+        return type == document.type && number.equals(document.number);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, type, number);
+        return Objects.hash(type, number);
     }
 }
