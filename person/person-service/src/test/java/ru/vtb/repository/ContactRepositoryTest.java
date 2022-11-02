@@ -3,7 +3,7 @@ package ru.vtb.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
-import ru.vtb.IntegrationAbstractTest;
+import ru.vtb.TestContainerSetup;
 import ru.vtb.model.Contact;
 import ru.vtb.model.superclass.BaseDateVersionEntity;
 
@@ -19,7 +19,7 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TE
 
 @Sql(scripts = "sql/init-contact-data-to-db.sql", executionPhase = BEFORE_TEST_METHOD)
 @Sql(scripts = "sql/drop-contact-data-in-db.sql", executionPhase = AFTER_TEST_METHOD)
-class ContactRepositoryTest extends IntegrationAbstractTest {
+class ContactRepositoryTest extends TestContainerSetup {
     @Autowired
     protected ContactRepository contactRepository;
 

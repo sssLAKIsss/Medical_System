@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.vtb.model.Address;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface AddressRepository extends JpaRepository<Address, Long> {
@@ -46,4 +47,14 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
     @Query(value = "update Address a set a.visibility = :visibility where a.id in :addressesId")
     void setVisibilityToAddresses(@Param("visibility") Boolean visibility,
                                   @Param("addressesId") List<Long> addressesId);
+
+    @Transactional
+    @Query(value = "delete from Address a where a.id in :addressesId")
+    @Modifying
+    void deleteAddressesById(@Param("addressesId") Set<Long> addressesId);
+
+    @Transactional
+    @Query(value = "delete from Address a")
+    @Modifying
+    void deleteAllAddresses();
 }

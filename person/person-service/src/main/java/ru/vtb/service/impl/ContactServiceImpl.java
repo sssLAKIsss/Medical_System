@@ -11,6 +11,7 @@ import ru.vtb.model.Contact;
 import ru.vtb.repository.ContactRepository;
 import ru.vtb.service.IContactService;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -88,12 +89,12 @@ public class ContactServiceImpl implements IContactService {
     @Override
     @Transactional
     public void deleteContactsFromDB(List<Long> contactsId) {
-        contactRepository.deleteAllById(contactsId);
+        contactRepository.deleteContactsById(new HashSet<>(contactsId));
     }
 
     @Override
     @Transactional
     public void deleteAllContacts() {
-        contactRepository.deleteAll();
+        contactRepository.deleteAllContacts();
     }
 }

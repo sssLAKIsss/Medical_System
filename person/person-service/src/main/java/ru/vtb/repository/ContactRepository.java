@@ -10,6 +10,7 @@ import ru.vtb.model.Contact;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface ContactRepository extends JpaRepository<Contact, Long> {
@@ -43,4 +44,14 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
     @Modifying
     @Query(value = "update Contact c set c.visibility = :visibility where c.id in :contactsId")
     void setVisibilityToContacts(@Param("visibility") Boolean visibility, @Param("contactsId") List<Long> contactsId);
+
+    @Transactional
+    @Query(value = "delete from Contact c where c.id in :contactsId")
+    @Modifying
+    void deleteContactsById(@Param("contactsId") Set<Long> contactsId);
+
+    @Transactional
+    @Query(value = "delete from Contact c")
+    @Modifying
+    void deleteAllContacts();
 }

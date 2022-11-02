@@ -11,6 +11,7 @@ import ru.vtb.model.Document;
 import ru.vtb.repository.DocumentRepository;
 import ru.vtb.service.IDocumentService;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -89,12 +90,12 @@ public class DocumentServiceImpl implements IDocumentService {
     @Override
     @Transactional
     public void deleteDocumentsFromDB(List<Long> documentsId) {
-        documentRepository.deleteAllById(documentsId);
+        documentRepository.deleteDocumentsById(new HashSet<>(documentsId));
     }
 
     @Override
     @Transactional
     public void deleteAllDocuments() {
-        documentRepository.deleteAll();
+        documentRepository.deleteAllDocuments();
     }
 }

@@ -11,6 +11,7 @@ import ru.vtb.model.Address;
 import ru.vtb.repository.AddressRepository;
 import ru.vtb.service.IAddressService;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -60,7 +61,7 @@ public class AddressServiceImpl implements IAddressService {
         return addressRepository.saveAll(
                         addresses.stream()
                                 .map(addressMapper::convertFromCreateDto)
-                                .filter(address -> addressRepository
+                                .filter(address -> !addressRepository
                                         .existsAddressByCountryAndCityAndRegionAndStreetAndHomeAndFlat(
                                                 address.getCountry(),
                                                 address.getCity(),
@@ -98,12 +99,12 @@ public class AddressServiceImpl implements IAddressService {
     @Override
     @Transactional
     public void deleteAddressesFromDB(List<Long> addressesId) {
-        addressRepository.deleteAllById(addressesId);
+        addressRepository.deleteAddressesById(new HashSet<>(addressesId));
     }
 
     @Override
     @Transactional
     public void deleteAllAddresses() {
-        addressRepository.deleteAll();
+        addressRepository.deleteAllAddresses();
     }
 }

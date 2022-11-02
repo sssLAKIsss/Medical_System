@@ -17,7 +17,9 @@ public interface IPersonService {
     List<Long> saveAll(List<PersonCreateInputDto> personCreateInputDtos);
     List<Long> updateAll(List<PersonDto> personDtos);
 
-    boolean isValidPassportForPerson(String personFullName, String passportNumber, Boolean visibility);
+    boolean isValidPassportForPerson(String firstName, String lastName,
+                                     String patronymic, String passportNumber,
+                                     Boolean visibility);
     void setPersonsVisibility(Boolean visibility, Set<Long> personsId);
 
     //TODO будет время - надо сделать

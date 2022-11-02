@@ -26,7 +26,7 @@ class AddressMapperTest extends AbstractTest {
                 AddressCreateInputDto.class);
         Address address = addressMapper.convertFromCreateDto(addressCreateInputDto);
 
-        assertEquals(address.getType(), (addressCreateInputDto.getType()));
+        assertEquals(address.getType().name(), (addressCreateInputDto.getType()));
         assertEquals(address.getCity(), (addressCreateInputDto.getCity()));
         assertEquals(address.getCountry(), (addressCreateInputDto.getCountry()));
         assertEquals(address.getFlat(), (addressCreateInputDto.getFlat()));

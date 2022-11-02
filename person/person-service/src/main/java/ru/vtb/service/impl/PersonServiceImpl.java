@@ -19,10 +19,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static java.util.Objects.nonNull;
-import static java.util.Objects.requireNonNull;
+import static org.apache.commons.lang.StringUtils.equalsIgnoreCase;
 import static ru.vtb.util.PersonServiceUtil.setPersonsAbilitiesVisibility;
-import static ru.vtb.util.PersonServiceUtil.setVisibility;
 
 @Service
 @RequiredArgsConstructor
@@ -111,24 +109,22 @@ public class PersonServiceImpl implements IPersonService {
 
     @Override
     @Transactional(readOnly = true)
-    public boolean isValidPassportForPerson(String personFullName, String passportNumber, Boolean visibility) {
-        Optional<Person> optionalPerson = personRepository.findByPassportNumber(passportNumber, visibility);
-        if (optionalPerson.isEmpty()) return false;
-        Person person = optionalPerson.get();
-
-        return requireNonNull(person.getLastName()).concat(" ")
-                .concat(requireNonNull(person.getFirstName()))
-                .concat(nonNull(person.getPatronymic())
-                        ? " ".concat(person.getPatronymic())
-                        : "")
-                .equals(personFullName);
+    public boolean isValidPassportForPerson(String firstName, String lastName,
+                                            String patronymic, String passportNumber,
+                                            Boolean visibility) {
+        return Optional.ofNullable(personRepository.findByPassportNumber(passportNumber, visibility)
+                        .orElseThrow(PersonNotFoundException::new))
+                .stream()
+                .anyMatch(person ->
+                        equalsIgnoreCase(person.getFirstName(), firstName)
+                                && equalsIgnoreCase(person.getLastName(), lastName)
+                                && equalsIgnoreCase(person.getPatronymic(), patronymic));
     }
 
     @Override
     @Transactional
     public void setPersonsVisibility(Boolean visibility, Set<Long> personsId) {
         List<Person> persons = personRepository.findAllById(personsId);
-        setVisibility(new HashSet<>(persons), visibility);
         persons.forEach(p -> p.setVisibility(visibility));
         persons.forEach(p -> setPersonsAbilitiesVisibility(p, visibility));
         personRepository.saveAll(persons);
@@ -137,12 +133,12 @@ public class PersonServiceImpl implements IPersonService {
     @Override
     @Transactional
     public void deletePersonsById(List<Long> personsId) {
-        personRepository.deleteAllById(personsId);
+        personRepository.deletePersonsById(new HashSet<>(personsId));
     }
 
     @Override
     @Transactional
     public void deleteAllPersons() {
-        personRepository.deleteAll();
+        personRepository.deleteAllPersons();
     }
 }

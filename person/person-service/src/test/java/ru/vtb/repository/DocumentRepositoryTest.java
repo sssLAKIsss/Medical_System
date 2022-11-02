@@ -3,12 +3,12 @@ package ru.vtb.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
-import ru.vtb.IntegrationAbstractTest;
+import ru.vtb.TestContainerSetup;
 import ru.vtb.model.Document;
 import ru.vtb.model.superclass.BaseDateVersionEntity;
 
-import javax.print.Doc;
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -18,7 +18,7 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.*;
 
 @Sql(scripts = "sql/init-document-data-to-db.sql", executionPhase = BEFORE_TEST_METHOD)
 @Sql(scripts = "sql/drop-document-data-in-db.sql", executionPhase = AFTER_TEST_METHOD)
-class DocumentRepositoryTest extends IntegrationAbstractTest {
+class DocumentRepositoryTest extends TestContainerSetup {
     @Autowired
     protected DocumentRepository documentRepository;
 
@@ -72,5 +72,22 @@ class DocumentRepositoryTest extends IntegrationAbstractTest {
         assertNotNull(documents);
         assertFalse(documents.isEmpty());
         assertThat(documents).hasSize(2);
+    }
+
+    @Test
+    void deleteDocumentsById() {
+        List<Document> documents = documentRepository.findAllDocumentsByVisibility(null);
+        assertThat(documents).hasSize(3);
+
+        documentRepository.deleteDocumentsById(Set.of(1L, 2L));
+
+        documents = documentRepository.findAllDocumentsByVisibility(null);
+        assertThat(documents).hasSize(1);
+    }
+
+    @Test
+    void deleteAllDocuments() {
+        documentRepository.deleteAllDocuments();
+        assertThat(documentRepository.findAllDocumentsByVisibility(null)).hasSize(0);
     }
 }

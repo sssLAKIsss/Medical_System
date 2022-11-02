@@ -6,12 +6,14 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Pageable;
 import ru.vtb.dto.createInput.PersonCreateInputDto;
 import ru.vtb.dto.getOrUpdate.PersonDto;
+import ru.vtb.exception.PersonNotFoundException;
 import ru.vtb.model.Person;
 import ru.vtb.repository.PersonRepository;
 import ru.vtb.AbstractTest;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -129,13 +131,15 @@ class PersonServiceImplTest extends AbstractTest {
     void isValidPassportForPerson_provideException() {
         //when
         when(personRepository.findByPassportNumber(any(), any()))
-                .thenReturn(Optional.of(Person.builder().build()));
+                .thenReturn(Optional.empty());
         assertThrows(
-                RuntimeException.class,
-                () -> personService.isValidPassportForPerson("", "123", true));
-        assertThrows(
-                RuntimeException.class,
-                () -> personService.isValidPassportForPerson("Name Name", "", true));
+                PersonNotFoundException.class,
+                () -> personService.isValidPassportForPerson(
+                        "",
+                        "123",
+                        "",
+                        "4545001001",
+                        true));
     }
 
     @Test
@@ -144,9 +148,14 @@ class PersonServiceImplTest extends AbstractTest {
         when(personRepository.findByPassportNumber(any(), any()))
                 .thenReturn(Optional.empty());
         //then
-        boolean isValid = personService.isValidPassportForPerson("Name name", "123", true);
+        assertThrows(PersonNotFoundException.class,
+                () -> personService.isValidPassportForPerson(
+                        "Name",
+                        "123",
+                        "",
+                        "",
+                        true));
 
-        assertFalse(isValid);
         verify(personRepository, times(1))
                 .findByPassportNumber(any(), any());
     }
@@ -155,9 +164,17 @@ class PersonServiceImplTest extends AbstractTest {
     void isValidPassportForPerson_personIsPresent() {
         //when
         when(personRepository.findByPassportNumber(any(), any()))
-                .thenReturn(Optional.ofNullable(Person.builder().firstName("firstName").lastName("lastname").build()));
+                .thenReturn(Optional.ofNullable(Person.builder()
+                        .firstName("firstName")
+                        .lastName("lastName")
+                        .build()));
         //then
-        boolean isValid = personService.isValidPassportForPerson("lastname firstName", "123", true);
+        boolean isValid = personService.isValidPassportForPerson(
+                "firstName",
+                "LASTNAME",
+                null,
+                "4545001001",
+                true);
 
         assertTrue(isValid);
         verify(personRepository, times(1))
@@ -166,6 +183,21 @@ class PersonServiceImplTest extends AbstractTest {
 
     @Test
     void setPersonsVisibility() {
+        //when
+        when(personRepository.findAllById(any()))
+                .thenReturn(List.of(
+                        Person.builder()
+                                .visibility(true)
+                                .build(),
+                        Person.builder()
+                                .visibility(false)
+                                .build()));
+        //then
+        personService.setPersonsVisibility(true, Set.of(1L, 2L));
 
+        verify(personRepository, times(1))
+                .saveAll(any());
+        verify(personRepository, times(1))
+                .findAllById(any());
     }
 }

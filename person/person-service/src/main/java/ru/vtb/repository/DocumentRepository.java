@@ -10,6 +10,7 @@ import ru.vtb.model.Document;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface DocumentRepository extends JpaRepository<Document, Long> {
@@ -53,4 +54,14 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
     @Query(value = "update Document d set d.visibility = :visibility where d.id in :documentsId")
     void setVisibilityToDocuments(@Param("visibility") Boolean visibility,
                                   @Param("documentsId") List<Long> documentsId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "delete from Document d where d.id in :documentsId")
+    void deleteDocumentsById(@Param("documentsId")Set<Long> documentsId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "delete from Document d")
+    void deleteAllDocuments();
 }

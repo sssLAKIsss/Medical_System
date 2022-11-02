@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.jdbc.Sql;
-import ru.vtb.IntegrationAbstractTest;
+import ru.vtb.TestContainerSetup;
 import ru.vtb.model.Person;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 @Sql(scripts = "sql/init-person-data-to-db.sql", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(scripts = "sql/drop-person-data-in-db.sql", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 class
-PersonRepositoryTest extends IntegrationAbstractTest {
+PersonRepositoryTest extends TestContainerSetup {
     @Autowired
     protected PersonRepository personRepository;
 

@@ -2,13 +2,16 @@ package ru.vtb.repository;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.vtb.model.Person;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
@@ -40,4 +43,14 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     List<Person> findAllPersonsWithPaginationByVisibility(@Param("visibility") Boolean visibility,
                                                           @Param("region") String region,
                                                           Pageable pageable);
+
+    @Transactional
+    @Modifying
+    @Query(value = "delete from Person p where p.id in :personsId")
+    void deletePersonsById(@Param("personsId") Set<Long> personsId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "delete from Person p")
+    void deleteAllPersons();
 }
