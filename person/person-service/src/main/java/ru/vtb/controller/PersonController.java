@@ -65,10 +65,12 @@ public class PersonController implements PersonApi {
     }
 
     @Override
-    public ResponseEntity<Boolean> checkByValidPersonData(String personFullName,
+    public ResponseEntity<Boolean> checkByValidPersonData(String firstName,
+                                                          String lastName,
+                                                          String patronymic,
                                                           String passportNumber,
                                                           Boolean visibility) {
-        return ResponseEntity.ok(personService.isValidPassportForPerson(personFullName, passportNumber, visibility));
+        return ResponseEntity.ok(personService.isValidPassportForPerson(firstName, lastName, patronymic, passportNumber, visibility));
     }
 
     @Override
