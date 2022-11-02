@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DocumentMapperTest extends AbstractTest {
 
-    private static final String DOCUMENT_PATH = "src/test/resources/ru/vtb/test-document-data.json";
+    private static final String DOCUMENT_PATH = "src/test/resources/ru/vtb/json/mapper/test-document-data.json";
 
     @Autowired
     protected DocumentMapper documentMapper;
@@ -29,7 +29,7 @@ class DocumentMapperTest extends AbstractTest {
         Document document = documentMapper.convertFromCreateDto(documentCreateInputDto);
 
         assertEquals(documentCreateInputDto.getNumber(), document.getNumber());
-        assertEquals(documentCreateInputDto.getType(), document.getType());
+        assertEquals(documentCreateInputDto.getType(), document.getType().name());
         assertTrue(document.isVisibility());
     }
 

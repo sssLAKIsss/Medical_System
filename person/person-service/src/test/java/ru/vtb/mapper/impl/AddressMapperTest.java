@@ -17,7 +17,7 @@ class AddressMapperTest extends AbstractTest {
     @Autowired
     protected AddressMapper addressMapper;
 
-    private static final String ADDRESS_DATA_PATH = "src/test/resources/ru/vtb/test-address-data.json";
+    private static final String ADDRESS_DATA_PATH = "src/test/resources/ru/vtb/json/mapper/test-address-data.json";
 
     @Test
     void convertFromCreateDto() throws IOException {

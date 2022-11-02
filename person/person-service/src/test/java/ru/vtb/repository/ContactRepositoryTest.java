@@ -17,8 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
-@Sql(scripts = "sql/init-contact-data-to-db.sql", executionPhase = BEFORE_TEST_METHOD)
-@Sql(scripts = "sql/drop-contact-data-in-db.sql", executionPhase = AFTER_TEST_METHOD)
+@Sql(scripts = "sql/contact/prepare-contact-data.sql", executionPhase = BEFORE_TEST_METHOD)
+@Sql(scripts = "sql/contact/drop-contact-data.sql", executionPhase = AFTER_TEST_METHOD)
 class ContactRepositoryTest extends TestContainerSetup {
     @Autowired
     protected ContactRepository contactRepository;
@@ -65,7 +65,7 @@ class ContactRepositoryTest extends TestContainerSetup {
 
     @Test
     void findAllContactsByPersonIdAndVisibility() {
-        List<Contact> contacts = contactRepository.findAllContactsByPersonIdAndVisibility(1L, true);
+        List<Contact> contacts = contactRepository.findAllContactsByPersonIdAndVisibility(1L, false);
         assertNotNull(contacts);
         assertFalse(contacts.isEmpty());
         assertThat(contacts).hasSize(1);

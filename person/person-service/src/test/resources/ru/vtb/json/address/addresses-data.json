@@ -1,0 +1,30 @@
+[
+  {
+    "visibility": false,
+    "version": 0,
+    "lastModifiedDate": null,
+    "dateTimeCreation": null,
+    "id": 1,
+    "type": "REGISTRATION",
+    "country": "Russia",
+    "region": "RB",
+    "city": "UFA",
+    "street": "GOGOl9",
+    "home": 106,
+    "flat": null
+  },
+  {
+    "visibility": true,
+    "version": 0,
+    "lastModifiedDate": null,
+    "dateTimeCreation": null,
+    "id": 2,
+    "type": "REGISTRATION",
+    "country": "Russia",
+    "region": "123",
+    "city": "123",
+    "street": "123",
+    "home": 111,
+    "flat": 111
+  }
+]

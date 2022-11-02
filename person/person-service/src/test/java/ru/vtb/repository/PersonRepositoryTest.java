@@ -14,8 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
-@Sql(scripts = "sql/init-person-data-to-db.sql", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(scripts = "sql/drop-person-data-in-db.sql", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+@Sql(scripts = "sql/person/prepare-person-data.sql", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = "sql/person/drop-person-data.sql", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 class
 PersonRepositoryTest extends TestContainerSetup {
     @Autowired

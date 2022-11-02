@@ -9,7 +9,10 @@ import ru.vtb.dto.getOrUpdate.PersonDto;
 import ru.vtb.exception.PersonIsAlreadyExistedException;
 import ru.vtb.exception.PersonNotFoundException;
 import ru.vtb.mapper.IModelMapper;
+import ru.vtb.model.Document;
 import ru.vtb.model.Person;
+import ru.vtb.repository.ContactRepository;
+import ru.vtb.repository.DocumentRepository;
 import ru.vtb.repository.PersonRepository;
 import ru.vtb.service.IPersonService;
 
@@ -26,6 +29,8 @@ import static ru.vtb.util.PersonServiceUtil.setPersonsAbilitiesVisibility;
 @RequiredArgsConstructor
 public class PersonServiceImpl implements IPersonService {
     private final PersonRepository personRepository;
+    private final DocumentRepository documentRepository;
+    private final ContactRepository contactRepository;
     private final IModelMapper<Person, PersonCreateInputDto, PersonDto> personMapper;
 
     @Override
@@ -133,12 +138,12 @@ public class PersonServiceImpl implements IPersonService {
     @Override
     @Transactional
     public void deletePersonsById(List<Long> personsId) {
-        personRepository.deletePersonsById(new HashSet<>(personsId));
+        personRepository.deleteAllById(personsId);
     }
 
     @Override
     @Transactional
     public void deleteAllPersons() {
-        personRepository.deleteAllPersons();
+        personRepository.deleteAll();
     }
 }

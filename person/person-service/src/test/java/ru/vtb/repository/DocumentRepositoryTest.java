@@ -16,8 +16,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.*;
 
-@Sql(scripts = "sql/init-document-data-to-db.sql", executionPhase = BEFORE_TEST_METHOD)
-@Sql(scripts = "sql/drop-document-data-in-db.sql", executionPhase = AFTER_TEST_METHOD)
+@Sql(scripts = "sql/document/prepare-document-data.sql", executionPhase = BEFORE_TEST_METHOD)
+@Sql(scripts = "sql/document/drop-document-data.sql", executionPhase = AFTER_TEST_METHOD)
 class DocumentRepositoryTest extends TestContainerSetup {
     @Autowired
     protected DocumentRepository documentRepository;

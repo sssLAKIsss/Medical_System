@@ -31,7 +31,7 @@
         <swagger-annotations.version>1.6.6</swagger-annotations.version>
         <springfox-version>3.0.0</springfox-version>
 
-        <spring.eureka.version>3.1.2</spring.eureka.version>
+        <spring.eureka.version>3.1.4</spring.eureka.version>
         <spring-cloud-starter-openfeign.version>3.1.2</spring-cloud-starter-openfeign.version>
 
     </properties>
@@ -41,12 +41,12 @@
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-maven-plugin</artifactId>
-            <version>4.10.0</version>
+            <version>4.17.1</version>
         </dependency>
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-            <version>4.10.0</version>
+            <version>4.17.1</version>
         </dependency>
 
         <!--        Spring-deps-->

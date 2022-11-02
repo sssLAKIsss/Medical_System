@@ -1,0 +1,163 @@
+[
+  {
+    "visibility": true,
+    "version": 0,
+    "lastModifiedDate": "2022-10-31T15:52:49.593993",
+    "dateTimeCreation": "2022-10-31T15:52:49.593993",
+    "id": 1,
+    "lastName": "Федоров",
+    "firstName": "Федор",
+    "patronymic": "Федорович",
+    "documents": [
+      {
+        "visibility": true,
+        "version": 0,
+        "lastModifiedDate": "2022-10-31T15:52:49.593993",
+        "dateTimeCreation": "2022-10-31T15:52:49.593993",
+        "id": 1,
+        "type": "PASSPORT",
+        "number": "4545001001"
+      },
+      {
+        "visibility": true,
+        "version": 0,
+        "lastModifiedDate": "2022-10-31T15:52:49.593993",
+        "dateTimeCreation": "2022-10-31T15:52:49.593993",
+        "id": 4,
+        "type": "SNILS",
+        "number": "4545001004"
+      }
+    ],
+    "addresses": [
+      {
+        "visibility": true,
+        "version": 0,
+        "lastModifiedDate": "2022-10-31T15:52:49.593993",
+        "dateTimeCreation": "2022-10-31T15:52:49.593993",
+        "id": 1,
+        "type": "REGISTRATION",
+        "country": "Russia",
+        "region": "RB",
+        "city": "UFA",
+        "street": "GOGOl9",
+        "home": 1,
+        "flat": 1
+      }
+    ],
+    "contacts": [
+      {
+        "visibility": true,
+        "version": 0,
+        "lastModifiedDate": "2022-10-31T15:52:49.593993",
+        "dateTimeCreation": "2022-10-31T15:52:49.593993",
+        "id": 1,
+        "type": "HOME",
+        "phoneNumber": "+79999999991"
+      },
+      {
+        "visibility": true,
+        "version": 0,
+        "lastModifiedDate": "2022-10-31T15:52:49.593993",
+        "dateTimeCreation": "2022-10-31T15:52:49.593993",
+        "id": 2,
+        "type": "HOME",
+        "phoneNumber": "+79999999992"
+      }
+    ]
+  },
+  {
+    "visibility": true,
+    "version": 0,
+    "lastModifiedDate": "2022-10-31T15:52:49.593993",
+    "dateTimeCreation": "2022-10-31T15:52:49.593993",
+    "id": 2,
+    "lastName": "Федоров1",
+    "firstName": "Федор1",
+    "patronymic": "Федорович1",
+    "documents": [
+      {
+        "visibility": true,
+        "version": 0,
+        "lastModifiedDate": "2022-10-31T15:52:49.593993",
+        "dateTimeCreation": "2022-10-31T15:52:49.593993",
+        "id": 2,
+        "type": "PASSPORT",
+        "number": "4545001002"
+      }
+    ],
+    "addresses": [
+      {
+        "visibility": true,
+        "version": 0,
+        "lastModifiedDate": "2022-10-31T15:52:49.593993",
+        "dateTimeCreation": "2022-10-31T15:52:49.593993",
+        "id": 2,
+        "type": "REGISTRATION",
+        "country": "Russia",
+        "region": "RB",
+        "city": "UFA",
+        "street": "GOGOl9",
+        "home": 2,
+        "flat": 2
+      }
+    ],
+    "contacts": [
+      {
+        "visibility": true,
+        "version": 0,
+        "lastModifiedDate": "2022-10-31T15:52:49.593993",
+        "dateTimeCreation": "2022-10-31T15:52:49.593993",
+        "id": 3,
+        "type": "HOME",
+        "phoneNumber": "+79999999993"
+      }
+    ]
+  },
+  {
+    "visibility": true,
+    "version": 0,
+    "lastModifiedDate": "2022-10-31T15:52:49.593993",
+    "dateTimeCreation": "2022-10-31T15:52:49.593993",
+    "id": 3,
+    "lastName": "Федоров2",
+    "firstName": "Федор2",
+    "documents": [
+      {
+        "visibility": true,
+        "version": 0,
+        "lastModifiedDate": "2022-10-31T15:52:49.593993",
+        "dateTimeCreation": "2022-10-31T15:52:49.593993",
+        "id": 3,
+        "type": "PASSPORT",
+        "number": "4545001003"
+      }
+    ],
+    "addresses": [
+      {
+        "visibility": true,
+        "version": 0,
+        "lastModifiedDate": "2022-10-31T15:52:49.593993",
+        "dateTimeCreation": "2022-10-31T15:52:49.593993",
+        "id": 3,
+        "type": "REGISTRATION",
+        "country": "Russia",
+        "region": "RB",
+        "city": "UFA",
+        "street": "GOGOl9",
+        "home": 3,
+        "flat": 3
+      }
+    ],
+    "contacts": [
+      {
+        "visibility": true,
+        "version": 0,
+        "lastModifiedDate": "2022-10-31T15:52:49.593993",
+        "dateTimeCreation": "2022-10-31T15:52:49.593993",
+        "id": 4,
+        "type": "HOME",
+        "phoneNumber": "+79999999994"
+      }
+    ]
+  }
+]

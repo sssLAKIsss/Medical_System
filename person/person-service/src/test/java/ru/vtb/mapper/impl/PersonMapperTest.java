@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PersonMapperTest extends AbstractTest {
 
-    private static final String PERSON_DATA_PATH = "src/test/resources/ru/vtb/test-person-data.json";
+    private static final String PERSON_DATA_PATH = "src/test/resources/ru/vtb/json/mapper/test-person-data.json";
 
     @Autowired
     protected PersonMapper personMapper;

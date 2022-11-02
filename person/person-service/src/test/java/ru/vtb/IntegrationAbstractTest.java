@@ -1,24 +1,42 @@
 package ru.vtb;
 
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.util.ResourceUtils;
 
-@Testcontainers
-public abstract class IntegrationAbstractTest extends AbstractTest {
-    @Container
-    private static final PostgreSQLContainer container = (PostgreSQLContainer) new PostgreSQLContainer("postgres:latest")
-            .withDatabaseName("persons")
-            .withUsername("postgres")
-            .withPassword("postgres")
-            .withReuse(true);
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
-    @DynamicPropertySource
-    public static void overrideProps(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", container::getJdbcUrl);
-        registry.add("spring.datasource.username", container::getUsername);
-        registry.add("spring.datasource.password", container::getPassword);
+@AutoConfigureMockMvc
+@Slf4j
+public abstract class IntegrationAbstractTest extends TestContainerSetup {
+
+    @Autowired
+    protected MockMvc mockMvc;
+
+    protected <T> T createObjectFromJson(String filePath, Class<T> classType) {
+        try {
+            File file = ResourceUtils.getFile(filePath);
+            return objectMapper.readValue(file, classType);
+        } catch (JsonProcessingException e) {
+            log.error("Failed to create object from json!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        throw new RuntimeException();
+    }
+
+    protected String getJsonDataByFilePath(String filePath) {
+        try {
+            return new String(Files.readAllBytes(Paths.get(filePath)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        throw new RuntimeException();
     }
 }

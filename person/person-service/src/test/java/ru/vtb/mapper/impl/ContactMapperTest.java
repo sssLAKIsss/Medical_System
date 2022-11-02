@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ContactMapperTest extends AbstractTest {
 
-    private static final String CONTACT_DATA = "src/test/resources/ru/vtb/test-contact-data.json";
+    private static final String CONTACT_DATA = "src/test/resources/ru/vtb/json/mapper/test-contact-data.json";
 
     @Autowired
     protected ContactMapper contactMapper;
@@ -29,7 +29,7 @@ class ContactMapperTest extends AbstractTest {
         Contact contact = contactMapper.convertFromCreateDto(contactCreateInputDto);
 
         assertEquals(contactCreateInputDto.getPhoneNumber(), contact.getPhoneNumber());
-        assertEquals(contactCreateInputDto.getType(), contact.getType());
+        assertEquals(contactCreateInputDto.getType(), contact.getType().name());
         assertTrue(contact.isVisibility());
     }
 

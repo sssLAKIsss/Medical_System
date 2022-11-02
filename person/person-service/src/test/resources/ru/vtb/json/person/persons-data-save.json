@@ -1,0 +1,93 @@
+[
+  {
+    "lastName": "Федоров4",
+    "firstName": "Федор4",
+    "patronymic": "Федорович4",
+    "documents": [
+      {
+        "type": "PASSPORT",
+        "number": "4545001005"
+      },
+      {
+        "type": "SNILS",
+        "number": "4545001006"
+      }
+    ],
+    "addresses": [
+      {
+        "type": "REGISTRATION",
+        "country": "Russia",
+        "region": "RB",
+        "city": "UFA",
+        "street": "GOGOl9",
+        "home": 5,
+        "flat": 5
+      }
+    ],
+    "contacts": [
+      {
+        "type": "HOME",
+        "phoneNumber": "+79999999995"
+      },
+      {
+        "type": "HOME",
+        "phoneNumber": "+79999999996"
+      }
+    ]
+  },
+  {
+    "lastName": "Федоров5",
+    "firstName": "Федор5",
+    "patronymic": "Федорович5",
+    "documents": [
+      {
+        "type": "PASSPORT",
+        "number": "4545001007"
+      }
+    ],
+    "addresses": [
+      {
+        "type": "REGISTRATION",
+        "country": "Russia",
+        "region": "RB",
+        "city": "UFA",
+        "street": "GOGOl9",
+        "home": 6,
+        "flat": 6
+      }
+    ],
+    "contacts": [
+      {
+        "type": "HOME",
+        "phoneNumber": "+79999999997"
+      }
+    ]
+  },
+  {
+    "lastName": "Федоров6",
+    "firstName": "Федор6",
+    "documents": [
+      {
+        "type": "PASSPORT",
+        "number": "4545001009"
+      }
+    ],
+    "addresses": [
+      {
+        "type": "REGISTRATION",
+        "country": "Russia",
+        "region": "RB",
+        "city": "UFA",
+        "street": "GOGOl9",
+        "home": 9,
+        "flat": 9
+      }
+    ],
+    "contacts": [
+      {
+        "type": "HOME",
+        "phoneNumber": "+79999999999"
+      }
+    ]
+  }
+]

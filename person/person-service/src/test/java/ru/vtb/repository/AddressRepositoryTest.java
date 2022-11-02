@@ -16,8 +16,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
-@Sql(scripts = "sql/init-data-to-db.sql", executionPhase = BEFORE_TEST_METHOD)
-@Sql(scripts = "sql/drop-data-in-db.sql", executionPhase = AFTER_TEST_METHOD)
+@Sql(scripts = "sql/address/prepare-address-data.sql", executionPhase = BEFORE_TEST_METHOD)
+@Sql(scripts = "sql/address/drop-address-data.sql", executionPhase = AFTER_TEST_METHOD)
 class AddressRepositoryTest extends TestContainerSetup {
     @Autowired
     protected AddressRepository addressRepository;

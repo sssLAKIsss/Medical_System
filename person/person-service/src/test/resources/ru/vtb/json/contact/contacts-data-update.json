@@ -1,0 +1,20 @@
+[
+  {
+    "visibility": true,
+    "version": 0,
+    "lastModifiedDate": "2022-10-25T14:04:05.995161",
+    "dateTimeCreation": "2022-10-25T14:04:05.995161",
+    "id": 1,
+    "type": "MOBILE",
+    "phoneNumber": "+79999999999"
+  },
+  {
+    "visibility": true,
+    "version": 0,
+    "lastModifiedDate": "2022-10-27T14:22:32.944572",
+    "dateTimeCreation": "2022-10-27T14:22:32.944572",
+    "id": 2,
+    "type": "HOME",
+    "phoneNumber": "+78999999981"
+  }
+]
