@@ -91,7 +91,8 @@ public interface PersonApi {
 
     @Operation(
             summary = "Обновить данные пользователя",
-            description = "Позволяет обновить данные пользователя на основе PersonDto"
+            description = "Позволяет обновить данные пользователя на основе PersonDto",
+            deprecated = true
     )
     @ApiResponses({
             @ApiResponse(
@@ -130,7 +131,8 @@ public interface PersonApi {
 
     @Operation(
             summary = "Создать пользователя",
-            description = "Позволяет создать пользователя на основе PersonCreateInputDto"
+            description = "Позволяет создать пользователя на основе PersonCreateInputDto",
+            deprecated = true
     )
     @ApiResponses({
             @ApiResponse(
@@ -143,18 +145,20 @@ public interface PersonApi {
 
     @Operation(
             summary = "Проверить, есть ли в базе пользователь с определенным паспортом и ФИО",
-            description = "Позволяет проверить базу на наличие опредленного пользователя"
+            description = "Позволяет проверить базу на наличие определенного пользователя"
     )
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200",
                     content = @Content(schema = @Schema(implementation = Boolean.class)))
     })
-    @GetMapping("/persons/checkByValidPersonData/{personFullName}/{passportNumber}")
-    ResponseEntity<Boolean> checkByValidPersonData(@Parameter(description = "ФИО через пробел")
-                                                   @PathVariable String personFullName,
-                                                   @PathVariable String passportNumber,
-                                                   @RequestParam(required = false) Boolean visibility);
+    @GetMapping("/persons/checkByValidPersonData")
+    ResponseEntity<Boolean> checkByValidPersonData(
+            @Parameter(description = "Фамилия") @RequestParam @Size(min = 1, max = 30) String firstName,
+            @Parameter(description = "Имя") @RequestParam @Size(min = 1, max = 30) String lastName,
+            @Parameter(description = "Отчество") @RequestParam(required = false) @Size(min = 1, max = 30) String patronymic,
+            @Parameter(description = "Серия и номер документа 10 цифр без пробела") @RequestParam @Pattern(regexp = "^[0-9]{10}$", message = "Серия и номер документа - цифры  без пробела") String passportNumber,
+            @RequestParam(required = false) Boolean visibility);
 
 
     @Operation(
