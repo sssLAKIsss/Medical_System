@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.vtb.model.type.DocumentType;
+import lombok.ToString;
 import ru.vtb.validator.EnumNamePattern;
 
 import javax.validation.constraints.Pattern;
@@ -16,6 +16,7 @@ import javax.validation.constraints.Pattern;
 @Getter
 @Setter
 @Builder
+@ToString
 public class DocumentCreateInputDto {
 
     @Schema(description = "Тип документа: паспорт, снилс",

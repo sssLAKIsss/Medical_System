@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -32,6 +33,7 @@ import java.util.Objects;
 @Setter
 @SuperBuilder
 @EntityListeners(AuditingEntityListener.class)
+@ToString
 public class Document extends BaseDateVersionEntity {
 
     @Id

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import ru.vtb.dto.superclass.BaseDtoModel;
 import ru.vtb.model.type.AddressType;
@@ -15,6 +16,7 @@ import ru.vtb.model.type.AddressType;
 @Getter
 @Setter
 @SuperBuilder
+@ToString
 public class AddressDto extends BaseDtoModel {
 
     @Schema(description = "Идентификатор",

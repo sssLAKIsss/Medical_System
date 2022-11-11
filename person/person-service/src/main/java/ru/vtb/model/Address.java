@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -40,6 +41,7 @@ import static javax.persistence.GenerationType.*;
 @Setter
 @SuperBuilder
 @EntityListeners(AuditingEntityListener.class)
+@ToString
 public class Address extends BaseDateVersionEntity {
 
     @Id
@@ -76,6 +78,7 @@ public class Address extends BaseDateVersionEntity {
     private Long flat;
 
     @ManyToMany(mappedBy = "addresses", fetch = FetchType.LAZY, cascade = {MERGE, PERSIST, REFRESH})
+    @ToString.Exclude
     private Set<Person> persons;
 
     @Override

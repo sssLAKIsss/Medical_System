@@ -9,14 +9,10 @@ import ru.vtb.dto.getOrUpdate.PersonDto;
 import ru.vtb.exception.PersonIsAlreadyExistedException;
 import ru.vtb.exception.PersonNotFoundException;
 import ru.vtb.mapper.IModelMapper;
-import ru.vtb.model.Document;
 import ru.vtb.model.Person;
-import ru.vtb.repository.ContactRepository;
-import ru.vtb.repository.DocumentRepository;
 import ru.vtb.repository.PersonRepository;
 import ru.vtb.service.IPersonService;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -29,8 +25,6 @@ import static ru.vtb.util.PersonServiceUtil.setPersonsAbilitiesVisibility;
 @RequiredArgsConstructor
 public class PersonServiceImpl implements IPersonService {
     private final PersonRepository personRepository;
-    private final DocumentRepository documentRepository;
-    private final ContactRepository contactRepository;
     private final IModelMapper<Person, PersonCreateInputDto, PersonDto> personMapper;
 
     @Override

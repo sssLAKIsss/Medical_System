@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import ru.vtb.dto.superclass.BaseDtoModel;
 import ru.vtb.model.type.DocumentType;
@@ -16,6 +17,7 @@ import javax.validation.constraints.Pattern;
 @Getter
 @Setter
 @SuperBuilder
+@ToString
 public class DocumentDto extends BaseDtoModel {
 
     @Schema(description = "Идентификатор",

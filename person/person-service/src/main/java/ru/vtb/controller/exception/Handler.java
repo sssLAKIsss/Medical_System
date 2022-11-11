@@ -39,8 +39,6 @@ public class Handler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {AbstractLocalizedException.class})
     public ResponseEntity<Object> handleLocalizedExceptionException(AbstractLocalizedException ex,
                                                                     WebRequest request) {
-        log.error(ex.getMessage(), ex);
-
         return handleExceptionInternal(
                 ex,
                 ApiError.builder()
@@ -64,7 +62,6 @@ public class Handler extends ResponseEntityExceptionHandler {
         if (cause instanceof PropertyValueException) {
             return handlePropertyValueException((PropertyValueException) cause, request);
         }
-        log.error(ex.getMostSpecificCause().getMessage(), ex);
         return handleExceptionInternal(
                 ex,
                 ApiError.builder()
@@ -81,8 +78,6 @@ public class Handler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {PropertyValueException.class})
     public ResponseEntity<Object> handlePropertyValueException(PropertyValueException ex, WebRequest request) {
-        log.error(ex.getMessage(), ex);
-
         Locale locale = request.getLocale();
         String messageKey = PREFIX_VALIDATION
                 + StringHelper.unqualify(ex.getEntityName()).toLowerCase() + "_" + ex.getPropertyName();
@@ -104,8 +99,6 @@ public class Handler extends ResponseEntityExceptionHandler {
                                                                   @NonNull HttpHeaders headers,
                                                                   @NonNull HttpStatus status,
                                                                   WebRequest request) {
-        log.error(ex.getMessage(), ex);
-
         Locale locale = request.getLocale();
         ApiError error = ApiError.builder()
                 .error(Messages.getMessageForLocale(ERROR_BAD_REQUEST, locale))
@@ -125,8 +118,6 @@ public class Handler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {ConstraintViolationException.class})
     public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex,
                                                                      WebRequest request) {
-        log.error(ex.getMessage(), ex);
-
         Locale locale = request.getLocale();
         ApiError error = ApiError.builder()
                 .error(Messages.getMessageForLocale(ERROR_BAD_REQUEST, locale))
@@ -141,8 +132,6 @@ public class Handler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<Object> handleOtherException(Exception ex, WebRequest request) {
-        log.error(ex.getMessage(), ex);
-
         return handleExceptionInternal(
                 ex,
                 null,

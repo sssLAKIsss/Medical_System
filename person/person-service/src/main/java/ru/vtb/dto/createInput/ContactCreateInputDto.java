@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import ru.vtb.validator.EnumNamePattern;
 
 import javax.validation.constraints.Pattern;
@@ -15,6 +16,7 @@ import javax.validation.constraints.Pattern;
 @Getter
 @Setter
 @Builder
+@ToString
 public class ContactCreateInputDto {
 
     @Schema(description = "Тип контакта: мобильный, домашний",

@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.vtb.model.type.AddressType;
+import lombok.ToString;
 import ru.vtb.validator.EnumNamePattern;
 
 import javax.validation.constraints.Min;
@@ -16,6 +16,7 @@ import javax.validation.constraints.Min;
 @Getter
 @Setter
 @Builder
+@ToString
 public class AddressCreateInputDto {
 
     @Schema(description = "Тип адреса: регистрация или временный",

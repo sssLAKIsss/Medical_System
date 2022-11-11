@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -39,6 +40,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @Setter
 @SuperBuilder
 @EntityListeners(AuditingEntityListener.class)
+@ToString
 public class Person extends BaseDateVersionEntity {
 
     @Id
@@ -59,6 +61,7 @@ public class Person extends BaseDateVersionEntity {
 
     @OneToMany(cascade = {MERGE, PERSIST, REFRESH})
     @JoinColumn(name = "person_id")
+    @ToString.Exclude
     private Set<Document> documents;
 
     @ManyToMany(fetch = EAGER, cascade = {MERGE, PERSIST, REFRESH})
@@ -71,6 +74,7 @@ public class Person extends BaseDateVersionEntity {
 
     @OneToMany(cascade = {MERGE, PERSIST, REFRESH})
     @JoinColumn(name = "person_id")
+    @ToString.Exclude
     private Set<Contact> contacts;
 
     @Override

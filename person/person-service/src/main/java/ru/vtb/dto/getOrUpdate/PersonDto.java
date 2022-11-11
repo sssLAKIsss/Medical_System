@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import ru.vtb.dto.superclass.BaseDtoModel;
 
@@ -16,6 +17,7 @@ import java.util.Set;
 @Getter
 @Setter
 @SuperBuilder
+@ToString
 public class PersonDto extends BaseDtoModel {
 
     @Schema(description = "Идентификатор",
