@@ -1,9 +1,12 @@
+app:
+  name: person-service
+  version: person-service-1.0
 logging:
   level:
     root: info
 spring:
   mvc:
-    pathmatch:
+    path match:
       matching-strategy: path-pattern-parser
   application:
     name: person-service
