@@ -30,27 +30,26 @@ public class PersonServiceImpl implements IPersonService {
     @Override
     @Transactional(readOnly = true)
     public PersonDto findById(Long id, Boolean visibility) {
-        Person person = personRepository.findByIdAndVisibility(id, visibility)
-                .orElseThrow(PersonNotFoundException::new);
-        setPersonsAbilitiesVisibility(person, visibility);
-        return personMapper.convertToOutputDto(person);
+        return personMapper.convertToOutputDto(
+                personRepository.findByIdAndVisibility(id, visibility)
+                .orElseThrow(PersonNotFoundException::new)
+        );
     }
 
     @Override
     @Transactional(readOnly = true)
     public PersonDto findByPassportNumber(String passportNumber, Boolean visibility) {
-        Person person = personRepository.findByPassportNumber(passportNumber, visibility)
-                .orElseThrow(PersonNotFoundException::new);
-        setPersonsAbilitiesVisibility(person, visibility);
-        return personMapper.convertToOutputDto(person);
+        return personMapper.convertToOutputDto(
+                personRepository.findByPassportNumber(passportNumber, visibility)
+                .orElseThrow(PersonNotFoundException::new)
+        );
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<PersonDto> findAllPersons(Boolean visibility, String filterRegion, Pageable pageable) {
-        List<Person> persons = personRepository.findAllPersonsWithPaginationByVisibility(visibility, filterRegion, pageable);
-        persons.forEach(person -> setPersonsAbilitiesVisibility(person, visibility));
-        return persons.stream()
+        return personRepository.findAllPersonsWithPaginationByVisibility(visibility, filterRegion, pageable)
+                .stream()
                 .map(personMapper::convertToOutputDto)
                 .collect(Collectors.toList());
     }
