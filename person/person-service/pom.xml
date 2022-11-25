@@ -34,6 +34,12 @@
         <spring.eureka.version>3.1.4</spring.eureka.version>
         <spring-cloud-starter-openfeign.version>3.1.2</spring-cloud-starter-openfeign.version>
 
+        <liquibase.version>4.17.1</liquibase.version>
+        <postgresql.version>42.3.4</postgresql.version>
+
+        <testcontainers.version>1.17.5</testcontainers.version>
+
+        <gson.version>2.9.0</gson.version>
     </properties>
 
     <dependencies>
@@ -41,12 +47,12 @@
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-maven-plugin</artifactId>
-            <version>4.17.1</version>
+            <version>${liquibase.version}</version>
         </dependency>
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-            <version>4.17.1</version>
+            <version>${liquibase.version}</version>
         </dependency>
 
         <!--        Spring-deps-->
@@ -61,11 +67,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-aop</artifactId>-->
-<!--            <version>${spring-boot.version}</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -97,7 +98,7 @@
         <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
-            <version>3.1.0</version>
+            <version>${modelMapper.version}</version>
         </dependency>
 
         <!--        Lombok-deps-->
@@ -113,33 +114,33 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
-            <version>42.3.4</version>
+            <version>${postgresql.version}</version>
         </dependency>
 
         <!--        Other-->
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers</artifactId>
-            <version>1.17.5</version>
+            <version>${testcontainers.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>1.17.5</version>
+            <version>${testcontainers.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>postgresql</artifactId>
-            <version>1.16.0</version>
+            <version>${testcontainers.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.9.0</version>
+            <version>${gson.version}</version>
         </dependency>
         <!--        <dependency>-->
         <!--            <groupId>com.github.ukman</groupId>-->
@@ -160,6 +161,7 @@
 
     <build>
         <plugins>
+
             <plugin>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
@@ -192,11 +194,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.6.7</version>
             </plugin>
         </plugins>
+
         <finalName>person</finalName>
     </build>
-
 
 </project>
