@@ -4,6 +4,7 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.PropertyValueException;
 import org.hibernate.internal.util.StringHelper;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,10 @@ import ru.vtb.message.Messages;
 import javax.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static ru.vtb.message.MessagesKeys.ERROR_BAD_REQUEST;
 import static ru.vtb.message.MessagesKeys.ERROR_INTERNAL_SERVER;
 import static ru.vtb.message.MessagesKeys.MSG_DEFAULT;
@@ -35,8 +39,6 @@ public class Handler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {AbstractLocalizedException.class})
     public ResponseEntity<Object> handleLocalizedExceptionException(AbstractLocalizedException ex,
                                                                     WebRequest request) {
-        log.error(ex.getMessage(), ex);
-
         return handleExceptionInternal(
                 ex,
                 ApiError.builder()
@@ -51,28 +53,31 @@ public class Handler extends ResponseEntityExceptionHandler {
                 request);
     }
 
-
-    //TODO допечь номарльную упаковку
     @ExceptionHandler(value = {DataIntegrityViolationException.class})
     public ResponseEntity<Object> handleDataIntegrityViolationException(
             DataIntegrityViolationException ex,
             WebRequest request) {
 
-        Throwable cause = ex.getCause();
+        Throwable cause = ex.getMostSpecificCause();
         if (cause instanceof PropertyValueException) {
             return handlePropertyValueException((PropertyValueException) cause, request);
         }
-//        if (cause instanceof ConstraintViolationException) {
-//            return handleConstraintViolationException((ConstraintViolationException) ex, request);
-//        }
-        log.error(ex.getMessage(), ex);
-        return handleOtherException(ex, request);
+        return handleExceptionInternal(
+                ex,
+                ApiError.builder()
+                        .error(Messages.getMessageForLocale(ERROR_BAD_REQUEST, request.getLocale()))
+                        .message(ex.getLocalizedMessage())
+                        .rawMessage(ex.getMostSpecificCause().getMessage())
+                        .status(BAD_REQUEST.value())
+                        .timestamp(LocalDateTime.now())
+                        .build(),
+                new HttpHeaders(),
+                BAD_REQUEST,
+                request);
     }
 
     @ExceptionHandler(value = {PropertyValueException.class})
     public ResponseEntity<Object> handlePropertyValueException(PropertyValueException ex, WebRequest request) {
-        log.error(ex.getMessage(), ex);
-
         Locale locale = request.getLocale();
         String messageKey = PREFIX_VALIDATION
                 + StringHelper.unqualify(ex.getEntityName()).toLowerCase() + "_" + ex.getPropertyName();
@@ -81,63 +86,58 @@ public class Handler extends ResponseEntityExceptionHandler {
                 .error(Messages.getMessageForLocale(ERROR_BAD_REQUEST, locale))
                 .message(Messages.getMessageForLocale(messageKey, locale))
                 .rawMessage(ex.getMessage())
-                .status(HttpStatus.BAD_REQUEST.value())
+                .status(BAD_REQUEST.value())
                 .timestamp(LocalDateTime.now())
                 .build();
 
-        return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+        return handleExceptionInternal(ex, error, new HttpHeaders(), BAD_REQUEST, request);
     }
 
     @NonNull
-//    @Override
+    @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(@NonNull MethodArgumentNotValidException ex,
                                                                   @NonNull HttpHeaders headers,
                                                                   @NonNull HttpStatus status,
                                                                   WebRequest request) {
-        log.error(ex.getMessage(), ex);
-
         Locale locale = request.getLocale();
         ApiError error = ApiError.builder()
                 .error(Messages.getMessageForLocale(ERROR_BAD_REQUEST, locale))
                 .message(Messages.getMessageForLocale(MSG_VALIDATION_ERROR, locale))
-                .rawMessage(ex.getMessage())
-                .status(HttpStatus.BAD_REQUEST.value())
+                .rawMessage(
+                        ex.getBindingResult().getFieldErrors()
+                                .stream()
+                                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                                .collect(Collectors.joining(", ")))
+                .status(BAD_REQUEST.value())
                 .timestamp(LocalDateTime.now())
                 .build();
 
-        return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+        return handleExceptionInternal(ex, error, new HttpHeaders(), BAD_REQUEST, request);
     }
 
     @ExceptionHandler(value = {ConstraintViolationException.class})
     public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex,
                                                                      WebRequest request) {
-        log.error(ex.getMessage(), ex);
-
         Locale locale = request.getLocale();
         ApiError error = ApiError.builder()
                 .error(Messages.getMessageForLocale(ERROR_BAD_REQUEST, locale))
                 .message(Messages.getMessageForLocale(MSG_VALIDATION_ERROR, locale))
                 .rawMessage(ex.getMessage())
-                .status(HttpStatus.BAD_REQUEST.value())
+                .status(BAD_REQUEST.value())
                 .timestamp(LocalDateTime.now())
                 .build();
 
-        return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+        return handleExceptionInternal(ex, error, new HttpHeaders(), BAD_REQUEST, request);
     }
 
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<Object> handleOtherException(Exception ex, WebRequest request) {
-        log.error(ex.getCause().getMessage(), ex);
-
-        return handleExceptionInternal(ex, null, getHeadersFromRequest(request), HttpStatus.INTERNAL_SERVER_ERROR, request);
-    }
-
-    private HttpHeaders getHeadersFromRequest(WebRequest request) {
-        HttpHeaders headers = new HttpHeaders();
-        request.getHeaderNames().forEachRemaining(
-                headerName -> headers.addIfAbsent(headerName, request.getHeader(headerName))
-        );
-        return headers;
+        return handleExceptionInternal(
+                ex,
+                null,
+                getHeadersFromRequest(request),
+                INTERNAL_SERVER_ERROR,
+                request);
     }
 
     @NonNull
@@ -159,9 +159,17 @@ public class Handler extends ResponseEntityExceptionHandler {
                 .error(Messages.getMessageForLocale(ERROR_INTERNAL_SERVER, locale))
                 .message(Messages.getMessageForLocale(MSG_DEFAULT, locale))
                 .rawMessage(ex.getMessage())
-                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .status(INTERNAL_SERVER_ERROR.value())
                 .timestamp(LocalDateTime.now())
                 .build();
         return new ResponseEntity<>(error, headers, status);
+    }
+
+    private HttpHeaders getHeadersFromRequest(WebRequest request) {
+        HttpHeaders headers = new HttpHeaders();
+        request.getHeaderNames().forEachRemaining(
+                headerName -> headers.addIfAbsent(headerName, request.getHeader(headerName))
+        );
+        return headers;
     }
 }

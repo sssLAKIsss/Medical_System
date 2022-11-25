@@ -6,7 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.vtb.model.type.DocumentType;
+import lombok.ToString;
+import ru.vtb.validator.EnumNamePattern;
 
 import javax.validation.constraints.Pattern;
 
@@ -15,12 +16,14 @@ import javax.validation.constraints.Pattern;
 @Getter
 @Setter
 @Builder
+@ToString
 public class DocumentCreateInputDto {
 
     @Schema(description = "Тип документа: паспорт, снилс",
             example = "PASSPORT",
             required = true)
-    private DocumentType type;
+    @EnumNamePattern(regexp = "SNILS|PASSPORT", message = "Тип документа может быть только {regexp}")
+    private String type;
 
     @Pattern(regexp = "^[0-9]{10}$",
             message = "Серия и номер пасспорта должны быть одной строкой без пробела 10 символов")

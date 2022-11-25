@@ -1,0 +1,20 @@
+[
+  {
+    "visibility": true,
+    "version": 0,
+    "lastModifiedDate": "2022-05-30T20:04:34.972264",
+    "dateTimeCreation": "2022-05-30T20:04:34.972264",
+    "id": 1,
+    "type": "SNILS",
+    "number": "4545001004"
+  },
+  {
+    "visibility": true,
+    "version": 0,
+    "lastModifiedDate": "2022-05-30T20:04:34.975264",
+    "dateTimeCreation": "2022-05-30T20:04:34.975264",
+    "id": 2,
+    "type": "SNILS",
+    "number": "4545001005"
+  }
+]

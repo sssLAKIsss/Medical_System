@@ -11,7 +11,9 @@ import ru.vtb.model.Document;
 import ru.vtb.repository.DocumentRepository;
 import ru.vtb.service.IDocumentService;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,32 +42,42 @@ public class DocumentServiceImpl implements IDocumentService {
 
     @Override
     @Transactional
-    public List<DocumentDto> findAllDocumentsByPersonsId(List<Long> personsId, Boolean visibility) {
-        return documentRepository.findAllDocumentsByPersonsId(personsId, visibility)
+    public Map<Long, List<DocumentDto>> findAllDocumentsByPersonId(List<Long> personsId, Boolean visibility) {
+        return personsId.stream()
+                .map(personId ->
+                        Map.entry(
+                                personId,
+                                documentRepository.findAllDocumentsByPersonIdAAndVisibility(personId, visibility)
+                                        .stream()
+                                        .map(documentMapper::convertToOutputDto)
+                                        .collect(Collectors.toList())
+                        ))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    @Override
+    @Transactional
+    public List<Long> createListOfDocuments(List<DocumentCreateInputDto> documents) {
+        return documentRepository.saveAll(
+                        documents.stream()
+                                .map(documentMapper::convertFromCreateDto)
+                                .filter(document -> !documentRepository.existsDocumentByNumber(document.getNumber()))
+                                .collect(Collectors.toList()))
                 .stream()
-                .map(documentMapper::convertToOutputDto)
+                .map(Document::getId)
                 .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public List<DocumentDto> createListOfDocuments(List<DocumentCreateInputDto> documents) {
+    public List<Long> updateListOfDocuments(List<DocumentDto> documents) {
         return documentRepository.saveAll(
-                        documents.stream().map(documentMapper::convertFromCreateDto).collect(Collectors.toList())
+                        documents.stream()
+                                .map(documentMapper::convertFromUpdateDto)
+                                .collect(Collectors.toList())
                 )
                 .stream()
-                .map(documentMapper::convertToOutputDto)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    @Transactional
-    public List<DocumentDto> updateListOfDocuments(List<DocumentDto> documents) {
-        return documentRepository.saveAll(
-                        documents.stream().map(documentMapper::convertFromUpdateDto).collect(Collectors.toList())
-                )
-                .stream()
-                .map(documentMapper::convertToOutputDto)
+                .map(Document::getId)
                 .collect(Collectors.toList());
     }
 
@@ -78,12 +90,12 @@ public class DocumentServiceImpl implements IDocumentService {
     @Override
     @Transactional
     public void deleteDocumentsFromDB(List<Long> documentsId) {
-        documentRepository.deleteAllById(documentsId);
+        documentRepository.deleteDocumentsById(new HashSet<>(documentsId));
     }
 
     @Override
     @Transactional
     public void deleteAllDocuments() {
-        documentRepository.deleteAll();
+        documentRepository.deleteAllDocuments();
     }
 }

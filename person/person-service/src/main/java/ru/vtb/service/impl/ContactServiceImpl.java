@@ -11,7 +11,9 @@ import ru.vtb.model.Contact;
 import ru.vtb.repository.ContactRepository;
 import ru.vtb.service.IContactService;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,34 +42,41 @@ public class ContactServiceImpl implements IContactService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ContactDto> findAllContactsByPersonsId(List<Long> personsId, Boolean visibility) {
-        return contactRepository.findAllContactsByPersonIdIsInAndVisibilityIsLike(personsId, visibility)
-                .stream()
-                .map(contactMapper::convertToOutputDto)
-                .collect(Collectors.toList());
+    public Map<Long, List<ContactDto>> findAllContactsByPersonsId(List<Long> personsId, Boolean visibility) {
+        return personsId.stream()
+                .map(personId ->
+                        Map.entry(
+                                personId,
+                                contactRepository.findAllContactsByPersonIdAndVisibility(personId, visibility)
+                                        .stream()
+                                        .map(contactMapper::convertToOutputDto)
+                                        .collect(Collectors.toList())
+                        ))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     @Override
     @Transactional
-    public List<ContactDto> createListOfContacts(List<ContactCreateInputDto> contacts) {
+    public List<Long> createListOfContacts(List<ContactCreateInputDto> contacts) {
         return contactRepository.saveAll(
                 contacts.stream()
                         .map(contactMapper::convertFromCreateDto)
+                        .filter(contact -> !contactRepository.existsContactByPhoneNumber(contact.getPhoneNumber()))
                         .collect(Collectors.toList()))
                 .stream()
-                .map(contactMapper::convertToOutputDto)
+                .map(Contact::getId)
                 .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public List<ContactDto> updateListOfContacts(List<ContactDto> contacts) {
+    public List<Long> updateListOfContacts(List<ContactDto> contacts) {
         return contactRepository.saveAll(
                         contacts.stream()
                                 .map(contactMapper::convertFromUpdateDto)
                                 .collect(Collectors.toList()))
                 .stream()
-                .map(contactMapper::convertToOutputDto)
+                .map(Contact::getId)
                 .collect(Collectors.toList());
     }
 
@@ -80,12 +89,12 @@ public class ContactServiceImpl implements IContactService {
     @Override
     @Transactional
     public void deleteContactsFromDB(List<Long> contactsId) {
-        contactRepository.deleteAllById(contactsId);
+        contactRepository.deleteContactsById(new HashSet<>(contactsId));
     }
 
     @Override
     @Transactional
     public void deleteAllContacts() {
-        contactRepository.deleteAll();
+        contactRepository.deleteAllContacts();
     }
 }

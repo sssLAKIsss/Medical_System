@@ -5,6 +5,7 @@ import ru.vtb.dto.createInput.PersonCreateInputDto;
 import ru.vtb.dto.getOrUpdate.PersonDto;
 
 import java.util.List;
+import java.util.Set;
 
 public interface IPersonService {
     PersonDto findById(Long id, Boolean visibility);
@@ -16,8 +17,10 @@ public interface IPersonService {
     List<Long> saveAll(List<PersonCreateInputDto> personCreateInputDtos);
     List<Long> updateAll(List<PersonDto> personDtos);
 
-    boolean isValidPassportForPerson(String personFullName, String passportNumber, Boolean visibility);
-    void setPersonsVisibility(Boolean visibility, List<Long> personsId);
+    boolean isValidPassportForPerson(String firstName, String lastName,
+                                     String patronymic, String passportNumber,
+                                     Boolean visibility);
+    void setPersonsVisibility(Boolean visibility, Set<Long> personsId);
 
     //TODO будет время - надо сделать
 //    void setDocumentsToPersons(List<Long> personsId, List<Long> documentsId);

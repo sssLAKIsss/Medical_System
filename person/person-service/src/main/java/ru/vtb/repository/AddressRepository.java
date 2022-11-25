@@ -5,16 +5,35 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.vtb.model.Address;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface AddressRepository extends JpaRepository<Address, Long> {
+
+    boolean existsAddressByCountryAndCityAndRegionAndStreetAndHomeAndFlat(
+            String country,
+            String city,
+            String region,
+            String street,
+            Long home,
+            Long flat
+    );
+
     @Query(value = "from Address a " +
             "where a.visibility = :visibility and :visibility is not null or " +
             ":visibility is null ")
     List<Address> findAllAddressesByVisibility(@Param("visibility") Boolean visibility);
+
+    @Query(value = "from Address a " +
+            "join a.persons p where " +
+            "p.id = :personId and  " +
+            "(a.visibility = :visibility and :visibility is not null or :visibility is null) ")
+    List<Address> findAllAddressesByPersonIdAndVisibility(@Param("personId") Long personId,
+                                                          @Param("visibility") Boolean visibility);
 
     @Query(value = "from Address a " +
             "join a.persons p where " +
@@ -23,13 +42,19 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
     List<Address> findAllAddressesByPersonsIdIsInAndVisibilityIsLike(@Param("personsId") List<Long> personsId,
                                                                      @Param("visibility") Boolean visibility);
 
+    @Transactional
     @Modifying
     @Query(value = "update Address a set a.visibility = :visibility where a.id in :addressesId")
     void setVisibilityToAddresses(@Param("visibility") Boolean visibility,
                                   @Param("addressesId") List<Long> addressesId);
 
+    @Transactional
+    @Query(value = "delete from Address a where a.id in :addressesId")
     @Modifying
-    @Query(value = "update Address a set a.visibility = :visibility where a.persons in :personsId and a.persons.size = 1")
-    void setVisibilityToAddressesByPersonsId(@Param("visibility") Boolean visibility,
-                                  @Param("personsId") List<Long> personsId);
+    void deleteAddressesById(@Param("addressesId") Set<Long> addressesId);
+
+    @Transactional
+    @Query(value = "delete from Address a")
+    @Modifying
+    void deleteAllAddresses();
 }

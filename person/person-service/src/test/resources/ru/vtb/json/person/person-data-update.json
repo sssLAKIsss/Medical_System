@@ -1,0 +1,68 @@
+[
+  {
+    "visibility": true,
+    "version": 0,
+    "lastModifiedDate": "2022-10-31T15:52:49.593993",
+    "dateTimeCreation": "2022-10-31T15:52:49.593993",
+    "id": 1,
+    "lastName": "Андрей",
+    "firstName": "Федор",
+    "patronymic": "Федорович",
+    "documents": [
+      {
+        "visibility": true,
+        "version": 0,
+        "lastModifiedDate": "2022-10-31T15:52:49.593993",
+        "dateTimeCreation": "2022-10-31T15:52:49.593993",
+        "id": 1,
+        "type": "PASSPORT",
+        "number": "4545001005"
+      },
+      {
+        "visibility": true,
+        "version": 0,
+        "lastModifiedDate": "2022-10-31T15:52:49.593993",
+        "dateTimeCreation": "2022-10-31T15:52:49.593993",
+        "id": 4,
+        "type": "SNILS",
+        "number": "4545001004"
+      }
+    ],
+    "addresses": [
+      {
+        "visibility": true,
+        "version": 0,
+        "lastModifiedDate": "2022-10-31T15:52:49.593993",
+        "dateTimeCreation": "2022-10-31T15:52:49.593993",
+        "id": 1,
+        "type": "REGISTRATION",
+        "country": "Russia",
+        "region": "RB",
+        "city": "UFA",
+        "street": "GOGOl9",
+        "home": 4,
+        "flat": 4
+      }
+    ],
+    "contacts": [
+      {
+        "visibility": true,
+        "version": 0,
+        "lastModifiedDate": "2022-10-31T15:52:49.593993",
+        "dateTimeCreation": "2022-10-31T15:52:49.593993",
+        "id": 1,
+        "type": "HOME",
+        "phoneNumber": "+79999999999"
+      },
+      {
+        "visibility": true,
+        "version": 0,
+        "lastModifiedDate": "2022-10-31T15:52:49.593993",
+        "dateTimeCreation": "2022-10-31T15:52:49.593993",
+        "id": 2,
+        "type": "HOME",
+        "phoneNumber": "+79999999992"
+      }
+    ]
+  }
+]

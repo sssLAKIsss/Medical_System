@@ -6,19 +6,24 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.vtb.model.type.AddressType;
+import lombok.ToString;
+import ru.vtb.validator.EnumNamePattern;
+
+import javax.validation.constraints.Min;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
+@ToString
 public class AddressCreateInputDto {
 
     @Schema(description = "Тип адреса: регистрация или временный",
             example = "REGISTRATION",
             required = true)
-    private AddressType type;
+    @EnumNamePattern(regexp = "REGISTRATION|TEMPORARY", message = "Тип адреса может быть только {regexp}")
+    private String type;
 
     @Schema(description = "Страна проживания/регистрации",
             example = "Russia",
@@ -49,5 +54,6 @@ public class AddressCreateInputDto {
             example = "1",
             required = false,
             nullable = true)
+    @Min(value = 1, message = "Квартира - натуральное число, необразованное быдло!")
     private Long flat;
 }

@@ -8,6 +8,9 @@ import ru.vtb.dto.getOrUpdate.PersonDto;
 import ru.vtb.mapper.IModelMapper;
 import ru.vtb.model.Person;
 
+import java.util.Optional;
+import java.util.Set;
+
 @Component
 @RequiredArgsConstructor
 public class PersonMapper implements IModelMapper<Person, PersonCreateInputDto, PersonDto> {
@@ -17,17 +20,17 @@ public class PersonMapper implements IModelMapper<Person, PersonCreateInputDto, 
     public Person convertFromCreateDto(PersonCreateInputDto createDto) {
         Person p = mapper.map(createDto, Person.class);
         p.setVisibility(true);
-        p.getAddresses().forEach(a -> a.setVisibility(true));
-        p.getDocuments().forEach(d -> d.setVisibility(true));
-        p.getContacts().forEach(c -> c.setVisibility(true));
+        Optional.ofNullable(p.getAddresses()).orElse(Set.of()).forEach(a -> a.setVisibility(true));
+        Optional.ofNullable(p.getDocuments()).orElse(Set.of()).forEach(d -> d.setVisibility(true));
+        Optional.ofNullable(p.getContacts()).orElse(Set.of()).forEach(c -> c.setVisibility(true));
         return p;
     }
 
     @Override
     public Person convertFromUpdateDto(PersonDto updateDto) {
         Person p = mapper.map(updateDto, Person.class);
-        p.getDocuments().forEach(d -> d.setPersonId(p.getId()));
-        p.getContacts().forEach(c -> c.setPersonId(p.getId()));
+        Optional.ofNullable(p.getDocuments()).orElse(Set.of()).forEach(d -> d.setPersonId(p.getId()));
+        Optional.ofNullable(p.getContacts()).orElse(Set.of()).forEach(c -> c.setPersonId(p.getId()));
         return p;
     }
 
