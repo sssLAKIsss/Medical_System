@@ -58,7 +58,7 @@ public class PatientServiceImpl implements IPatientService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public boolean loggingAndSaveOperation(Patient patient) {
+    public boolean saveOperation(Patient patient) {
         log.info("Save vaccinationData to DB");
         patientRepository.save(patient);
         log.info("Send vaccinationData to kafka");

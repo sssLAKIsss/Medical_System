@@ -24,7 +24,11 @@ public class CsvFileStructureSchedulerImpl implements IScheduler {
     public void scheduleTask() {
         CsvFileStructure c = csvFileStructureIDataQueue.pollCsvData();
         if (Objects.isNull(c)) return;
-        log.info("Try to validate vaccination with name = " + c.getFullName());
+        log.info("Try to validate vaccination with name = " + String.join(
+                " ",
+                c.getLastName(),
+                c.getFirstName(),
+                c.getPatronymic()));
         businessTasksResolver.executeTasks(c);
     }
 }

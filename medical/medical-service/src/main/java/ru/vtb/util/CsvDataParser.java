@@ -16,7 +16,6 @@ public class CsvDataParser {
 
     public <T> List<T> parseMultipartFileToDataList(Class<T> clazz, MultipartFile file)  {
         List<T> dataList = new ArrayList<>();
-//        CSVReader csvReader = new CSVReader(new InputStreamReader(file.getInputStream()));
         try(Reader reader = new InputStreamReader(file.getInputStream())) {
             CsvToBean<T> toCsvToBean = new CsvToBeanBuilder(reader)
                     .withType(clazz)

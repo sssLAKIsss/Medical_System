@@ -20,28 +20,34 @@ import java.time.LocalDateTime;
 public class CsvFileStructure {
 
     @CsvBindByPosition(position = 0)
-    private String fullName;
+    private String firstName;
 
     @CsvBindByPosition(position = 1)
+    private String lastName;
+
+    @CsvBindByPosition(position = 2)
+    private String patronymic;
+
+    @CsvBindByPosition(position = 3)
     private String documentNumber;
 
     @CsvDate(value = "yyyy-MM-dd HH:mm:ss")
-    @CsvBindByPosition(position = 2)
+    @CsvBindByPosition(position = 4)
     private LocalDateTime chippingDate;
 
-    @CsvBindByPosition(position = 3)
+    @CsvBindByPosition(position = 5)
     private String vaccineTitle;
 
-    @CsvBindByPosition(position = 4)
+    @CsvBindByPosition(position = 6)
     private String vaccinationPointNumber;
 
-    @CsvBindByPosition(position = 5)
+    @CsvBindByPosition(position = 7)
     private String vaccinationPointTitle;
 
-    @CsvBindByPosition(position = 6)
+    @CsvBindByPosition(position = 8)
     private String city;
 
-    @CsvBindByPosition(position = 7)
+    @CsvBindByPosition(position = 9)
     private String address;
 
 }

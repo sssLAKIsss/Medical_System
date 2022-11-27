@@ -9,5 +9,5 @@ public interface IPatientService {
 
     void checkVaccinationAndVaccinationPointsInDataBase(Patient patient);
 
-    boolean loggingAndSaveOperation(Patient patient);
+    boolean saveOperation(Patient patient);
 }

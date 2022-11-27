@@ -15,7 +15,8 @@ public class CsvBusinessTasksResolverImpl implements IBusinessTasksResolver<CsvF
     public void executeTasks(CsvFileStructure obj) {
         long count = businessTaskList.stream()
                 .filter(task -> OperationType.VALIDATION.equals(task.getOperationName()))
-                .filter(task -> !task.execute(obj)).count();
+                .filter(task -> !task.execute(obj))
+                .count();
         if (count > 0) return;
 
         businessTaskList.stream()

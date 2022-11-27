@@ -41,10 +41,10 @@ public class CsvSaveBusinessTaskImpl implements IBusinessTask<CsvFileStructure> 
                     oldPatientOpt.get().getVaccinations().add(v);
                 }
                 patientService.checkVaccinationAndVaccinationPointsInDataBase(oldPatientOpt.get());
-                return patientService.loggingAndSaveOperation(oldPatientOpt.get());
+                return patientService.saveOperation(oldPatientOpt.get());
             }
             patientService.checkVaccinationAndVaccinationPointsInDataBase(newPatient);
-            return patientService.loggingAndSaveOperation(newPatient);
+            return patientService.saveOperation(newPatient);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,13 +1,15 @@
 package ru.vtb.service.chain;
 
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import ru.vtb.external.PersonsClient;
 import ru.vtb.model.csv.CsvFileStructure;
 import ru.vtb.service.IDataQueue;
 
-import java.util.Objects;
+import static java.util.Objects.*;
 
 @Component
 @RequiredArgsConstructor
@@ -19,19 +21,26 @@ public class CsvValidateBusinessTaskImpl implements IBusinessTask<CsvFileStructu
     @Override
     public boolean execute(CsvFileStructure obj) {
         try {
-            if (Objects.isNull(obj) || Boolean.FALSE.equals(
+            if (isNull(obj) || Boolean.FALSE.equals(
                     personsClient.checkByValidPersonData(
-                                    obj.getFullName(),
+                                    obj.getFirstName(),
+                                    obj.getLastName(),
                                     obj.getDocumentNumber(),
-                                    true
-                            )
+                                    obj.getPatronymic(),
+                                    Boolean.TRUE)
                             .getBody())
             ) {
                 return false;
             }
             log.info("Check csvData ");
         } catch (Exception e) {
-            log.error("Cannot check csvData from person-service");
+            if (e instanceof FeignException && ((FeignException) e).status() == HttpStatus.NOT_FOUND.value()) {
+                log.error("External exception {} with message {}", e, e.getMessage());
+                return false;
+            }
+            log.error("External exception: {}, with message: {}. Cannot check csvData from person-service",
+                    e,
+                    e.getMessage());
             csvFileStructureIDataQueue.saveInQueueCsvData(obj);
             return false;
         }
