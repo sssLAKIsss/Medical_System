@@ -1,6 +1,9 @@
+app:
+  version: medical-service-1.0
+  name: medical-service
 spring:
   mvc:
-    pathmatch:
+    path match:
       matching-strategy: path-pattern-parser
   application:
     name: medical-service

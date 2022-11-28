@@ -9,7 +9,7 @@ import ru.vtb.external.PersonsClient;
 import ru.vtb.model.csv.CsvFileStructure;
 import ru.vtb.service.IDataQueue;
 
-import static java.util.Objects.*;
+import static java.util.Objects.isNull;
 
 @Component
 @RequiredArgsConstructor
