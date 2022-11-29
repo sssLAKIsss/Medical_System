@@ -33,6 +33,14 @@ spring:
       maxLifetime: 180000
       maximumPoolSize: 5
 
+external:
+  kafka:
+    bootstrap-server: ${BOOTSTRAP_SERVER:localhost:29092}
+  client:
+    person-service-client:
+      base-url: ${BASE_URL:localhost:8081}
+      service-name: ${SERVICE_NAME:person-service}
+
 feign:
   autoconfiguration:
     jackson:

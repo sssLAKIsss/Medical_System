@@ -30,6 +30,7 @@ public class CsvValidateBusinessTaskImpl implements IBusinessTask<CsvFileStructu
                                     Boolean.TRUE)
                             .getBody())
             ) {
+                log.info("Пользователь {} {} не прошел проверку в справочнике", obj.getFirstName(), obj.getLastName());
                 return false;
             }
             log.info("Check csvData ");

@@ -14,6 +14,8 @@ import ru.vtb.controller.api.custom.ApiParams;
 import ru.vtb.controller.api.custom.ApiV1;
 import ru.vtb.dto.PatientDto;
 
+import javax.validation.constraints.Pattern;
+
 @Tag(
         name = "patient-controller",
         description = "Позволяет получить данные о вакцинации пациента по номеру паспорта"
@@ -33,5 +35,7 @@ public interface PatientApi {
                     content = @Content(schema = @Schema(implementation = PatientDto.class)))
     })
     @GetMapping("/medical/patient")
-    ResponseEntity<PatientDto> getByPassportNumber(@RequestParam String passportNumber);
+    ResponseEntity<PatientDto> getByPassportNumber(
+            @RequestParam @Pattern(regexp = "^[0-9]{10}$", message = "Номер документа строго 10 цифр") String passportNumber
+    );
 }
