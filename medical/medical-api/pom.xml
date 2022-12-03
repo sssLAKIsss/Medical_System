@@ -7,12 +7,12 @@
     <parent>
         <artifactId>medical</artifactId>
         <groupId>ru.vtb</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
 
     <groupId>vtb</groupId>
     <artifactId>medical-api</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>${revision}</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -37,7 +37,7 @@
                 <configuration>
                     <!--suppress UnresolvedMavenProperty -->
                     <inputSpec>
-                        ${project.basedir}/src/main/resources/medical-service-api-v0.json
+                        ${project.basedir}/src/main/resources/medical-service-api-v1.json
                     </inputSpec>
                     <generatorName>spring</generatorName>
                     <configOptions>

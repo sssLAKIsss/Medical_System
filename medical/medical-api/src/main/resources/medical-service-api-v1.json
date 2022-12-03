@@ -1,8 +1,16 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "OpenAPI definition",
-    "version": "v0"
+    "title": "medical-service",
+    "description": "Медицинский справочник",
+    "contact": {
+      "name": "Я",
+      "email": "я@я.я"
+    },
+    "license": {
+      "name": "Лицензировано мной"
+    },
+    "version": "medical-service-1.0"
   },
   "servers": [
     {
@@ -27,7 +35,7 @@
           "vaccination-data-controller"
         ],
         "summary": "Загрузить данные с файла",
-        "description": "Позволяет загрузить данные с csv-файла, файл имеет стурктуру: ФИОпаспортдата вакцинацииназвание вакциныуникальный номер пункта вакцинацииназвание пункта вакцинацииадрес пункта",
+        "description": "Позволяет загрузить данные с csv-файла, файл имеет структуру: ФИОпаспортдата вакцинацииназвание вакциныуникальный номер пункта вакцинацииназвание пункта вакцинацииадрес пункта",
         "operationId": "saveCsvVaccinationFile",
         "requestBody": {
           "content": {
@@ -48,10 +56,20 @@
           }
         },
         "responses": {
-          "400": {
-            "description": "Bad Request",
+          "404": {
+            "description": "Not found",
             "content": {
-              "*/*": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiError"
                 }
@@ -138,10 +156,10 @@
               }
             }
           },
-          "404": {
-            "description": "Not Found",
+          "400": {
+            "description": "Bad request",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiError"
                 }
@@ -151,7 +169,7 @@
         }
       }
     },
-    "/api/v1/medical/patient/{passportNumber}": {
+    "/api/v1/medical/patient": {
       "get": {
         "tags": [
           "patient-controller"
@@ -162,9 +180,10 @@
         "parameters": [
           {
             "name": "passportNumber",
-            "in": "path",
+            "in": "query",
             "required": true,
             "schema": {
+              "pattern": "^[0-9]{10}$",
               "type": "string"
             }
           }
@@ -180,20 +199,30 @@
               }
             }
           },
-          "400": {
-            "description": "Bad Request",
+          "404": {
+            "description": "Not found",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
-          "404": {
-            "description": "Not Found",
+          "500": {
+            "description": "Internal server error",
             "content": {
-              "*/*": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiError"
                 }
@@ -237,16 +266,29 @@
       "PatientDto": {
         "required": [
           "documentNumber",
-          "fullName"
+          "firstName",
+          "lastName",
+          "patronymic"
         ],
         "type": "object",
         "properties": {
-          "fullName": {
+          "lastName": {
             "type": "string",
-            "description": "ФИО вакцинальщика",
-            "example": "Андреев Андрей Андреич"
+            "description": "Фамилия вакцинальщика",
+            "example": "Андреев"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "Имя вакцинальщика",
+            "example": "Андрей"
+          },
+          "patronymic": {
+            "type": "string",
+            "description": "Отчество вакцинальщика",
+            "example": "Андреич"
           },
           "documentNumber": {
+            "pattern": "^[0-9]{10}$",
             "type": "string",
             "description": "Номер паспорта",
             "example": "4510003221"

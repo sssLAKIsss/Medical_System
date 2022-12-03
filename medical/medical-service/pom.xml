@@ -7,12 +7,12 @@
     <parent>
         <artifactId>medical</artifactId>
         <groupId>ru.vtb</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
 
     <groupId>vtb</groupId>
     <artifactId>medical-service</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>${revision}</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -37,6 +37,16 @@
         <spring.eureka.version>3.1.2</spring.eureka.version>
 
         <shedlock.version>4.42.0</shedlock.version>
+
+        <liquibase-maven-plugin.version>4.17.2</liquibase-maven-plugin.version>
+        <liquibase-core.version>4.17.2</liquibase-core.version>
+        <postgresql.version>42.5.0</postgresql.version>
+
+        <opencsv.version>5.7.1</opencsv.version>
+
+        <shedlock.version>4.42.0</shedlock.version>
+
+        <person-api.version>person-service-1.0</person-api.version>
     </properties>
 
     <dependencies>
@@ -57,12 +67,12 @@
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-maven-plugin</artifactId>
-            <version>4.17.2</version>
+            <version>${liquibase-maven-plugin.version}</version>
         </dependency>
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-            <version>4.17.2</version>
+            <version>${liquibase-core.version}</version>
         </dependency>
 
         <!--        Spring-deps-->
@@ -114,7 +124,7 @@
         <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
-            <version>3.1.0</version>
+            <version>${modelMapper.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -135,20 +145,20 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
-            <version>42.5.0</version>
+            <version>${postgresql.version}</version>
         </dependency>
 
         <!--		Cvs-parser-->
         <dependency>
             <groupId>com.opencsv</groupId>
             <artifactId>opencsv</artifactId>
-            <version>5.7.1</version>
+            <version>${opencsv.version}</version>
         </dependency>
         <!--        internal API-->
         <dependency>
             <groupId>vtb</groupId>
             <artifactId>person-api</artifactId>
-            <version>person-service-1.0</version>
+            <version>${person-api.version}</version>
             <scope>compile</scope>
         </dependency>
 
@@ -159,14 +169,13 @@
             <plugin>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
-                <version>4.4.0</version>
+                <version>${liquibase-maven-plugin.version}</version>
                 <configuration>
                     <url>jdbc:postgresql://localhost:5432/medical</url>
                     <username>postgres</username>
                     <password>postgres</password>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
 </project>
