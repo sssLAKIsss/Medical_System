@@ -1,11 +1,11 @@
 package ru.vtb.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import ru.vtb.model.superclass.BaseDateVersionEntity;
 
@@ -27,7 +27,7 @@ import java.util.Objects;
 @Accessors(chain = true)
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @EntityListeners(AuditingEntityListener.class)
 public class VaccinationPoint extends BaseDateVersionEntity {
 

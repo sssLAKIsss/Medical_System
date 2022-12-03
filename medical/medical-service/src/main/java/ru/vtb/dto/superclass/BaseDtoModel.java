@@ -5,12 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@SuperBuilder
 public class BaseDtoModel {
 
     @Schema(description = "Дата последнего изменения сущности")
@@ -18,5 +20,4 @@ public class BaseDtoModel {
 
     @Schema(description = "Дата создания сущности")
     private String dateTimeCreation;
-
 }

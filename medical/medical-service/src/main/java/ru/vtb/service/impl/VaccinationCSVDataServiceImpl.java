@@ -24,5 +24,4 @@ public class VaccinationCSVDataServiceImpl implements IVaccinationCSVDataService
         CsvDataParser.parseMultipartFileToDataList(CsvFileStructure.class, file)
                 .forEach(tasksResolver::executeTasks);
     }
-
 }
