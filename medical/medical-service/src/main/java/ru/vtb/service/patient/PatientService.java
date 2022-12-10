@@ -1,4 +1,4 @@
-package ru.vtb.service.impl;
+package ru.vtb.service.patient;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,15 +11,14 @@ import ru.vtb.model.Patient;
 import ru.vtb.repository.PatientRepository;
 import ru.vtb.repository.VaccinationPointRepository;
 import ru.vtb.repository.VaccineRepository;
-import ru.vtb.service.IDataQueue;
-import ru.vtb.service.IPatientService;
+import ru.vtb.service.queue.IDataQueue;
 
 import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class PatientServiceImpl implements IPatientService {
+public class PatientService implements IPatientService {
     private final PatientRepository patientRepository;
     private final VaccinationPointRepository vaccinationPointRepository;
     private final VaccineRepository vaccineRepository;
@@ -62,7 +61,7 @@ public class PatientServiceImpl implements IPatientService {
         log.info("Save vaccinationData to DB");
         patientRepository.save(patient);
         log.info("Send vaccinationData to kafka");
-        patientDataQueue.saveInQueueCsvData(patient.getId());
+        patientDataQueue.putInQueue(patient.getId());
         return true;
     }
 }

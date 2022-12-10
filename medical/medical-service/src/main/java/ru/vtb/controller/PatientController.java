@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.vtb.controller.api.PatientApi;
 import ru.vtb.dto.PatientDto;
-import ru.vtb.service.IPatientService;
+import ru.vtb.service.patient.IPatientService;
 
 @RestController
 @RequiredArgsConstructor

@@ -1,4 +1,4 @@
-package ru.vtb.service.chain;
+package ru.vtb.service.chain.operation;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,14 +9,14 @@ import ru.vtb.model.Patient;
 import ru.vtb.model.Vaccination;
 import ru.vtb.model.csv.CsvFileStructure;
 import ru.vtb.repository.PatientRepository;
-import ru.vtb.service.IPatientService;
+import ru.vtb.service.patient.IPatientService;
 
 import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class CsvSaveBusinessTaskImpl implements IBusinessTask<CsvFileStructure> {
+public class PatientSaverOperation implements IOperation<CsvFileStructure> {
     private final PatientRepository patientRepository;
     private final IPatientService patientService;
     private final IModelMapper<Patient, CsvFileStructure> patientMapper;

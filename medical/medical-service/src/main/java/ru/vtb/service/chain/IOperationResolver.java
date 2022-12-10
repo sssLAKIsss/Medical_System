@@ -1,5 +1,5 @@
 package ru.vtb.service.chain;
 
-public interface IBusinessTasksResolver<T> {
+public interface IOperationResolver<T> {
     void executeTasks(T object);
 }

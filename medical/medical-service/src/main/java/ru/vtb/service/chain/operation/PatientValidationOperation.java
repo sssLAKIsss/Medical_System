@@ -1,4 +1,4 @@
-package ru.vtb.service.chain;
+package ru.vtb.service.chain.operation;
 
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
@@ -7,14 +7,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import ru.vtb.external.PersonsClient;
 import ru.vtb.model.csv.CsvFileStructure;
-import ru.vtb.service.IDataQueue;
+import ru.vtb.service.queue.IDataQueue;
 
 import static java.util.Objects.isNull;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class CsvValidateBusinessTaskImpl implements IBusinessTask<CsvFileStructure> {
+public class PatientValidationOperation implements IOperation<CsvFileStructure> {
     private final IDataQueue<CsvFileStructure> csvFileStructureIDataQueue;
     private final PersonsClient personsClient;
 
@@ -36,13 +36,16 @@ public class CsvValidateBusinessTaskImpl implements IBusinessTask<CsvFileStructu
             log.info("Check csvData ");
         } catch (Exception e) {
             if (e instanceof FeignException && ((FeignException) e).status() == HttpStatus.NOT_FOUND.value()) {
-                log.error("External exception {} with message {}", e, e.getMessage());
+                log.info(
+                        "Person service return 404 with patient passportNumber {}. \nExternal exception {}",
+                        obj.getDocumentNumber(),
+                        e.getMessage());
                 return false;
             }
-            log.error("External exception: {}, with message: {}. Cannot check csvData from person-service",
-                    e,
+            log.error(
+                    "External exception with message: {}. Cannot check csvData from person-service",
                     e.getMessage());
-            csvFileStructureIDataQueue.saveInQueueCsvData(obj);
+            csvFileStructureIDataQueue.putInQueue(obj);
             return false;
         }
         return true;

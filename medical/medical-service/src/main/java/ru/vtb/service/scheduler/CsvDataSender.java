@@ -1,4 +1,4 @@
-package ru.vtb.service.impl.scheduler;
+package ru.vtb.service.scheduler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +13,7 @@ import ru.vtb.dto.PatientDto;
 import ru.vtb.mapper.IModelMapper;
 import ru.vtb.model.Patient;
 import ru.vtb.repository.PatientRepository;
-import ru.vtb.service.IDataQueue;
+import ru.vtb.service.queue.IDataQueue;
 import ru.vtb.util.JsonCreator;
 
 import java.util.Objects;
@@ -21,7 +21,7 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class CsvDataSchedulerImpl implements IScheduler {
+public class CsvDataSender implements IScheduler {
     private final IDataQueue<Long> patientDataQueue;
     private final IModelMapper<Patient, PatientDto> patientMapper;
     private final PatientRepository patientRepository;
@@ -35,7 +35,7 @@ public class CsvDataSchedulerImpl implements IScheduler {
     @Scheduled(fixedDelay = DELAY)
     @SchedulerLock(name = "medicalDataSendTask")
     public void scheduleTask() {
-        Long patientDataId = patientDataQueue.pollCsvData();
+        Long patientDataId = patientDataQueue.pollData();
         if (Objects.isNull(patientDataId)) return;
 
         Patient patient =
@@ -53,7 +53,7 @@ public class CsvDataSchedulerImpl implements IScheduler {
                                  @Override
                                  public void onFailure(Throwable ex) {
                                      log.error("Failure to send csvData");
-                                     patientDataQueue.saveInQueueCsvData(patientDataId);
+                                     patientDataQueue.putInQueue(patientDataId);
                                  }
 
                                  @Override

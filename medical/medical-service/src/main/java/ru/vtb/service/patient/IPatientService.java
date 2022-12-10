@@ -1,4 +1,4 @@
-package ru.vtb.service;
+package ru.vtb.service.patient;
 
 
 import ru.vtb.dto.PatientDto;
