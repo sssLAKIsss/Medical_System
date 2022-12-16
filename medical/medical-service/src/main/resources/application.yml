@@ -36,6 +36,7 @@ spring:
 external:
   kafka:
     bootstrap-server: ${BOOTSTRAP_SERVER:localhost:29092}
+    topic: ${KAFKA_TOPIC:medical_topic}
   client:
     person-service-client:
       base-url: ${BASE_URL:localhost:8081}

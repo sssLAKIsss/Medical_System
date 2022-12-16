@@ -3,6 +3,7 @@ package ru.vtb.service.scheduler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.scheduling.annotation.Async;
@@ -27,7 +28,8 @@ public class CsvDataSender implements IScheduler {
     private final PatientRepository patientRepository;
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    private static final String KAFKA_TOPIC = "medical_topic";
+    @Value("external.kafka.topic")
+    private String KAFKA_TOPIC;
     private static final long DELAY = 1000L;
 
     @Override
