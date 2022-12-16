@@ -2,11 +2,11 @@ package ru.vtb.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
 import ru.vtb.dto.superclass.BaseDtoModel;
 
 @AllArgsConstructor
@@ -14,7 +14,7 @@ import ru.vtb.dto.superclass.BaseDtoModel;
 @Accessors(chain = true)
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 public class VaccineDto extends BaseDtoModel {
 
     @Schema(description = "Название вакцины",

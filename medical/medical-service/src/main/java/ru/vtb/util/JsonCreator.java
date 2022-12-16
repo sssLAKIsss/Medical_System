@@ -9,12 +9,11 @@ public class JsonCreator {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public <T> String getStringJsonNodeFromObject(T object) {
-        String data = "";
         try {
-            data = objectMapper.writeValueAsString(object);
+            return objectMapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
+            throw new RuntimeException("Произошла ошибка при преобразовании объекта в json");
         }
-        return data;
     }
 }

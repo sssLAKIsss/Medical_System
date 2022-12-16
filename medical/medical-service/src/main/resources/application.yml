@@ -1,6 +1,9 @@
+app:
+  version: medical-service-1.0
+  name: medical-service
 spring:
   mvc:
-    pathmatch:
+    path match:
       matching-strategy: path-pattern-parser
   application:
     name: medical-service
@@ -29,6 +32,15 @@ spring:
     hikari:
       maxLifetime: 180000
       maximumPoolSize: 5
+
+external:
+  kafka:
+    bootstrap-server: ${BOOTSTRAP_SERVER:localhost:29092}
+    topic: ${KAFKA_TOPIC:medical_topic}
+  client:
+    person-service-client:
+      base-url: ${BASE_URL:localhost:8081}
+      service-name: ${SERVICE_NAME:person-service}
 
 feign:
   autoconfiguration:

@@ -1,4 +1,4 @@
-package ru.vtb.service;
+package ru.vtb.service.patient;
 
 
 import ru.vtb.dto.PatientDto;
@@ -9,5 +9,5 @@ public interface IPatientService {
 
     void checkVaccinationAndVaccinationPointsInDataBase(Patient patient);
 
-    boolean loggingAndSaveOperation(Patient patient);
+    boolean saveOperation(Patient patient);
 }

@@ -1,24 +1,24 @@
-package ru.vtb.service.impl;
+package ru.vtb.service.queue.kafka;
 
 import lombok.Getter;
 import org.springframework.stereotype.Service;
-import ru.vtb.service.IDataQueue;
+import ru.vtb.service.queue.IDataQueue;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 @Service
 @Getter
-public class KafkaQueueImpl implements IDataQueue<Long> {
+public class KafkaQueue implements IDataQueue<Long> {
     private final Queue<Long> csvData = new ConcurrentLinkedDeque<>();
 
     @Override
-    public void saveInQueueCsvData(Long csvDataId) {
+    public void putInQueue(Long csvDataId) {
         csvData.add(csvDataId);
     }
 
     @Override
-    public Long pollCsvData() {
+    public Long pollData() {
         return csvData.poll();
     }
 }

@@ -1,20 +1,20 @@
-package ru.vtb.service.impl.scheduler;
+package ru.vtb.service.scheduler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ru.vtb.model.csv.CsvFileStructure;
-import ru.vtb.service.chain.IBusinessTasksResolver;
-import ru.vtb.service.IDataQueue;
+import ru.vtb.service.chain.IOperationResolver;
+import ru.vtb.service.queue.IDataQueue;
 
 import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class CsvFileStructureSchedulerImpl implements IScheduler {
-    private final IBusinessTasksResolver<CsvFileStructure> businessTasksResolver;
+public class CsvDataRetryer implements IScheduler {
+    private final IOperationResolver<CsvFileStructure> businessTasksResolver;
     private final IDataQueue<CsvFileStructure> csvFileStructureIDataQueue;
 
     private static final long DELAY = 1000L;
@@ -22,9 +22,13 @@ public class CsvFileStructureSchedulerImpl implements IScheduler {
     @Override
     @Scheduled(fixedDelay = DELAY)
     public void scheduleTask() {
-        CsvFileStructure c = csvFileStructureIDataQueue.pollCsvData();
+        CsvFileStructure c = csvFileStructureIDataQueue.pollData();
         if (Objects.isNull(c)) return;
-        log.info("Try to validate vaccination with name = " + c.getFullName());
+        log.info("Try to validate vaccination with name = " + String.join(
+                " ",
+                c.getLastName(),
+                c.getFirstName(),
+                c.getPatronymic()));
         businessTasksResolver.executeTasks(c);
     }
 }
