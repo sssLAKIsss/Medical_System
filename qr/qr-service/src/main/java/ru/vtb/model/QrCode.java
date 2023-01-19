@@ -31,25 +31,25 @@ public class QrCode {
     @SequenceGenerator(name = "qr_codes_id_gen", sequenceName = "qr_codes_id_seq", allocationSize = 1)
     private Long id;
 
-    @Column(name = "qr_codes")
-    private String crCode;
+    @Column(name = "qr_codes", nullable = false)
+    private String qrCode;
 
-    @Column(name = "passport_number")
+    @Column(name = "passport_number", nullable = false)
     private String passportNumber;
 
-    @Column(name = "values")
+    @Column(name = "values", nullable = false)
     private String value;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        QrCode qrCode = (QrCode) o;
-        return passportNumber.equals(qrCode.passportNumber);
+        QrCode qrCode1 = (QrCode) o;
+        return Objects.equals(qrCode, qrCode1.qrCode) && passportNumber.equals(qrCode1.passportNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(passportNumber);
+        return Objects.hash(qrCode, passportNumber);
     }
 }

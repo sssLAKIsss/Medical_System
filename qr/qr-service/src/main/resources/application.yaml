@@ -1,6 +1,6 @@
 spring:
   mvc:
-    pathmatch:
+    path match:
       matching-strategy: path-pattern-parser
   application:
     name: qr-code-storage-service
@@ -42,5 +42,3 @@ server:
     include-binding-errors: always
     include-stacktrace: on_param
     include-exception: false
-
-

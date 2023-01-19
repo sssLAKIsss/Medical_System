@@ -1,5 +1,5 @@
 package ru.vtb.service;
 
-public interface IMedicalDataProcessor {
+public interface IMedicalDataListener {
     void saveVaccinationDataFromKafka(String vaccinationDto);
 }
