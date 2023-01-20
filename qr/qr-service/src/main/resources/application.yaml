@@ -30,6 +30,14 @@ spring:
       maxLifetime: 180000
       maximumPoolSize: 5
 
+kafka:
+  topics: ${KAFKA_TOPICS:medical_topic}
+  bootstrap-servers: ${BOOTSTRAP_SERVERS:localhost:29092}
+  group-id: ${GROUP_ID:medical_topic}
+  concurrencyValue: ${CONCURRENCY_VALUE:1}
+  key-deserializer: ${KAFKA_DESERIALIZER:org.apache.kafka.common.serialization.StringDeserializer}
+  value-deserializer: ${KAFKA_DESERIALIZER:org.apache.kafka.common.serialization.StringDeserializer}
+
 feign:
   autoconfiguration:
     jackson:

@@ -19,11 +19,9 @@ public class MedicalDataListener implements IMedicalDataListener {
     private final QrCodeRepository qrCodeRepository;
     private final ObjectMapper objectMapper;
 
-    private static final String KAFKA_TOPIC = "medical_topic";
-
     @Override
     @SneakyThrows(JsonProcessingException.class)
-    @KafkaListener(topics = KAFKA_TOPIC)
+    @KafkaListener(topics = "#{'${kafka.topics}'.split(',')}")
     public void saveVaccinationDataFromKafka(String vaccinationDto) {
         if (StringUtils.isBlank(vaccinationDto)) return;
 
