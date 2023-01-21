@@ -1,9 +1,13 @@
+logging:
+  level:
+    root: info
 spring:
   mvc:
     path match:
       matching-strategy: path-pattern-parser
   application:
     name: qr-code-storage-service
+    version: qr-code-storage-service-1.0
   liquibase:
     changeLog: classpath:db.changelog/db.changelog-master.yaml
     default-schema: public
