@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import ru.vtb.personservice.client.model.ApiError;
+import ru.vtb.controller.exception.ApiError;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;

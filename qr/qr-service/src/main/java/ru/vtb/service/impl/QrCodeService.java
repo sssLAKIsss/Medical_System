@@ -3,6 +3,7 @@ package ru.vtb.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.vtb.exception.DataNotFoundException;
 import ru.vtb.model.QrCode;
 import ru.vtb.repository.QrCodeRepository;
 import ru.vtb.service.IQrCodeService;
@@ -19,7 +20,7 @@ public class QrCodeService implements IQrCodeService {
     @Transactional(readOnly = true)
     public BufferedImage getQrCodeByPassportNumber(String passportNumber) {
         QrCode qrCode = qrCodeRepository.findByPassportNumber(passportNumber)
-                .orElseThrow(() -> new RuntimeException("Нету данных этого чела"));
+                .orElseThrow(DataNotFoundException::new);
 
         return QrCodeUtil.convertBase64DataToBufferedImage(qrCode.getQrCode());
     }
@@ -28,7 +29,7 @@ public class QrCodeService implements IQrCodeService {
     @Transactional(readOnly = true)
     public String getBase64StringQrCodeByPassportNumber(String passportNumber) {
         return qrCodeRepository.findByPassportNumber(passportNumber)
-                .orElseThrow(() -> new RuntimeException("Нету данных этого чела"))
+                .orElseThrow(DataNotFoundException::new)
                 .getQrCode();
     }
 
