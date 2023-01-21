@@ -1,8 +1,16 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "OpenAPI definition",
-    "version": "v0"
+    "title": "qr-code-storage-service",
+    "description": "База данных qr-кодов(PNG)",
+    "contact": {
+      "name": "Я",
+      "email": "я@я.я"
+    },
+    "license": {
+      "name": "Лицензировано мной"
+    },
+    "version": "qr-code-storage-service-1.0"
   },
   "servers": [
     {
@@ -17,7 +25,7 @@
     }
   ],
   "paths": {
-    "/api/v1/qr/{passportNumber}": {
+    "/api/v1/qr/file": {
       "get": {
         "tags": [
           "qr-controller"
@@ -28,28 +36,29 @@
         "parameters": [
           {
             "name": "passportNumber",
-            "in": "path",
+            "in": "query",
             "required": true,
             "schema": {
+              "pattern": "^[0-9]{10}$",
               "type": "string"
             }
           }
         ],
         "responses": {
           "400": {
-            "description": "Bad Request",
+            "description": "Bad request",
             "content": {
-              "image/png": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
-          "404": {
-            "description": "Not Found",
+          "500": {
+            "description": "Internal server error",
             "content": {
-              "image/png": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiError"
                 }
@@ -370,6 +379,30 @@
                                     "empty": {
                                       "type": "boolean"
                                     },
+                                    "height": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "minX": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "minY": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "width": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "y": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "x": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
                                     "maxX": {
                                       "type": "number",
                                       "format": "double"
@@ -383,30 +416,6 @@
                                       "format": "double"
                                     },
                                     "centerY": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "width": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "height": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "minX": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "minY": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "x": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "y": {
                                       "type": "number",
                                       "format": "double"
                                     }
@@ -418,6 +427,30 @@
                                     "empty": {
                                       "type": "boolean"
                                     },
+                                    "height": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "minX": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "minY": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "width": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "y": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "x": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
                                     "maxX": {
                                       "type": "number",
                                       "format": "double"
@@ -433,33 +466,17 @@
                                     "centerY": {
                                       "type": "number",
                                       "format": "double"
-                                    },
-                                    "width": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "height": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "minX": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "minY": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "x": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "y": {
-                                      "type": "number",
-                                      "format": "double"
                                     }
                                   },
                                   "writeOnly": true
+                                },
+                                "minX": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "minY": {
+                                  "type": "number",
+                                  "format": "double"
                                 },
                                 "maxX": {
                                   "type": "number",
@@ -474,14 +491,6 @@
                                   "format": "double"
                                 },
                                 "centerY": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minX": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minY": {
                                   "type": "number",
                                   "format": "double"
                                 }
@@ -646,6 +655,30 @@
                                     "empty": {
                                       "type": "boolean"
                                     },
+                                    "height": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "minX": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "minY": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "width": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "y": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "x": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
                                     "maxX": {
                                       "type": "number",
                                       "format": "double"
@@ -659,30 +692,6 @@
                                       "format": "double"
                                     },
                                     "centerY": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "width": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "height": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "minX": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "minY": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "x": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "y": {
                                       "type": "number",
                                       "format": "double"
                                     }
@@ -694,6 +703,30 @@
                                     "empty": {
                                       "type": "boolean"
                                     },
+                                    "height": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "minX": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "minY": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "width": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "y": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "x": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
                                     "maxX": {
                                       "type": "number",
                                       "format": "double"
@@ -709,33 +742,17 @@
                                     "centerY": {
                                       "type": "number",
                                       "format": "double"
-                                    },
-                                    "width": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "height": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "minX": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "minY": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "x": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "y": {
-                                      "type": "number",
-                                      "format": "double"
                                     }
                                   },
                                   "writeOnly": true
+                                },
+                                "minX": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "minY": {
+                                  "type": "number",
+                                  "format": "double"
                                 },
                                 "maxX": {
                                   "type": "number",
@@ -750,14 +767,6 @@
                                   "format": "double"
                                 },
                                 "centerY": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minX": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minY": {
                                   "type": "number",
                                   "format": "double"
                                 }
@@ -824,6 +833,30 @@
                                 "empty": {
                                   "type": "boolean"
                                 },
+                                "height": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "minX": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "minY": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "width": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "y": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "x": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
                                 "maxX": {
                                   "type": "number",
                                   "format": "double"
@@ -837,30 +870,6 @@
                                   "format": "double"
                                 },
                                 "centerY": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "width": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "height": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minX": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minY": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "x": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "y": {
                                   "type": "number",
                                   "format": "double"
                                 }
@@ -872,6 +881,30 @@
                                 "empty": {
                                   "type": "boolean"
                                 },
+                                "height": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "minX": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "minY": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "width": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "y": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "x": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
                                 "maxX": {
                                   "type": "number",
                                   "format": "double"
@@ -887,33 +920,17 @@
                                 "centerY": {
                                   "type": "number",
                                   "format": "double"
-                                },
-                                "width": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "height": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minX": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minY": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "x": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "y": {
-                                  "type": "number",
-                                  "format": "double"
                                 }
                               },
                               "writeOnly": true
+                            },
+                            "minX": {
+                              "type": "number",
+                              "format": "double"
+                            },
+                            "minY": {
+                              "type": "number",
+                              "format": "double"
                             },
                             "maxX": {
                               "type": "number",
@@ -928,14 +945,6 @@
                               "format": "double"
                             },
                             "centerY": {
-                              "type": "number",
-                              "format": "double"
-                            },
-                            "minX": {
-                              "type": "number",
-                              "format": "double"
-                            },
-                            "minY": {
                               "type": "number",
                               "format": "double"
                             }
@@ -1107,6 +1116,30 @@
                                 "empty": {
                                   "type": "boolean"
                                 },
+                                "height": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "minX": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "minY": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "width": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "y": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "x": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
                                 "maxX": {
                                   "type": "number",
                                   "format": "double"
@@ -1120,30 +1153,6 @@
                                   "format": "double"
                                 },
                                 "centerY": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "width": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "height": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minX": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minY": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "x": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "y": {
                                   "type": "number",
                                   "format": "double"
                                 }
@@ -1155,6 +1164,30 @@
                                 "empty": {
                                   "type": "boolean"
                                 },
+                                "height": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "minX": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "minY": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "width": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "y": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "x": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
                                 "maxX": {
                                   "type": "number",
                                   "format": "double"
@@ -1170,33 +1203,17 @@
                                 "centerY": {
                                   "type": "number",
                                   "format": "double"
-                                },
-                                "width": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "height": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minX": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minY": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "x": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "y": {
-                                  "type": "number",
-                                  "format": "double"
                                 }
                               },
                               "writeOnly": true
+                            },
+                            "minX": {
+                              "type": "number",
+                              "format": "double"
+                            },
+                            "minY": {
+                              "type": "number",
+                              "format": "double"
                             },
                             "maxX": {
                               "type": "number",
@@ -1213,14 +1230,6 @@
                             "centerY": {
                               "type": "number",
                               "format": "double"
-                            },
-                            "minX": {
-                              "type": "number",
-                              "format": "double"
-                            },
-                            "minY": {
-                              "type": "number",
-                              "format": "double"
                             }
                           }
                         },
@@ -1229,489 +1238,6 @@
                           "format": "int32"
                         }
                       }
-                    },
-                    "numXTiles": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "numYTiles": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "minTileX": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "minTileY": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "tileWidth": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "tileHeight": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "tileGridXOffset": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "tileGridYOffset": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "writableTileIndices": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "x": {
-                            "type": "number",
-                            "format": "double"
-                          },
-                          "y": {
-                            "type": "number",
-                            "format": "double"
-                          }
-                        }
-                      }
-                    },
-                    "sources": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "data": {
-                            "type": "object",
-                            "properties": {
-                              "sampleModel": {
-                                "type": "object",
-                                "properties": {
-                                  "width": {
-                                    "type": "integer",
-                                    "format": "int32"
-                                  },
-                                  "height": {
-                                    "type": "integer",
-                                    "format": "int32"
-                                  },
-                                  "numBands": {
-                                    "type": "integer",
-                                    "format": "int32"
-                                  },
-                                  "dataType": {
-                                    "type": "integer",
-                                    "format": "int32"
-                                  },
-                                  "sampleSize": {
-                                    "type": "array",
-                                    "items": {
-                                      "type": "integer",
-                                      "format": "int32"
-                                    }
-                                  },
-                                  "transferType": {
-                                    "type": "integer",
-                                    "format": "int32"
-                                  },
-                                  "numDataElements": {
-                                    "type": "integer",
-                                    "format": "int32"
-                                  }
-                                }
-                              },
-                              "dataBuffer": {
-                                "type": "object",
-                                "properties": {
-                                  "dataType": {
-                                    "type": "integer",
-                                    "format": "int32"
-                                  },
-                                  "offset": {
-                                    "type": "integer",
-                                    "format": "int32"
-                                  },
-                                  "size": {
-                                    "type": "integer",
-                                    "format": "int32"
-                                  },
-                                  "offsets": {
-                                    "type": "array",
-                                    "items": {
-                                      "type": "integer",
-                                      "format": "int32"
-                                    }
-                                  },
-                                  "numBanks": {
-                                    "type": "integer",
-                                    "format": "int32"
-                                  }
-                                }
-                              },
-                              "minX": {
-                                "type": "integer",
-                                "format": "int32"
-                              },
-                              "minY": {
-                                "type": "integer",
-                                "format": "int32"
-                              },
-                              "width": {
-                                "type": "integer",
-                                "format": "int32"
-                              },
-                              "height": {
-                                "type": "integer",
-                                "format": "int32"
-                              },
-                              "sampleModelTranslateX": {
-                                "type": "integer",
-                                "format": "int32"
-                              },
-                              "sampleModelTranslateY": {
-                                "type": "integer",
-                                "format": "int32"
-                              },
-                              "numBands": {
-                                "type": "integer",
-                                "format": "int32"
-                              },
-                              "numDataElements": {
-                                "type": "integer",
-                                "format": "int32"
-                              },
-                              "bounds": {
-                                "type": "object",
-                                "properties": {
-                                  "x": {
-                                    "type": "number",
-                                    "format": "double"
-                                  },
-                                  "y": {
-                                    "type": "number",
-                                    "format": "double"
-                                  },
-                                  "width": {
-                                    "type": "number",
-                                    "format": "double"
-                                  },
-                                  "height": {
-                                    "type": "number",
-                                    "format": "double"
-                                  },
-                                  "empty": {
-                                    "type": "boolean"
-                                  },
-                                  "location": {
-                                    "type": "object",
-                                    "properties": {
-                                      "x": {
-                                        "type": "number",
-                                        "format": "double"
-                                      },
-                                      "y": {
-                                        "type": "number",
-                                        "format": "double"
-                                      }
-                                    }
-                                  },
-                                  "size": {
-                                    "type": "object",
-                                    "properties": {
-                                      "width": {
-                                        "type": "number",
-                                        "format": "double"
-                                      },
-                                      "height": {
-                                        "type": "number",
-                                        "format": "double"
-                                      }
-                                    }
-                                  },
-                                  "bounds2D": {
-                                    "type": "object",
-                                    "properties": {
-                                      "empty": {
-                                        "type": "boolean"
-                                      },
-                                      "maxX": {
-                                        "type": "number",
-                                        "format": "double"
-                                      },
-                                      "maxY": {
-                                        "type": "number",
-                                        "format": "double"
-                                      },
-                                      "centerX": {
-                                        "type": "number",
-                                        "format": "double"
-                                      },
-                                      "centerY": {
-                                        "type": "number",
-                                        "format": "double"
-                                      },
-                                      "width": {
-                                        "type": "number",
-                                        "format": "double"
-                                      },
-                                      "height": {
-                                        "type": "number",
-                                        "format": "double"
-                                      },
-                                      "minX": {
-                                        "type": "number",
-                                        "format": "double"
-                                      },
-                                      "minY": {
-                                        "type": "number",
-                                        "format": "double"
-                                      },
-                                      "x": {
-                                        "type": "number",
-                                        "format": "double"
-                                      },
-                                      "y": {
-                                        "type": "number",
-                                        "format": "double"
-                                      }
-                                    }
-                                  },
-                                  "rect": {
-                                    "type": "object",
-                                    "properties": {
-                                      "empty": {
-                                        "type": "boolean"
-                                      },
-                                      "maxX": {
-                                        "type": "number",
-                                        "format": "double"
-                                      },
-                                      "maxY": {
-                                        "type": "number",
-                                        "format": "double"
-                                      },
-                                      "centerX": {
-                                        "type": "number",
-                                        "format": "double"
-                                      },
-                                      "centerY": {
-                                        "type": "number",
-                                        "format": "double"
-                                      },
-                                      "width": {
-                                        "type": "number",
-                                        "format": "double"
-                                      },
-                                      "height": {
-                                        "type": "number",
-                                        "format": "double"
-                                      },
-                                      "minX": {
-                                        "type": "number",
-                                        "format": "double"
-                                      },
-                                      "minY": {
-                                        "type": "number",
-                                        "format": "double"
-                                      },
-                                      "x": {
-                                        "type": "number",
-                                        "format": "double"
-                                      },
-                                      "y": {
-                                        "type": "number",
-                                        "format": "double"
-                                      }
-                                    },
-                                    "writeOnly": true
-                                  },
-                                  "maxX": {
-                                    "type": "number",
-                                    "format": "double"
-                                  },
-                                  "maxY": {
-                                    "type": "number",
-                                    "format": "double"
-                                  },
-                                  "centerX": {
-                                    "type": "number",
-                                    "format": "double"
-                                  },
-                                  "centerY": {
-                                    "type": "number",
-                                    "format": "double"
-                                  },
-                                  "minX": {
-                                    "type": "number",
-                                    "format": "double"
-                                  },
-                                  "minY": {
-                                    "type": "number",
-                                    "format": "double"
-                                  }
-                                }
-                              },
-                              "transferType": {
-                                "type": "integer",
-                                "format": "int32"
-                              }
-                            }
-                          },
-                          "numXTiles": {
-                            "type": "integer",
-                            "format": "int32"
-                          },
-                          "numYTiles": {
-                            "type": "integer",
-                            "format": "int32"
-                          },
-                          "minTileX": {
-                            "type": "integer",
-                            "format": "int32"
-                          },
-                          "minTileY": {
-                            "type": "integer",
-                            "format": "int32"
-                          },
-                          "tileWidth": {
-                            "type": "integer",
-                            "format": "int32"
-                          },
-                          "tileHeight": {
-                            "type": "integer",
-                            "format": "int32"
-                          },
-                          "tileGridXOffset": {
-                            "type": "integer",
-                            "format": "int32"
-                          },
-                          "tileGridYOffset": {
-                            "type": "integer",
-                            "format": "int32"
-                          },
-                          "propertyNames": {
-                            "type": "array",
-                            "items": {
-                              "type": "string"
-                            }
-                          },
-                          "width": {
-                            "type": "integer",
-                            "format": "int32"
-                          },
-                          "sampleModel": {
-                            "type": "object",
-                            "properties": {
-                              "width": {
-                                "type": "integer",
-                                "format": "int32"
-                              },
-                              "height": {
-                                "type": "integer",
-                                "format": "int32"
-                              },
-                              "numBands": {
-                                "type": "integer",
-                                "format": "int32"
-                              },
-                              "dataType": {
-                                "type": "integer",
-                                "format": "int32"
-                              },
-                              "sampleSize": {
-                                "type": "array",
-                                "items": {
-                                  "type": "integer",
-                                  "format": "int32"
-                                }
-                              },
-                              "transferType": {
-                                "type": "integer",
-                                "format": "int32"
-                              },
-                              "numDataElements": {
-                                "type": "integer",
-                                "format": "int32"
-                              }
-                            }
-                          },
-                          "height": {
-                            "type": "integer",
-                            "format": "int32"
-                          },
-                          "minX": {
-                            "type": "integer",
-                            "format": "int32"
-                          },
-                          "minY": {
-                            "type": "integer",
-                            "format": "int32"
-                          },
-                          "colorModel": {
-                            "type": "object",
-                            "properties": {
-                              "transparency": {
-                                "type": "integer",
-                                "format": "int32"
-                              },
-                              "numComponents": {
-                                "type": "integer",
-                                "format": "int32"
-                              },
-                              "numColorComponents": {
-                                "type": "integer",
-                                "format": "int32"
-                              },
-                              "colorSpace": {
-                                "type": "object",
-                                "properties": {
-                                  "type": {
-                                    "type": "integer",
-                                    "format": "int32"
-                                  },
-                                  "numComponents": {
-                                    "type": "integer",
-                                    "format": "int32"
-                                  },
-                                  "cs_sRGB": {
-                                    "type": "boolean"
-                                  }
-                                }
-                              },
-                              "transferType": {
-                                "type": "integer",
-                                "format": "int32"
-                              },
-                              "alphaPremultiplied": {
-                                "type": "boolean"
-                              },
-                              "componentSize": {
-                                "type": "array",
-                                "items": {
-                                  "type": "integer",
-                                  "format": "int32"
-                                }
-                              },
-                              "pixelSize": {
-                                "type": "integer",
-                                "format": "int32"
-                              }
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "propertyNames": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "width": {
-                      "type": "integer",
-                      "format": "int32"
                     },
                     "alphaPremultiplied": {
                       "type": "boolean"
@@ -2004,6 +1530,30 @@
                                     "empty": {
                                       "type": "boolean"
                                     },
+                                    "height": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "minX": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "minY": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "width": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "y": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "x": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
                                     "maxX": {
                                       "type": "number",
                                       "format": "double"
@@ -2017,30 +1567,6 @@
                                       "format": "double"
                                     },
                                     "centerY": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "width": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "height": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "minX": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "minY": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "x": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "y": {
                                       "type": "number",
                                       "format": "double"
                                     }
@@ -2052,6 +1578,30 @@
                                     "empty": {
                                       "type": "boolean"
                                     },
+                                    "height": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "minX": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "minY": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "width": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "y": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "x": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
                                     "maxX": {
                                       "type": "number",
                                       "format": "double"
@@ -2067,33 +1617,17 @@
                                     "centerY": {
                                       "type": "number",
                                       "format": "double"
-                                    },
-                                    "width": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "height": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "minX": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "minY": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "x": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "y": {
-                                      "type": "number",
-                                      "format": "double"
                                     }
                                   },
                                   "writeOnly": true
+                                },
+                                "minX": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "minY": {
+                                  "type": "number",
+                                  "format": "double"
                                 },
                                 "maxX": {
                                   "type": "number",
@@ -2108,14 +1642,6 @@
                                   "format": "double"
                                 },
                                 "centerY": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minX": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minY": {
                                   "type": "number",
                                   "format": "double"
                                 }
@@ -2280,6 +1806,30 @@
                                     "empty": {
                                       "type": "boolean"
                                     },
+                                    "height": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "minX": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "minY": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "width": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "y": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "x": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
                                     "maxX": {
                                       "type": "number",
                                       "format": "double"
@@ -2293,30 +1843,6 @@
                                       "format": "double"
                                     },
                                     "centerY": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "width": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "height": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "minX": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "minY": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "x": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "y": {
                                       "type": "number",
                                       "format": "double"
                                     }
@@ -2328,6 +1854,30 @@
                                     "empty": {
                                       "type": "boolean"
                                     },
+                                    "height": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "minX": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "minY": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "width": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "y": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "x": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
                                     "maxX": {
                                       "type": "number",
                                       "format": "double"
@@ -2343,33 +1893,17 @@
                                     "centerY": {
                                       "type": "number",
                                       "format": "double"
-                                    },
-                                    "width": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "height": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "minX": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "minY": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "x": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "y": {
-                                      "type": "number",
-                                      "format": "double"
                                     }
                                   },
                                   "writeOnly": true
+                                },
+                                "minX": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "minY": {
+                                  "type": "number",
+                                  "format": "double"
                                 },
                                 "maxX": {
                                   "type": "number",
@@ -2384,14 +1918,6 @@
                                   "format": "double"
                                 },
                                 "centerY": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minX": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minY": {
                                   "type": "number",
                                   "format": "double"
                                 }
@@ -2458,6 +1984,30 @@
                                 "empty": {
                                   "type": "boolean"
                                 },
+                                "height": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "minX": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "minY": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "width": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "y": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "x": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
                                 "maxX": {
                                   "type": "number",
                                   "format": "double"
@@ -2471,30 +2021,6 @@
                                   "format": "double"
                                 },
                                 "centerY": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "width": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "height": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minX": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minY": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "x": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "y": {
                                   "type": "number",
                                   "format": "double"
                                 }
@@ -2506,6 +2032,30 @@
                                 "empty": {
                                   "type": "boolean"
                                 },
+                                "height": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "minX": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "minY": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "width": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "y": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "x": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
                                 "maxX": {
                                   "type": "number",
                                   "format": "double"
@@ -2521,33 +2071,17 @@
                                 "centerY": {
                                   "type": "number",
                                   "format": "double"
-                                },
-                                "width": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "height": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minX": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minY": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "x": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "y": {
-                                  "type": "number",
-                                  "format": "double"
                                 }
                               },
                               "writeOnly": true
+                            },
+                            "minX": {
+                              "type": "number",
+                              "format": "double"
+                            },
+                            "minY": {
+                              "type": "number",
+                              "format": "double"
                             },
                             "maxX": {
                               "type": "number",
@@ -2562,14 +2096,6 @@
                               "format": "double"
                             },
                             "centerY": {
-                              "type": "number",
-                              "format": "double"
-                            },
-                            "minX": {
-                              "type": "number",
-                              "format": "double"
-                            },
-                            "minY": {
                               "type": "number",
                               "format": "double"
                             }
@@ -2671,6 +2197,9 @@
                                 "family": {
                                   "type": "string"
                                 },
+                                "plain": {
+                                  "type": "boolean"
+                                },
                                 "fontName": {
                                   "type": "string"
                                 },
@@ -2708,7 +2237,92 @@
                                     "type": "object"
                                   }
                                 },
-                                "plain": {
+                                "transform": {
+                                  "type": "object",
+                                  "properties": {
+                                    "scaleX": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "shearY": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "shearX": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "scaleY": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "translateX": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "translateY": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "type": {
+                                      "type": "integer",
+                                      "format": "int32"
+                                    },
+                                    "identity": {
+                                      "type": "boolean"
+                                    },
+                                    "toRotation": {
+                                      "type": "number",
+                                      "format": "double",
+                                      "writeOnly": true
+                                    },
+                                    "toQuadrantRotation": {
+                                      "type": "integer",
+                                      "format": "int32",
+                                      "writeOnly": true
+                                    },
+                                    "determinant": {
+                                      "type": "number",
+                                      "format": "double"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "height": {
+                              "type": "integer",
+                              "format": "int32"
+                            },
+                            "maxAscent": {
+                              "type": "integer",
+                              "format": "int32"
+                            },
+                            "maxDecent": {
+                              "type": "integer",
+                              "format": "int32",
+                              "deprecated": true
+                            },
+                            "maxAdvance": {
+                              "type": "integer",
+                              "format": "int32"
+                            },
+                            "fontRenderContext": {
+                              "type": "object",
+                              "properties": {
+                                "antiAliased": {
+                                  "type": "boolean"
+                                },
+                                "transformType": {
+                                  "type": "integer",
+                                  "format": "int32"
+                                },
+                                "antiAliasingHint": {
+                                  "type": "object"
+                                },
+                                "fractionalMetricsHint": {
+                                  "type": "object"
+                                },
+                                "transformed": {
                                   "type": "boolean"
                                 },
                                 "transform": {
@@ -2785,94 +2399,6 @@
                                 "type": "integer",
                                 "format": "int32"
                               }
-                            },
-                            "maxAscent": {
-                              "type": "integer",
-                              "format": "int32"
-                            },
-                            "maxDecent": {
-                              "type": "integer",
-                              "format": "int32",
-                              "deprecated": true
-                            },
-                            "maxAdvance": {
-                              "type": "integer",
-                              "format": "int32"
-                            },
-                            "fontRenderContext": {
-                              "type": "object",
-                              "properties": {
-                                "antiAliasingHint": {
-                                  "type": "object"
-                                },
-                                "fractionalMetricsHint": {
-                                  "type": "object"
-                                },
-                                "transformed": {
-                                  "type": "boolean"
-                                },
-                                "antiAliased": {
-                                  "type": "boolean"
-                                },
-                                "transformType": {
-                                  "type": "integer",
-                                  "format": "int32"
-                                },
-                                "transform": {
-                                  "type": "object",
-                                  "properties": {
-                                    "scaleX": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "shearY": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "shearX": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "scaleY": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "translateX": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "translateY": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "type": {
-                                      "type": "integer",
-                                      "format": "int32"
-                                    },
-                                    "identity": {
-                                      "type": "boolean"
-                                    },
-                                    "toRotation": {
-                                      "type": "number",
-                                      "format": "double",
-                                      "writeOnly": true
-                                    },
-                                    "toQuadrantRotation": {
-                                      "type": "integer",
-                                      "format": "int32",
-                                      "writeOnly": true
-                                    },
-                                    "determinant": {
-                                      "type": "number",
-                                      "format": "double"
-                                    }
-                                  }
-                                }
-                              }
-                            },
-                            "height": {
-                              "type": "integer",
-                              "format": "int32"
                             }
                           }
                         },
@@ -2898,6 +2424,9 @@
                             },
                             "family": {
                               "type": "string"
+                            },
+                            "plain": {
+                              "type": "boolean"
                             },
                             "fontName": {
                               "type": "string"
@@ -2935,9 +2464,6 @@
                               "items": {
                                 "type": "object"
                               }
-                            },
-                            "plain": {
-                              "type": "boolean"
                             },
                             "transform": {
                               "type": "object",
@@ -3045,6 +2571,30 @@
                                 "empty": {
                                   "type": "boolean"
                                 },
+                                "height": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "minX": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "minY": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "width": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "y": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "x": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
                                 "maxX": {
                                   "type": "number",
                                   "format": "double"
@@ -3058,30 +2608,6 @@
                                   "format": "double"
                                 },
                                 "centerY": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "width": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "height": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minX": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minY": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "x": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "y": {
                                   "type": "number",
                                   "format": "double"
                                 }
@@ -3093,6 +2619,30 @@
                                 "empty": {
                                   "type": "boolean"
                                 },
+                                "height": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "minX": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "minY": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "width": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "y": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "x": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
                                 "maxX": {
                                   "type": "number",
                                   "format": "double"
@@ -3108,33 +2658,17 @@
                                 "centerY": {
                                   "type": "number",
                                   "format": "double"
-                                },
-                                "width": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "height": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minX": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minY": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "x": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "y": {
-                                  "type": "number",
-                                  "format": "double"
                                 }
                               },
                               "writeOnly": true
+                            },
+                            "minX": {
+                              "type": "number",
+                              "format": "double"
+                            },
+                            "minY": {
+                              "type": "number",
+                              "format": "double"
                             },
                             "maxX": {
                               "type": "number",
@@ -3149,14 +2683,6 @@
                               "format": "double"
                             },
                             "centerY": {
-                              "type": "number",
-                              "format": "double"
-                            },
-                            "minX": {
-                              "type": "number",
-                              "format": "double"
-                            },
-                            "minY": {
                               "type": "number",
                               "format": "double"
                             }
@@ -3265,6 +2791,30 @@
                                     "empty": {
                                       "type": "boolean"
                                     },
+                                    "height": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "minX": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "minY": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "width": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "y": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "x": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
                                     "maxX": {
                                       "type": "number",
                                       "format": "double"
@@ -3278,30 +2828,6 @@
                                       "format": "double"
                                     },
                                     "centerY": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "width": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "height": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "minX": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "minY": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "x": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "y": {
                                       "type": "number",
                                       "format": "double"
                                     }
@@ -3313,6 +2839,30 @@
                                     "empty": {
                                       "type": "boolean"
                                     },
+                                    "height": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "minX": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "minY": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "width": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "y": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "x": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
                                     "maxX": {
                                       "type": "number",
                                       "format": "double"
@@ -3328,33 +2878,17 @@
                                     "centerY": {
                                       "type": "number",
                                       "format": "double"
-                                    },
-                                    "width": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "height": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "minX": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "minY": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "x": {
-                                      "type": "number",
-                                      "format": "double"
-                                    },
-                                    "y": {
-                                      "type": "number",
-                                      "format": "double"
                                     }
                                   },
                                   "writeOnly": true
+                                },
+                                "minX": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "minY": {
+                                  "type": "number",
+                                  "format": "double"
                                 },
                                 "maxX": {
                                   "type": "number",
@@ -3369,14 +2903,6 @@
                                   "format": "double"
                                 },
                                 "centerY": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minX": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minY": {
                                   "type": "number",
                                   "format": "double"
                                 }
@@ -3387,26 +2913,6 @@
                               "properties": {
                                 "empty": {
                                   "type": "boolean"
-                                },
-                                "maxX": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "maxY": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "centerX": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "centerY": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "width": {
-                                  "type": "number",
-                                  "format": "double"
                                 },
                                 "height": {
                                   "type": "number",
@@ -3420,11 +2926,31 @@
                                   "type": "number",
                                   "format": "double"
                                 },
-                                "x": {
+                                "width": {
                                   "type": "number",
                                   "format": "double"
                                 },
                                 "y": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "x": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "maxX": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "maxY": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "centerX": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "centerY": {
                                   "type": "number",
                                   "format": "double"
                                 }
@@ -3486,6 +3012,30 @@
                                 "empty": {
                                   "type": "boolean"
                                 },
+                                "height": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "minX": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "minY": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "width": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "y": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "x": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
                                 "maxX": {
                                   "type": "number",
                                   "format": "double"
@@ -3499,30 +3049,6 @@
                                   "format": "double"
                                 },
                                 "centerY": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "width": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "height": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minX": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minY": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "x": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "y": {
                                   "type": "number",
                                   "format": "double"
                                 }
@@ -3534,6 +3060,30 @@
                                 "empty": {
                                   "type": "boolean"
                                 },
+                                "height": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "minX": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "minY": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "width": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "y": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "x": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
                                 "maxX": {
                                   "type": "number",
                                   "format": "double"
@@ -3549,33 +3099,17 @@
                                 "centerY": {
                                   "type": "number",
                                   "format": "double"
-                                },
-                                "width": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "height": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minX": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "minY": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "x": {
-                                  "type": "number",
-                                  "format": "double"
-                                },
-                                "y": {
-                                  "type": "number",
-                                  "format": "double"
                                 }
                               },
                               "writeOnly": true
+                            },
+                            "minX": {
+                              "type": "number",
+                              "format": "double"
+                            },
+                            "minY": {
+                              "type": "number",
+                              "format": "double"
                             },
                             "maxX": {
                               "type": "number",
@@ -3592,21 +3126,631 @@
                             "centerY": {
                               "type": "number",
                               "format": "double"
-                            },
-                            "minX": {
-                              "type": "number",
-                              "format": "double"
-                            },
-                            "minY": {
-                              "type": "number",
-                              "format": "double"
                             }
                           },
                           "deprecated": true
                         }
                       }
+                    },
+                    "numXTiles": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "numYTiles": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "minTileX": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "minTileY": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "tileWidth": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "tileHeight": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "tileGridXOffset": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "tileGridYOffset": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "writableTileIndices": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "x": {
+                            "type": "number",
+                            "format": "double"
+                          },
+                          "y": {
+                            "type": "number",
+                            "format": "double"
+                          }
+                        }
+                      }
+                    },
+                    "sources": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "data": {
+                            "type": "object",
+                            "properties": {
+                              "sampleModel": {
+                                "type": "object",
+                                "properties": {
+                                  "width": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                  },
+                                  "height": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                  },
+                                  "numBands": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                  },
+                                  "dataType": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                  },
+                                  "sampleSize": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "integer",
+                                      "format": "int32"
+                                    }
+                                  },
+                                  "transferType": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                  },
+                                  "numDataElements": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                  }
+                                }
+                              },
+                              "dataBuffer": {
+                                "type": "object",
+                                "properties": {
+                                  "dataType": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                  },
+                                  "offset": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                  },
+                                  "size": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                  },
+                                  "offsets": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "integer",
+                                      "format": "int32"
+                                    }
+                                  },
+                                  "numBanks": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                  }
+                                }
+                              },
+                              "minX": {
+                                "type": "integer",
+                                "format": "int32"
+                              },
+                              "minY": {
+                                "type": "integer",
+                                "format": "int32"
+                              },
+                              "width": {
+                                "type": "integer",
+                                "format": "int32"
+                              },
+                              "height": {
+                                "type": "integer",
+                                "format": "int32"
+                              },
+                              "sampleModelTranslateX": {
+                                "type": "integer",
+                                "format": "int32"
+                              },
+                              "sampleModelTranslateY": {
+                                "type": "integer",
+                                "format": "int32"
+                              },
+                              "numBands": {
+                                "type": "integer",
+                                "format": "int32"
+                              },
+                              "numDataElements": {
+                                "type": "integer",
+                                "format": "int32"
+                              },
+                              "bounds": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number",
+                                    "format": "double"
+                                  },
+                                  "y": {
+                                    "type": "number",
+                                    "format": "double"
+                                  },
+                                  "width": {
+                                    "type": "number",
+                                    "format": "double"
+                                  },
+                                  "height": {
+                                    "type": "number",
+                                    "format": "double"
+                                  },
+                                  "empty": {
+                                    "type": "boolean"
+                                  },
+                                  "location": {
+                                    "type": "object",
+                                    "properties": {
+                                      "x": {
+                                        "type": "number",
+                                        "format": "double"
+                                      },
+                                      "y": {
+                                        "type": "number",
+                                        "format": "double"
+                                      }
+                                    }
+                                  },
+                                  "size": {
+                                    "type": "object",
+                                    "properties": {
+                                      "width": {
+                                        "type": "number",
+                                        "format": "double"
+                                      },
+                                      "height": {
+                                        "type": "number",
+                                        "format": "double"
+                                      }
+                                    }
+                                  },
+                                  "bounds2D": {
+                                    "type": "object",
+                                    "properties": {
+                                      "empty": {
+                                        "type": "boolean"
+                                      },
+                                      "height": {
+                                        "type": "number",
+                                        "format": "double"
+                                      },
+                                      "minX": {
+                                        "type": "number",
+                                        "format": "double"
+                                      },
+                                      "minY": {
+                                        "type": "number",
+                                        "format": "double"
+                                      },
+                                      "width": {
+                                        "type": "number",
+                                        "format": "double"
+                                      },
+                                      "y": {
+                                        "type": "number",
+                                        "format": "double"
+                                      },
+                                      "x": {
+                                        "type": "number",
+                                        "format": "double"
+                                      },
+                                      "maxX": {
+                                        "type": "number",
+                                        "format": "double"
+                                      },
+                                      "maxY": {
+                                        "type": "number",
+                                        "format": "double"
+                                      },
+                                      "centerX": {
+                                        "type": "number",
+                                        "format": "double"
+                                      },
+                                      "centerY": {
+                                        "type": "number",
+                                        "format": "double"
+                                      }
+                                    }
+                                  },
+                                  "rect": {
+                                    "type": "object",
+                                    "properties": {
+                                      "empty": {
+                                        "type": "boolean"
+                                      },
+                                      "height": {
+                                        "type": "number",
+                                        "format": "double"
+                                      },
+                                      "minX": {
+                                        "type": "number",
+                                        "format": "double"
+                                      },
+                                      "minY": {
+                                        "type": "number",
+                                        "format": "double"
+                                      },
+                                      "width": {
+                                        "type": "number",
+                                        "format": "double"
+                                      },
+                                      "y": {
+                                        "type": "number",
+                                        "format": "double"
+                                      },
+                                      "x": {
+                                        "type": "number",
+                                        "format": "double"
+                                      },
+                                      "maxX": {
+                                        "type": "number",
+                                        "format": "double"
+                                      },
+                                      "maxY": {
+                                        "type": "number",
+                                        "format": "double"
+                                      },
+                                      "centerX": {
+                                        "type": "number",
+                                        "format": "double"
+                                      },
+                                      "centerY": {
+                                        "type": "number",
+                                        "format": "double"
+                                      }
+                                    },
+                                    "writeOnly": true
+                                  },
+                                  "minX": {
+                                    "type": "number",
+                                    "format": "double"
+                                  },
+                                  "minY": {
+                                    "type": "number",
+                                    "format": "double"
+                                  },
+                                  "maxX": {
+                                    "type": "number",
+                                    "format": "double"
+                                  },
+                                  "maxY": {
+                                    "type": "number",
+                                    "format": "double"
+                                  },
+                                  "centerX": {
+                                    "type": "number",
+                                    "format": "double"
+                                  },
+                                  "centerY": {
+                                    "type": "number",
+                                    "format": "double"
+                                  }
+                                }
+                              },
+                              "transferType": {
+                                "type": "integer",
+                                "format": "int32"
+                              }
+                            }
+                          },
+                          "sampleModel": {
+                            "type": "object",
+                            "properties": {
+                              "width": {
+                                "type": "integer",
+                                "format": "int32"
+                              },
+                              "height": {
+                                "type": "integer",
+                                "format": "int32"
+                              },
+                              "numBands": {
+                                "type": "integer",
+                                "format": "int32"
+                              },
+                              "dataType": {
+                                "type": "integer",
+                                "format": "int32"
+                              },
+                              "sampleSize": {
+                                "type": "array",
+                                "items": {
+                                  "type": "integer",
+                                  "format": "int32"
+                                }
+                              },
+                              "transferType": {
+                                "type": "integer",
+                                "format": "int32"
+                              },
+                              "numDataElements": {
+                                "type": "integer",
+                                "format": "int32"
+                              }
+                            }
+                          },
+                          "height": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "minX": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "minY": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "colorModel": {
+                            "type": "object",
+                            "properties": {
+                              "transparency": {
+                                "type": "integer",
+                                "format": "int32"
+                              },
+                              "numComponents": {
+                                "type": "integer",
+                                "format": "int32"
+                              },
+                              "numColorComponents": {
+                                "type": "integer",
+                                "format": "int32"
+                              },
+                              "colorSpace": {
+                                "type": "object",
+                                "properties": {
+                                  "type": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                  },
+                                  "numComponents": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                  },
+                                  "cs_sRGB": {
+                                    "type": "boolean"
+                                  }
+                                }
+                              },
+                              "transferType": {
+                                "type": "integer",
+                                "format": "int32"
+                              },
+                              "alphaPremultiplied": {
+                                "type": "boolean"
+                              },
+                              "componentSize": {
+                                "type": "array",
+                                "items": {
+                                  "type": "integer",
+                                  "format": "int32"
+                                }
+                              },
+                              "pixelSize": {
+                                "type": "integer",
+                                "format": "int32"
+                              }
+                            }
+                          },
+                          "numXTiles": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "numYTiles": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "minTileX": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "minTileY": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "tileWidth": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "tileHeight": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "tileGridXOffset": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "tileGridYOffset": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "propertyNames": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "width": {
+                            "type": "integer",
+                            "format": "int32"
+                          }
+                        }
+                      }
+                    },
+                    "propertyNames": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "width": {
+                      "type": "integer",
+                      "format": "int32"
                     }
                   }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/qr/check": {
+      "get": {
+        "tags": [
+          "qr-controller"
+        ],
+        "summary": "Проверка принадлежности qr-code его владельцу по паспорту",
+        "description": "Проверка принадлежности qr-code его владельцу по паспорту",
+        "operationId": "checkQrCode",
+        "parameters": [
+          {
+            "name": "qrCode",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/qr/base64": {
+      "get": {
+        "tags": [
+          "qr-controller"
+        ],
+        "summary": "Получить base64-qrcode по номеру паспорта",
+        "description": "Позволяет получить base64-qrcode по его уникальному номеру паспорта",
+        "operationId": "getBase64QrCodeStringByPassportNumber",
+        "parameters": [
+          {
+            "name": "passportNumber",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "pattern": "^[0-9]{10}$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
@@ -3640,7 +3784,7 @@
           },
           "rawMessage": {
             "type": "string",
-            "description": "Сообщение исключеня java"
+            "description": "Сообщение исключения java"
           }
         },
         "description": "Ошибка обработки запроса"
