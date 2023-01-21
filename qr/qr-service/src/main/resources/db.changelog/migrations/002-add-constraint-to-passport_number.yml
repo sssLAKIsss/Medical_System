@@ -4,7 +4,7 @@ databaseChangeLog:
       author: Andrey
       preConditions:
         tableExists:
-          tableName: passport_number
+          tableName: qr_codes
       changes:
         - addUniqueConstraint:
             tableName: qr_codes

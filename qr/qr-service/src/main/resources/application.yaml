@@ -1,9 +1,13 @@
+logging:
+  level:
+    root: info
 spring:
   mvc:
-    pathmatch:
+    path match:
       matching-strategy: path-pattern-parser
   application:
     name: qr-code-storage-service
+    version: qr-code-storage-service-1.0
   liquibase:
     changeLog: classpath:db.changelog/db.changelog-master.yaml
     default-schema: public
@@ -30,6 +34,14 @@ spring:
       maxLifetime: 180000
       maximumPoolSize: 5
 
+kafka:
+  topics: ${KAFKA_TOPICS:medical_topic}
+  bootstrap-servers: ${BOOTSTRAP_SERVERS:localhost:29092}
+  group-id: ${GROUP_ID:medical_topic}
+  concurrencyValue: ${CONCURRENCY_VALUE:1}
+  key-deserializer: ${KAFKA_DESERIALIZER:org.apache.kafka.common.serialization.StringDeserializer}
+  value-deserializer: ${KAFKA_DESERIALIZER:org.apache.kafka.common.serialization.StringDeserializer}
+
 feign:
   autoconfiguration:
     jackson:
@@ -42,5 +54,3 @@ server:
     include-binding-errors: always
     include-stacktrace: on_param
     include-exception: false
-
-
