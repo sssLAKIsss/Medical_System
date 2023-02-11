@@ -12,6 +12,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.List;
@@ -26,6 +29,8 @@ import java.util.Objects;
 public class User implements UserDetails {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_id_gen")
+    @SequenceGenerator(name = "users_id_gen", sequenceName = "users_id_seq")
     private Long id;
 
     @NotBlank

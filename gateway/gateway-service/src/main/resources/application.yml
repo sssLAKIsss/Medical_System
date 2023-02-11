@@ -3,10 +3,12 @@ spring:
     allow-bean-definition-overriding: true
     web-application-type: reactive
   mvc:
-    pathmatch:
+    path match:
       matching-strategy: path-pattern-parser
   application:
-    name: gateway-service
+    name: Gateway-service
+    version: 1.0
+    description: Сервис-агрегатор и трололо
   jackson:
     deserialization:
       read-date-timestamps-as-nanoseconds: false
@@ -21,11 +23,11 @@ spring:
           enabled: true
           lower-case-service-id: true
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/users
-    username: postgres
-    password: postgres
+    url: ${DB_URL:r2dbc:postgresql://localhost:5432/users}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
   liquibase:
-    driverClassName: org.postgresql.Driver
+    driverClassName: ${DB_DRIVER:org.postgresql.Driver}
     changeLog: classpath:db.changelog/db.changelog-master.yaml
     default-schema: public
     enabled: true
@@ -34,17 +36,47 @@ spring:
     password: postgres
 
 jwt:
-  secret: some-secret-dadsa-das-das-as-das-da-sdasd-sda
-  expirationToken: 86400
+  secret: ${JWT_SECRET:some-secret-dadsa-das-das-as-das-da-sdasd-sda}
+  expiration_token: ${JWT_EXPIRATION_TIME:86400}
+
+integration:
+  person-service:
+    base-uri: ${PERSON_SERVICE_BASE_URI:http://localhost:8081/api/v1/persons}
+    paths:
+      passport-path: ${PERSON_SERVICE_PATHS:/passportNumber/{passportNumber}}
+  medical-service:
+    base-uri: ${MEDICAL_SERVICE_BASE_URL:http://localhost:8082/api/v1/medical/patient}
+    paths:
+      passport-path: ${MEDICAL_SERVICE_PATHS:?passportNumber={passportNumber}}
+  qr-service:
+    base-uri: ${QR_SERVICE_BASE_URL:http://localhost:8083/api/v1/qr}
+    paths:
+      passport-path: ${QR_SERVICE_PATHS:/base64?passportNumber={passportNumber}}
+
+gateway:
+  httpMethods: ${HTTP_METHODS:GET,POST,PUT,DELETE}
+  person-service-params:
+    base-route-id: ${BASE_PERSON_SERVICE_ROUTE_ID:person_route}
+    base-route-path-pattern: ${BASE_PERSON_SERVICE_ROUTE_PATTERN:/api/v1/persons/**}
+    base-redirect-uri: ${BASE_PERSON_SERVICE_REDIRECT_URI:lb://person-service}
+  medical-service-params:
+    base-route-id: ${BASE_MEDICAL_SERVICE_ROUTE_ID:medical_route}
+    base-route-path-pattern: ${BASE_MEDICAL_SERVICE_ROUTE_PATTERN:/api/v1/medical/**}
+    base-redirect-uri: ${BASE_MEDICAL_SERVICE_REDIRECT_URI:lb://medical-service}
+  qr-service-params:
+    base-route-id: ${BASE_QR_SERVICE_ROUTE_ID:qr_code_route}
+    base-route-path-pattern: ${BASE_QR_SERVICE_ROUTE_PATTERN:/api/v1/qr/**}
+    base-redirect-uri: ${BASE_QR_SERVICE_REDIRECT_URI:lb://qr-code-storage-service}
 
 logging:
   level:
     org:
       springframework:
-        r2dbc: DEBUG
+        r2dbc: ${DB_LOG_LEVEL:DEBUG}
+        security: ${SECURITY_LOG_LEVEL:DEBUG}
 
 server:
-  port: 8084
+  port: ${GATEWAY_SERVICE_PORT:8084}
   error:
     include-message: always
     include-binding-errors: always
@@ -53,4 +85,4 @@ server:
 
 eureka:
   instance:
-    hostname: localhost
+    hostname: ${HOST_NAME:localhost}
