@@ -8,4 +8,5 @@ import ru.vtb.model.User;
 @Repository
 public interface UserRepository extends ReactiveCrudRepository<User, Long> {
     Mono<User> findByUsername(String name);
+    Mono<Boolean> existsByUsername(String userName);
 }

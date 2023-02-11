@@ -1,4 +1,4 @@
-package ru.vtb.config;
+package ru.vtb.config.security;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpHeaders;
@@ -9,8 +9,6 @@ import org.springframework.security.web.server.context.ServerSecurityContextRepo
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-
-import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
@@ -24,21 +22,17 @@ public class SecurityContextRepository implements ServerSecurityContextRepositor
 
     @Override
     public Mono<SecurityContext> load(ServerWebExchange exchange) {
-        String authHeader = exchange.getRequest()
-                .getHeaders()
-                .getFirst(HttpHeaders.AUTHORIZATION);
-
-        if (Objects.nonNull(authHeader) && authHeader.startsWith("Bearer ")) {
-            String authToken = authHeader.substring(7);
-
-            return authenticationManager.authenticate(
-                            new UsernamePasswordAuthenticationToken(
-                                    authToken,
-                                    authToken
+        return Mono.justOrEmpty(exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION))
+                .filter(autHeader -> autHeader.startsWith("Bearer "))
+                .flatMap(authHeader -> {
+                    String authToken = authHeader.substring(7);
+                    return authenticationManager.authenticate(
+                                    new UsernamePasswordAuthenticationToken(
+                                            authToken,
+                                            authToken
+                                    )
                             )
-                    )
-                    .map(SecurityContextImpl::new);
-        }
-        return Mono.empty();
+                            .map(SecurityContextImpl::new);
+                });
     }
 }
