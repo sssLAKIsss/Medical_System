@@ -28,7 +28,7 @@ public class CsvDataSender implements IScheduler {
     private final PatientRepository patientRepository;
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    @Value("external.kafka.topic")
+    @Value("${external.kafka.topic}")
     private String KAFKA_TOPIC;
     private static final long DELAY = 1000L;
 

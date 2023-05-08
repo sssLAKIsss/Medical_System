@@ -37,7 +37,7 @@
                 <configuration>
                     <!--suppress UnresolvedMavenProperty -->
                     <inputSpec>
-                        ${project.basedir}/src/main/resources/qr-service-api-v0.json
+                        ${project.basedir}/src/main/resources/qr-service-api-v1.json
                     </inputSpec>
                     <generatorName>spring</generatorName>
                     <configOptions>
